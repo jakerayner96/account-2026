@@ -163,7 +163,7 @@ body.appmode .device .chin{height:0!important}
     </span>
     <select id="more" aria-label="More fascias"></select>
     <span class="div"></span>
-    <span class="seg" id="view" title="Which screen"><button data-v="account">Account</button><button data-v="pdp">PDP</button><button data-v="checkout">Checkout</button></span>
+    <span class="seg" id="view" title="Which screen"><button data-v="account">Account</button><button data-v="pdp">PDP</button><button data-v="checkout">Checkout</button><button data-v="checkout2">New checkout</button></span>
     <span class="div"></span>
     <span class="seg" id="chan" title="Mobile web or the app"><button data-c="web">Web</button><button data-c="app">App</button></span>
     <span class="div"></span>
@@ -182,7 +182,7 @@ body.appmode .device .chin{height:0!important}
 <aside class="panel">
   <div class="mhead">
     <select id="brand-m" aria-label="Fascia"></select>
-    <span class="seg" id="view-m"><button data-v="account">Account</button><button data-v="pdp">PDP</button><button data-v="checkout">Checkout</button></span>
+    <span class="seg" id="view-m"><button data-v="account">Account</button><button data-v="pdp">PDP</button><button data-v="checkout">Checkout</button><button data-v="checkout2">New checkout</button></span>
     <span class="seg" id="chan-m"><button data-c="web">Web</button><button data-c="app">App</button></span>
     <button class="export" id="exportbtn2"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M2.5 12.5h11"/></svg>Export</button>
     <button class="mclose" id="mclose" aria-label="Close">✕</button>
@@ -235,7 +235,7 @@ try{const saved=JSON.parse(localStorage.getItem('acct26')||'null');if(saved)S=Ob
  if(q.get('brand')&&NAME[q.get('brand')])S.brand=q.get('brand');}
 S.mode='new'; // new 2026 designs only
 // the only page controls: account balance on/off + (Debenhams) Unlimited / Unlimited+ — everything else is the design as is
-{const bal=S.on['blocks:balance']!==false;S=Object.assign(JSON.parse(JSON.stringify(DEF)),{brand:S.brand,app:!!S.app,view:['pdp','checkout'].includes(S.view)?S.view:'account',status:S.status==='plus'?'plus':'active',mstate:['none','expiring'].includes(S.mstate)?S.mstate:'active'});if(!bal)setBal(false);}
+{const bal=S.on['blocks:balance']!==false;S=Object.assign(JSON.parse(JSON.stringify(DEF)),{brand:S.brand,app:!!S.app,view:['pdp','checkout','checkout2'].includes(S.view)?S.view:'account',status:S.status==='plus'?'plus':'active',mstate:['none','expiring'].includes(S.mstate)?S.mstate:'active'});if(!bal)setBal(false);}
 function setBal(v){if(v){delete S.on['blocks:balance'];delete S.on['rows:balance'];}else{S.on['blocks:balance']=false;S.on['rows:balance']=false;}}
 function effStatus(){const plus=S.brand==='debenhams'&&S.status==='plus',st=S.mstate||'active';return st==='none'?(plus?'plusnone':'none'):st==='expiring'?(plus?'plusexp':'expiring'):(plus?'plus':'active');}
 let FOLD=false, W=390, PAGE_STATE={blocks:[],rows:[],statusStyle:'dot',member:'Unlimited'};
@@ -262,16 +262,16 @@ function radios(host,list,get,set){
 }
 function summary(){return `${S.view} · ${NAME[S.brand]} · account balance ${S.on['blocks:balance']===false?'off':'on'}${S.brand==='debenhams'?' · '+(S.status==='plus'?'Unlimited+':'Unlimited'):''} · ${(S.mstate||'active')}`;}
 function renderPanel(){
-  const pdp=S.view==='pdp',co=S.view==='checkout';
+  const pdp=S.view==='pdp',co=S.view==='checkout'||S.view==='checkout2';
   $('#pdpcard').hidden=!pdp;$('#balcard').hidden=pdp||co;
   $('#pdpnote').innerHTML=(PDP_BRANDS.includes(S.brand)?'':`${NAME[S.brand]} has no PDP yet — showing Debenhams. `)+(pdpBrand()==='boohooman'?'boohooMAN new-format PDP (the core-pdp-2026 configurator page, default set-up).':`${NAME[pdpBrand()]} live PDP recreation.`)+(pdpBrand()==='debenhams'?' Membership box carries the new Unlimited wordmark.':'')+' Configure it fully at <a href="https://jakerayner96.github.io/core-pdp-2026/" target="_blank" rel="noopener" style="color:inherit">core-pdp-2026 ↗</a>';
-  $('.ph h1').textContent=pdp?'PDP':co?'Configure the checkout':'Configure the account page';
+  $('.ph h1').textContent=pdp?'PDP':S.view==='checkout2'?'New checkout':co?'Configure the checkout':'Configure the account page';
   document.querySelectorAll('#view button,#view-m button').forEach(b=>{b.classList.toggle('on',b.dataset.v===S.view);b.disabled=b.dataset.v==='pdp'&&!!S.app;}); // the PDP is web only
   const bal=S.on['blocks:balance']!==false,tg=$('#baltg');tg.classList.toggle('on',bal);
   tg.querySelectorAll('button').forEach(b=>b.onclick=()=>{setBal(!bal);send(bal?null:'balance');});
   $('#memcard').hidden=NOMEMBER.includes(S.brand)||pdp||(co&&S.brand!=='debenhams');
   $('#stateopts').hidden=co; // checkout = the active state only
-  $('#memname').textContent=co?'Checkout shows the active member: Unlimited (grey pill, Deliver+ upsell) or Unlimited+ (gradient pill, Deliver+ included).':(PAGE_STATE.member||'Unlimited')+' — row status, and the page it clicks into.';
+  $('#memname').textContent=co?(S.view==='checkout2'?'Delivery methods in a modal (Checkout 2026 3996:173990 / 174293) — tap Delivery Method to reopen it. ':'')+'Checkout shows the active member: Unlimited (grey pill, Deliver+ upsell) or Unlimited+ (gradient pill, Deliver+ included).':(PAGE_STATE.member||'Unlimited')+' — row status, and the page it clicks into.';
   radios($('#stateopts'),MSTATES,()=>S.mstate||'active',v=>S.mstate=v);
   $('#tiercard').hidden=S.brand!=='debenhams';
   radios($('#memopts'),MEMS,()=>S.status,v=>S.status=v);

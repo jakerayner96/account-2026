@@ -101,3 +101,9 @@ Abroad, `hidePremier` hides the row on most non-UK locales (Debenhams US/IE, boo
 Top bar **Account · PDP · Checkout**.
 - **Checkout** — active member only. Live checkout layout (boohooMAN web, Debenhams app sheet) with all four delivery options kept; the new pieces from Checkout 2026 (`WChEtDPH0LcErdYFS9SESn` 3996:173990 Unlimited · 3996:174293 Unlimited+, current 3996:171295) are the membership pill on *Delivery Method* (grey Unlimited / Premier / Royalty; black→teal gradient Unlimited+) and the Deliver+ box (upsell + *Get Unlimited+* strip with Unlimited, *Included* with Unlimited+). Tier toggle stays for Debenhams; no pill for Brand Room / DSGN Studio.
 - **PDP** — the core-pdp-2026 pages copied into `pdp/` (boohooMAN = new-format `pdp.html`, other fascias = live recreations `live.html` + `live-pdp.js` + `brands-live.js`; assets load from core-pdp-2026 Pages). Only change: the Debenhams membership box uses the new Unlimited wordmark (DS `assets/brands/memberships/unlimited-logo.svg`). Web only.
+
+### 08 Oct 2026 (later)
+- **New checkout** screen: Checkout 2026 3996:173492 landing (bag + express pay, Arrives/Change summary, Pennies donation, payment grid, order summary). **Change** opens the delivery-method modal (3996:173990 / 174293); all four options kept. No USP bar (as Figma).
+- **Current checkout:** the membership pill sits on the right edge of the Delivery Method heading.
+- **App checkout** (both): App Checkout `zGhu3eHyChNPZCHsFOmuie` 5441:420 (PLT) layout for every fascia, in that fascia's font.
+- **Deliver+** in checkout for non-Debenhams fascias = the new DS checkout banner `.dplus-co` (SEEL Enhancements 2026 "Small New", own lockup / font / colour). Debenhams keeps the Unlimited / Unlimited+ member boxes from Checkout 2026.

@@ -268,7 +268,7 @@ body.co main{padding-top:0;padding-left:0;padding-right:0;max-width:1100px}
 .co-more img{width:16px;height:16px}
 .co-div{height:1px;background:var(--border-subtle);margin:24px calc(var(--m) * -1)}
 /* the new bit: membership pill on the Delivery Method heading */
-.co-dmh{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin-bottom:24px}
+.co-dmh{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;margin-bottom:24px} /* current checkout: pill on the right edge (Jake 08 Oct) */
 .mpill{display:inline-flex;align-items:center;gap:6px;height:20px;padding:0 8px 0 6px;border-radius:100px;background:#F2F2F2;color:#000;font-size:10px;line-height:1;white-space:nowrap;text-transform:uppercase}
 .mpill i{width:8px;height:8px;border-radius:99px;background:#000;flex:none}
 .mpill b{font-weight:600}.mpill span{font-weight:300}
@@ -288,7 +288,7 @@ body.co main{padding-top:0;padding-left:0;padding-right:0;max-width:1100px}
 .co-dp .dpl{display:none}.co-dp .dpl.show{display:block;margin:0 auto 0 0!important;align-self:flex-start;max-width:100%;height:auto!important;max-height:30px;width:auto!important}
 .co-dp .top{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .co-dp .inc{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--dplus-link,#00787D);white-space:nowrap}
-.co-dp .inc img{width:16px;height:16px}
+.co-dp .inc svg{width:16px;height:16px}
 .co-dp p{font-size:14px;line-height:18px;font-weight:300}.co-dp p b{font-weight:600}
 .co-dp .sm{font-size:12px;line-height:15px}
 .co-dp ul{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:12px;font-weight:300}
@@ -317,21 +317,91 @@ body.co main{padding-top:0;padding-left:0;padding-right:0;max-width:1100px}
   .co-div{margin:24px -24px}
   .co-side{display:flex;flex-direction:column;gap:2px}
 }
+/* NEW checkout (view 'checkout2'): delivery methods move into a modal — Checkout 2026 3996:173990 (Unlimited) · 3996:174293 (Unlimited+).
+   Behind it the page keeps a Delivery Method summary row; tap it to reopen. Mobile = bottom sheet, desktop = centred dialog. */
+.co-sel{display:flex;align-items:center;gap:16px;border:1px solid var(--border-subtle);border-radius:var(--radius-default);padding:16px 20px;cursor:pointer;width:100%;text-align:left;background:none;color:inherit;font:inherit}
+.co-sel .t{flex:1;min-width:0}.co-sel b{display:block;font-size:16px;font-weight:600}.co-sel small{font-size:14px;font-weight:300;color:var(--text-secondary)}
+.co-sel .pr{font-size:16px;font-weight:600}.co-sel u{font-size:14px}
+.co-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:50}
+.co-modal{position:fixed;left:0;right:0;bottom:0;box-sizing:border-box;width:100%;z-index:51;background:#FFF;color:var(--acct-ink);border-radius:8px 8px 0 0;padding:24px 16px 32px;max-height:88vh;overflow:auto}
+.co-modal .mh{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.co-modal .mh h3{font-size:18px;font-weight:600;line-height:24px}
+.co-modal .mh .x{margin-left:auto;width:16px;height:16px;flex:none;cursor:pointer}
+.co-modal .co-radio.on{border-color:var(--co-sel,var(--acct-ink))}.co-modal .co-radio.on::after{background:var(--co-sel,var(--acct-ink))}
+body:not(.comodal) .co-ov,body:not(.comodal) .co-modal{display:none}
+@media(min-width:1024px){.co-modal{left:50%;right:auto;bottom:auto;top:50%;transform:translate(-50%,-50%);width:520px;border-radius:8px;padding:32px}}
+.co-modal *{box-sizing:border-box}
+/* NEW checkout landing — Checkout 2026 3996:173492 "Guest Flow - Default": sections on #FAFAFA with 8px gaps, Geologica 14 light/semibold, CTA #00787D.
+   Delivery is a one-line summary with Change → the delivery modal above. */
+.nco{--co-cta:var(--acct-ink);background:#FAFAFA;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:normal;color:#000}
+[data-brand="debenhams"] .nco,[data-brand="debenhams"] .co-modal{--co-cta:#00787D}
+.nco section{background:#FFF;padding:16px}
+.nco h4{font-size:16px;font-weight:600}
+.nco .n-lt{font-weight:300}.nco s{font-weight:300}
+.nco .n-chg{font-size:12px;font-weight:600;color:var(--co-cta);cursor:pointer;background:none;border:0;padding:0;font-family:inherit}
+.nco .n-bag{background:#FAFAFA;padding:12px 16px;display:flex;flex-direction:column;gap:16px}
+.nco .n-bag .n-top{display:flex;justify-content:space-between;align-items:center}.nco .n-bag .n-top img{width:16px;height:16px}
+.nco .n-or{display:flex;align-items:center;gap:16px;color:#6B6B6B;font-weight:300}.nco .n-or i{flex:1;height:1px;background:#E7E7E7}
+.nco .n-xp{display:flex;gap:8px}.nco .n-xp span{flex:1;height:50px;border-radius:4px;display:grid;place-items:center}
+.nco .n-xp .n-pp{background:rgba(238,238,238,.93)}.nco .n-xp .n-ap{background:#000}.nco .n-xp .n-kl{background:#FFA8CD}
+.nco .n-dl{display:flex;flex-direction:column;gap:8px}
+.nco .n-dl .n-r{display:flex;align-items:center;gap:8px}.nco .n-dl .n-r>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.nco .n-dl hr{border:0;height:1px;background:#E7E7E7;margin:4px 0}
+.nco .n-ck{width:24px;height:24px;flex:none;border:1px solid #B5B5B5;border-radius:3px;background:#FFF;display:grid;place-items:center}
+.nco .n-ck.n-on{background:var(--co-cta);border-color:var(--co-cta)}.nco .n-ck svg{width:16px;height:16px}
+.nco .n-cl{display:flex;gap:8px;align-items:center}
+.nco .n-fine{font-size:12px;font-weight:300;color:#767676}
+.nco .n-don{display:flex;flex-direction:column;gap:12px}.nco .n-don .n-lg{display:flex;gap:24px}
+.nco .n-pay{display:flex;flex-direction:column;gap:16px}
+.nco .n-promo{display:flex;gap:8px}.nco .n-promo span{flex:1;height:50px;border:1px solid #B5B5B5;border-radius:4px;display:flex;align-items:center;padding:0 16px;color:#6B6B6B;font-weight:300}
+.nco .n-promo button{height:50px;padding:0 24px;border:1px solid #70BEB3;border-radius:4px;background:#FFF;font:600 16px/1 inherit;font-family:inherit;color:#000}
+[data-brand]:not([data-brand="debenhams"]) .nco .n-promo button{border-color:var(--acct-ink)}
+.nco .n-acc{display:flex;justify-content:space-between;align-items:center;font-weight:600}.nco .n-acc img{width:16px;height:16px}
+.nco .n-pm{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nco .n-pm>span{height:44px;border:1px solid #B5B5B5;border-radius:4px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600}
+.nco .n-pm .n-cp{background:#B2FCE3;border-radius:210px;padding:6px 8px;display:flex}
+.nco .n-sum{background:#FAFAFA;padding:16px;display:flex;flex-direction:column;gap:16px}
+.nco .n-sum .n-r{display:flex;justify-content:space-between;align-items:center;font-weight:300}
+.nco .n-sum .n-r b{font-weight:600}.nco .n-sum .n-tot{font-weight:600;border-top:1px solid #E7E7E7;padding-top:16px}
+.nco .n-sum .n-disc{color:var(--co-cta);font-weight:600;display:flex;align-items:center;gap:4px}.nco .n-sum .n-disc img{width:12px;height:12px}
+.nco .n-sum p{font-weight:300;line-height:18px}.nco .n-sum a{color:var(--co-cta);font-weight:600}
+body.co2 #usp,body.co2 #uspAbove{display:none} /* Figma: no USP bar on the new checkout */
+@media(min-width:1024px){
+  .nco{display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:8px 24px;background:none;align-items:start}
+  .nco .n-main{display:flex;flex-direction:column;gap:8px}.nco .n-aside{display:flex;flex-direction:column;gap:8px;position:sticky;top:16px}
+  .nco section,.nco .n-bag,.nco .n-sum{border-radius:var(--radius-default)}
+}
+.nco b{font-weight:600}
+.nco .n-main,.nco .n-aside{display:flex;flex-direction:column;gap:8px}
 /* app checkout sheet (Debenhams app, 08 Oct 2026) */
 body.app.co{background:#8A8A8A}
-.app-co{background:#FFF;border-radius:16px 16px 0 0;margin:0;padding:24px 16px 120px;box-sizing:border-box;min-height:calc(100vh - 47px)}
-.app-co .ttl{display:flex;justify-content:space-between;align-items:center;font-size:18px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;margin-bottom:24px}
-.app-co .ttl img{width:20px;height:20px}
-.app-co .prod{display:flex;gap:24px;align-items:center;margin-bottom:24px}.app-co .prod img{width:64px;height:80px;object-fit:cover;background:var(--surface-media)}
-.app-co .prod b{display:block;font-weight:600;font-size:16px;margin-bottom:8px}.app-co .prod div{font-size:16px;line-height:22px;font-weight:300}
-.app-co .seg2{display:grid;grid-template-columns:1fr 1fr;background:#F2F2F2;border-radius:4px;padding:4px;margin-bottom:28px}
-.app-co .seg2 span{display:flex;align-items:center;justify-content:center;gap:8px;height:40px;font-size:16px;font-weight:300}.app-co .seg2 span.on{background:#FFF;border-radius:3px;font-weight:600}.app-co .seg2 img{width:20px;height:20px}
-.app-co .kv{display:grid;grid-template-columns:1fr auto 24px;gap:12px;align-items:center;padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid var(--border-subtle)}
-.app-co .kv .l{font-size:16px;font-weight:600;align-self:start}
-.app-co .kv .v{text-align:right;font-size:16px;line-height:22px;font-weight:300}.app-co .kv .v b{font-weight:600}
-.app-co .kv .ed{width:24px;height:24px}
-.app-co .kv .l .mpill{margin-top:8px}
-.app-co .pay{position:fixed;left:16px;bottom:24px;height:48px;width:calc(100% - 32px)}
+body.app.co .app-sb{margin:0} /* checkout main has no side padding */
+/* App checkout sheet — App Checkout Figma zGhu3eHyChNPZCHsFOmuie 5441:420 (PLT), every fascia in its own font (Jake 08 Oct 2026).
+   Bag page dimmed behind · white sheet r8 top, 24/16 padding, 24 gaps · rows 14 bold label + 14 regular value + 16 chevron, 16 gaps with rules. */
+.app-bagt{height:44px;display:grid;place-items:center;font:600 17px/1 -apple-system,'SF Pro Text',system-ui,sans-serif;color:#000;opacity:.55;margin-bottom:16px}
+.app-co{background:#FFF;border-radius:8px 8px 0 0;margin:0;padding:24px 16px 40px;box-sizing:border-box;min-height:calc(100vh - 107px);display:flex;flex-direction:column;gap:24px;font-family:var(--font-family-base);color:#000;font-size:14px;line-height:normal}
+.app-co b,.app-co .bd{font-weight:var(--app-co-bold,700)}
+.app-co .ttl{display:flex;justify-content:space-between;align-items:center;font-size:18px;line-height:22px;font-weight:var(--app-co-bold,700);text-transform:uppercase}
+.app-co .ttl img{width:16px;height:16px}
+.app-co .prod{display:flex;gap:20px;align-items:flex-start}.app-co .prod img{width:65px;height:97px;object-fit:cover;background:var(--surface-media);flex:none}
+.app-co .prod div{display:flex;flex-direction:column;gap:8px}
+.app-co .seg2{display:grid;grid-template-columns:1fr 1fr;background:#F2F2F2;border-radius:4px;padding:2px;height:50px;box-sizing:border-box}
+.app-co .seg2 span{display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;border-radius:4px;white-space:nowrap}.app-co .seg2 span.on{background:#FFF;box-shadow:0 0 4px rgba(0,0,0,.05)}.app-co .seg2 img{width:24px;height:24px}
+.app-co .rows{display:flex;flex-direction:column;gap:16px}
+.app-co .rows hr{border:0;height:1px;background:#E7E7E7;margin:0}
+.app-co .kv{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.app-co .kv.top{align-items:flex-start}.app-co .kv.top .ch{align-self:center}
+.app-co .kv .l{font-weight:var(--app-co-bold,700);display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.app-co .kv .r{display:flex;align-items:center;gap:16px;text-align:right}
+.app-co .kv .lnk{color:#1661E3}
+.app-co .kv .ch{width:16px;height:16px;flex:none}
+.app-co .kv .tot{font-size:13px}
+.app-co .dprot{display:flex;flex-direction:column;gap:24px}
+.app-co .dplus-co,.app-co .co-dp{margin:0}
+.app-co{--app-co-bold:var(--w-strong,700)}[data-brand="plt"] .app-co{--app-co-bold:700} /* Figma is PLT Roboto Bold; other fascias take their own strong weight */
+.app-co .mpill b{font-weight:600}.app-co .mpill--plus b{font-weight:700}
+.co-opts+.dplus-co{margin-top:24px}
+.app-co .pay{height:50px;width:100%;flex:none;border-radius:4px;background:#E5E7EB;color:#6B7280;font:var(--app-co-bold,700) 16px/24px var(--font-family-base);text-transform:uppercase;border:0}
+.app-co .hi{position:fixed;left:50%;bottom:8px;transform:translateX(-50%);width:139px;height:5px;border-radius:100px;background:#000}
 /* configurator focus ring */
 .focus{outline:2px solid #0D99FF;outline-offset:3px;transition:outline-color .6s}
 </style>
@@ -552,15 +622,52 @@ function mpillHTML(b,f){
 }
 // new Deliver+ box: Unlimited = upsell (checkbox, dynamic price, Get Unlimited+ strip, Debenhams only) · Unlimited+ = included
 function coDplusHTML(b,f){
+  if(b!=='debenhams'){const lg=(window.DG_DPLUS_CO_LOGOS||'').replace(/assets\//g,AST+'/');return `<div class="dplus-co" data-el="dplus"><div class="top">${lg}<button class="chk on" aria-checked="true" aria-label="Deliver+ added"></button></div><p>Next-level experience, guaranteed for <b>£3.90</b></p><span class="more">Learn more</span></div>`;}
   let logos=(window.DG_DPLUS_LOGOS||'').replace(/assets\//g,AST+'/');
   logos=new RegExp(`dpl-${b}"`).test(logos)?logos.replace(new RegExp(`dpl-${b}"`),`dpl-${b} show"`):logos.replace('dpl-generic"','dpl-generic show"');
   const plus=b==='debenhams'&&S.status==='plus';
   const lm=`<div class="lm"><a>Learn more</a><i></i><span>Powered by <img src="${AST}/ds/icons/seel/seel-logo.png" alt="seel"></span></div>`;
-  if(plus) return `<div class="co-dp" data-el="dplus"><div class="in"><div class="col"><div class="top">${logos}<span class="inc"><img src="${LIB}/icons-tick-circle-fill.svg" alt="">Included</span></div><p class="sm">Deliver+ protection on every order is included with your Unlimited+ membership.</p>${lm}</div></div></div>`;
+  if(plus) return `<div class="co-dp" data-el="dplus"><div class="in"><div class="col"><div class="top">${logos}<span class="inc"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg>Included</span></div><p class="sm">Deliver+ protection on every order is included with your Unlimited+ membership.</p>${lm}</div></div></div>`;
   return `<div class="co-dp" data-el="dplus"><div class="in"><span class="chk"></span><div class="col"><div class="dlg">${logos}</div><p>Your delivery is free. Why not protect it <b>for £2.99?</b></p><ul><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Extended</b> 35-Day Returns</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Win</b> a holiday worth £15k!</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>£5/day</b> Late Delivery Compensation</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Priority</b> Customer Support</span></li></ul>${lm}</div></div>${b==='debenhams'?'<div class="up">Want protection on every order? - <b>Get Unlimited+</b></div>':''}</div>`;
 }
 const CO_ADDR=['Apartment 18, 2 Munday Street','Manchester, United Kingdom','M4 7BB','+447733361372'];
+function coModalHTML(b,f){
+  const opts=CO_OPTS.map(([t,d,pr,was,on])=>`<div class="co-opt"><span class="co-radio${on?' on':''}"></span><div class="t"><b>${t}</b><small>${d}</small></div><span class="pr">${pr}${was?`<s>${was}</s>`:''}</span></div>`).join('');
+  return `<div class="co-ov" data-co="close"></div><div class="co-modal" role="dialog" aria-label="Delivery Method" data-el="comodal" style="--co-sel:${b==='debenhams'?'#00787D':'var(--acct-ink)'}"><div class="mh"><h3>Delivery Method</h3>${mpillHTML(b,f)}<img class="x" data-co="close" src="${LIB}/icons-close.svg" alt="Close"></div><div class="co-opts">${opts}</div>${coDplusHTML(b,f)}</div>`;
+}
+const PM=AST+'/ds/icons/payments/', CA='assets/checkout/';
+const TICK='<svg viewBox="0 0 16 16" fill="none" stroke="#FFF" stroke-width="1.6"><path d="M3 8.5 6.5 12 13 4.5"/></svg>';
+function newCheckoutHTML(b,f){
+  const p=PROD[b]||PROD.debenhams, o=CO_OPTS.find(x=>x[4]), ship=1.99, sub=p.was||p.now, tot=p.now+ship, deb=b==='debenhams';
+  const bag=`<div class="n-bag" data-el="bag"><div class="n-top"><div><b>Your Bag (1)</b><div><span class="n-lt">Order Total:</span> <b>${gbp(tot)}</b></div></div><img src="${LIB}/icons-down.svg" alt=""></div>
+    <div class="n-or"><i></i>Express Checkout<i></i></div>
+    <div class="n-xp"><span class="n-pp"><img src="${PM}paypal-wordmark.svg" alt="PayPal" style="height:20px"></span><span class="n-ap"><img src="${PM}applepay-onblack.svg" alt="Apple Pay" style="height:22px"></span><span class="n-kl"><img src="${CA}klarna-express.svg" alt="Klarna" style="height:33px"></span></div></div>`;
+  const dl=`<section data-el="delivery"><div class="n-dl"><h4>${o[1].replace(/^Arrives/,'Arrives')}</h4>
+    <div class="n-r"><div><span class="n-lt">${o[0]}</span><span><b>${o[2]}</b> ${o[3]?`<s>${o[3]}</s>`:''}</span></div><button class="n-chg" data-co="open">Change</button></div><hr>
+    <div class="n-r"><div><span><b>Jake Rayner</b><br><span class="n-lt">${CO_ADDR.slice(0,3).join(', ')}</span></span></div><button class="n-chg">Change</button></div></div></section>`;
+  const don=`<section data-el="donation"><div class="n-don"><h4 style="margin-bottom:-8px">Make a Donation?</h4><p class="n-lt">Change lives with just <b>${gbp(Math.ceil(tot)-tot)}!</b> Your support will help [charity name] do amazing things!</p>
+    <div class="n-cl"><span class="n-ck"></span><span class="n-lt">Yes, round up my total to <b>${gbp(Math.ceil(tot))}</b></span></div>
+    <p class="n-fine">Every penny you give goes to charity: 95% to British Heart Foundation (registered charity no. 296645) and 5% goes to Pennies (registered charity no. 1122489)</p>
+    <div class="n-lg"><img src="${CA}pennies.png" alt="Pennies" style="width:73px;height:26px"><img src="${CA}bhf.png" alt="British Heart Foundation" style="width:71px;height:31px"></div></div></section>`;
+  const pay=`<section data-el="payment"><div class="n-pay"><h4>Payment</h4><div class="n-promo"><span>Enter promo code...</span><button>Apply</button></div>
+    <div class="n-acc">Redeem Gift Card<img src="${LIB}/icons-down.svg" alt=""></div>
+    <div class="n-pm"><span><img src="${LIB}/icons-card.svg" alt="" style="width:20px">Card</span><span><img src="${PM}applepay-onwhite.svg" alt="Apple Pay" style="height:20px"></span>
+      <span><img src="${PM}paypal-wordmark.svg" alt="PayPal" style="height:18px"></span><span><img src="${PM}paypal-monogram.png" alt="" style="height:20px">Pay Later</span>
+      ${deb?`<span><img src="${CA}debenhams-pay-plus.svg" alt="Debenhams Pay+" style="height:16px"></span>`:''}<span style="gap:4px"><img src="${PM}gpay-g.svg" alt="" style="height:20px"><img src="${PM}gpay-word.svg" alt="Google Pay" style="height:22px"></span>
+      <span><img src="${PM}klarna-badge.svg" alt="Klarna" style="height:20px"></span><span><span class="n-cp"><img src="${PM}clearpay-lockup-mini.svg" alt="Clearpay" style="height:12px"></span></span></div>
+    <b>Billing Address</b><div class="n-cl"><span class="n-ck n-on">${TICK}</span><span class="n-lt">Use delivery address as billing address</span></div></div></section>`;
+  const sum=`<div class="n-sum" data-el="summary"><b>Order Summary</b>
+    <div class="n-r"><span>Subtotal</span><span>${gbp(sub)}</span></div><div class="n-r"><span>Delivery</span><span><b>${o[2]}</b> ${o[3]?`<s>${o[3]}</s>`:''}</span></div>
+    ${p.was?`<div class="n-r"><span class="n-disc">Discounts<img src="${LIB}/icons-down.svg" alt=""></span><span>-${gbp(p.was-p.now)}</span></div>`:''}
+    <div class="n-r n-tot"><span>Order Total</span><span>${gbp(tot)}</span></div>
+    <div class="n-cl" style="align-items:flex-start"><span class="n-ck n-on">${TICK}</span><p>We will share our latest offers, promotions and new collections via email and SMS from ${esc(f.name)} and our <a>family of brands</a> unless you untick this box.</p></div>
+    <p>By continuing I confirm that I am over the age of 18 and by entering my email address, I consent to receive an automated one-time verification code from ${esc(f.name)} at the phone number associated with my account. Message and data rates may apply.</p>
+    <p>We will use your information in accordance with our <a>Terms of use</a> and <a>Privacy policy</a>.</p></div>`;
+  return `<div class="nco"><div class="n-main">${bag}${dl}${don}${pay}</div><div class="n-aside">${sum}</div></div>${coModalHTML(b,f)}`;
+}
+const coSelHTML=()=>{const o=CO_OPTS.find(x=>x[4]);return `<button class="co-sel" data-co="open"><div class="t"><b>${o[0]}</b><small>${o[1]}</small></div><span class="pr">${o[2]}</span><u>Change</u></button>`;};
 function checkoutHTML(b,f){
+  const nw=S.view==='checkout2';
   const p=PROD[b]||PROD.debenhams, ship=1.99, tot=p.now+ship;
   const opts=CO_OPTS.map(([t,d,pr,was,on])=>`<div class="co-opt"><span class="co-radio${on?' on':''}"></span><div class="t"><b>${t}</b><small>${d}</small></div><span class="pr">${pr}${was?`<s>${was}</s>`:''}</span></div>`).join('');
   const deliv=`<section class="co-card" data-el="delivery"><h2>Delivery</h2>
@@ -569,25 +676,30 @@ function checkoutHTML(b,f){
     <div class="co-addr"><span class="co-radio on"></span><div class="t"><b>Jake Rayner</b><br>${CO_ADDR.join('<br>')}</div><img src="${LIB}/icons-edit.svg" alt="" style="width:20px"></div>
     <div class="co-more">More Addresses <img src="${LIB}/icons-down.svg" alt=""></div>
     <div class="co-div"></div>
-    <div class="co-dmh"><h3>Delivery Method</h3>${mpillHTML(b,f)}</div>
+    ${nw?`<div class="co-dmh"><h3>Delivery Method</h3></div>${coSelHTML()}`:`<div class="co-dmh"><h3>Delivery Method</h3>${mpillHTML(b,f)}</div>
     <div class="co-opts">${opts}</div>
-    ${coDplusHTML(b,f)}
+    ${coDplusHTML(b,f)}`}
   </section>`;
   const pay=`<section class="co-card" data-el="payment"><h2>Payment</h2><div class="co-acc">Promo Code<img src="${LIB}/icons-down.svg" alt=""></div><div class="co-acc">Redeem Gift Card<img src="${LIB}/icons-down.svg" alt=""></div></section>`;
   const side=`<aside class="co-side"><section class="co-card"><h2>Your Order</h2><div class="co-prod"><img src="${PIMG}${p.img}/01.jpg" alt=""><div>${p.br?`<b>${p.br}</b>`:''}<div class="nm">${esc(p.nm)}</div><div class="pp">${p.was?`<span class="now">${gbp(p.now)}</span><s>${gbp(p.was)}</s>`:gbp(p.now)}</div><dl><dt>Size:</dt><dd>${p.sz}</dd><dt>Colour:</dt><dd>${p.col}</dd><dt>Qty:</dt><dd>1</dd></dl></div></div></section>
     <section class="co-card co-sum"><h2>Order Summary</h2><div class="r"><span>Subtotal</span><span>${gbp(p.now)}</span></div><div class="r"><span>Delivery</span><span>${gbp(ship)}</span></div><div class="r tot"><span>Total</span><span>${gbp(tot)}</span></div></section></aside>`;
-  return `<div class="co-bagbar"><div><b>Your Bag (1)</b><span>Total ${gbp(tot)}</span></div><img src="${LIB}/icons-down.svg" alt="" style="width:16px"></div><div class="co-wrap"><div style="display:flex;flex-direction:column;gap:16px">${deliv}${pay}</div>${side}</div>`;
+  return `<div class="co-bagbar"><div><b>Your Bag (1)</b><span>Total ${gbp(tot)}</span></div><img src="${LIB}/icons-down.svg" alt="" style="width:16px"></div><div class="co-wrap"><div style="display:flex;flex-direction:column;gap:16px">${deliv}${pay}</div>${side}</div>${nw?coModalHTML(b,f):''}`;
 }
 // app checkout sheet (Debenhams app, 08 Oct 2026): the grey "UNLIMITED / ACTIVE" banner becomes the new pill on Delivery Method
 function appCheckoutHTML(b,f){
-  const p=PROD[b]||PROD.debenhams, o=CO_OPTS[1];
-  return `<div class="app-co"><div class="ttl">Checkout<img src="${LIB}/icons-close.svg" alt=""></div>
-   <div class="prod"><img src="${PIMG}${p.img}/01.jpg" alt=""><div><b>${gbp(p.now)}</b>${esc(p.nm)}<br>Size: ${p.sz}</div></div>
+  const p=PROD[b]||PROD.debenhams, o=CO_OPTS.find(x=>x[4]), nw=S.view==='checkout2', CH=`<img class="ch" src="${LIB}/icons-right.svg" alt="">`;
+  return `<div class="app-bagt">Bag (1)</div><div class="app-co"><div class="ttl">Checkout<img src="${LIB}/icons-close.svg" alt=""></div>
+   <div class="prod"><img src="${PIMG}${p.img}/01.jpg" alt=""><div><span>${esc(p.nm)}</span><span>Size: ${p.sz} - Qty: 1</span></div></div>
    <div class="seg2"><span class="on"><img src="${LIB}/icons-delivery.svg" alt="">Home Delivery</span><span><img src="${LIB}/shop.svg" alt="">Click &amp; Collect</span></div>
-   <div class="kv"><span class="l">Delivery Address</span><span class="v"><b>Jake Rayner</b><br>${CO_ADDR.slice(0,3).join('<br>')}</span><img class="ed" src="${LIB}/icons-edit.svg" alt=""></div>
-   <div class="kv"><span class="l">Delivery Method<br>${mpillHTML(b,f)}</span><span class="v"><b>${o[0]}</b><br>${o[1]}<br><b>${o[2]}</b> <s>${o[3]}</s></span><img class="ed" src="${LIB}/icons-edit.svg" alt=""></div>
-   ${coDplusHTML(b,f)}
-   <button class="bd pri pay">Payment</button></div>`;
+   <div class="rows">
+    <div class="kv top"><span class="l">Delivery Address</span><span class="r"><span>Jake Rayner<br>Apartment 18,<br>2 Munday Street,<br>M4 7BB<br>+447733361372</span>${CH}</span></div><hr>
+    <div class="kv"${nw?' data-co="open" style="cursor:pointer"':''}><span class="l">Delivery Method${nw?'':mpillHTML(b,f)}</span><span class="r"><span><b>${o[0]}</b><br>${o[2]}</span>${CH}</span></div><hr>
+    ${nw?'':`<div class="dprot">${coDplusHTML(b,f)}</div><hr>`}
+    <div class="kv"><span class="l">Billing Address</span><span class="r"><span class="lnk">Select billing address</span>${CH}</span></div><hr>
+    <div class="kv"><span class="l">Gift Card</span><span class="r"><span class="lnk">Redeem Gift Card</span>${CH}</span></div><hr>
+    <div class="kv"><span class="l">Total</span><span class="tot">${gbp(p.now+1.99)}</span></div>
+   </div>
+   <button class="pay">Payment</button><span class="hi"></span></div>${nw?coModalHTML(b,f):''}`;
 }
 const appSB=()=>`<div class="app-sb"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 18 12" fill="#000"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg><svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round"><path d="M1.5 4.2a9.5 9.5 0 0 1 13 0"/><path d="M4 7a5.8 5.8 0 0 1 8 0"/><circle cx="8" cy="10.2" r="1" fill="#000" stroke="none"/></svg><svg width="28" height="13" viewBox="0 0 28 13"><rect x=".5" y=".5" width="24" height="12" rx="3.5" fill="none" stroke="#000" stroke-opacity=".4"/><rect x="2" y="2" width="21" height="9" rx="2" fill="#000"/><path d="M26 4.5v4a2 2 0 0 0 0-4z" fill="#000" fill-opacity=".4"/></svg></span></div>`;
 // app nav bar: account is a sub-page of Home, so it always has the back chevron (landing → Home, sub-pages → account)
@@ -603,8 +715,8 @@ function render(){
   S.mode='new'; // new 2026 designs only
   const b=F[S.brand]?S.brand:'debenhams', f=F[b];
   document.documentElement.setAttribute('data-brand',b);
-  const co=S.view==='checkout';
-  document.body.className='mode-'+S.mode+((S.chev==='on')?' chev-on':'')+(S.app?' app':'')+(co?' co':'');
+  const co=S.view==='checkout'||S.view==='checkout2';
+  document.body.className='mode-'+S.mode+((S.chev==='on')?' chev-on':'')+(S.app?' app':'')+(co?' co':'')+(S.view==='checkout2'?' co2':'')+(S.view==='checkout2'&&S.coModal===true?' comodal':'');
   const r=document.documentElement.style, c=f.card;
   ['--ac-bg','--ac-ink','--ac-btn','--ac-btn-ink','--ac-lbl','--ac-r'].forEach(k=>r.removeProperty(k));
   if(c){r.setProperty('--ac-bg',c.bg);r.setProperty('--ac-ink',c.ink);r.setProperty('--ac-btn',c.btn);r.setProperty('--ac-btn-ink',c.btnInk);if(c.lbl)r.setProperty('--ac-lbl',c.lbl);if(c.r)r.setProperty('--ac-r',c.r);}
@@ -643,7 +755,7 @@ function render(){
   // checkout is the active state only: force active (tier kept), secure-checkout bar, no footer
   const savedSt=S.status; if(co)S.status=S.status==='plus'||S.status==='plusnone'||S.status==='plusexp'?'plus':'active';
   $('#coHd').innerHTML=co?`<img class="hd-logo" src="${AST}/brands/${b}.svg" alt="${esc(f.name)}" onerror="this.outerHTML='<b>${esc(f.name)}</b>'"><span class="sec"><img src="${LIB}/icons-lock.svg" alt="">Secure checkout</span>`:'';
-  if(co){html+=S.app?appCheckoutHTML(b,f):checkoutHTML(b,f);}
+  if(co){html+=S.app?appCheckoutHTML(b,f):S.view==='checkout2'?newCheckoutHTML(b,f):checkoutHTML(b,f);}
   else if(S.page==='landing'){
     if(S.app)html+=appTitle('Good Morning, '+(S.name||'Jake'));
     const blocks=ordered('blocks',BLOCKS).filter(x=>!['usp','news','footer'].includes(x.id)&&on(x.id));
@@ -735,6 +847,8 @@ function syncUspH(){
 let rotI=0;
 setInterval(()=>{const cells=[...document.querySelectorAll('#uspstrip .usp-cell')];if(cells.length<2||!matchMedia('(max-width:1023px)').matches)return;rotI=(rotI+1)%cells.length;cells.forEach((c,i)=>c.classList.toggle('rot-on',i===rotI));},4000);
 
+// new checkout: open / close the delivery modal
+document.addEventListener('click',e=>{const c=e.target.closest('[data-co]');if(!c)return;S.coModal=c.dataset.co==='open';document.body.classList.toggle('comodal',S.coModal);});
 // page navigation inside the prototype
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(!g)return;S.page=g.dataset.go==='balance'?(parseFloat(S.balance)>0?'balance':'empty'):g.dataset.go;render();parent!==window&&parent.postMessage({acctPage:S.page},'*');window.scrollTo(0,0);});
 
