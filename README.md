@@ -96,3 +96,8 @@ On the non-Debenhams family sites, "Debenhams Mastercard" is a footer link, not 
 | Maine, Gorgeous, Forever Unique | — | No live site (brand configs only, no domain) | — |
 
 Abroad, `hidePremier` hides the row on most non-UK locales (Debenhams US/IE, boohoo outside UK and IE, PLT outside UK, FR and IE, KM outside UK and IE, every boohooMAN locale outside the UK, Nasty Gal US).
+
+## Screens (08 Oct 2026)
+Top bar **Account · PDP · Checkout**.
+- **Checkout** — active member only. Live checkout layout (boohooMAN web, Debenhams app sheet) with all four delivery options kept; the new pieces from Checkout 2026 (`WChEtDPH0LcErdYFS9SESn` 3996:173990 Unlimited · 3996:174293 Unlimited+, current 3996:171295) are the membership pill on *Delivery Method* (grey Unlimited / Premier / Royalty; black→teal gradient Unlimited+) and the Deliver+ box (upsell + *Get Unlimited+* strip with Unlimited, *Included* with Unlimited+). Tier toggle stays for Debenhams; no pill for Brand Room / DSGN Studio.
+- **PDP** — the core-pdp-2026 pages copied into `pdp/` (boohooMAN = new-format `pdp.html`, other fascias = live recreations `live.html` + `live-pdp.js` + `brands-live.js`; assets load from core-pdp-2026 Pages). Only change: the Debenhams membership box uses the new Unlimited wordmark (DS `assets/brands/memberships/unlimited-logo.svg`). Web only.
