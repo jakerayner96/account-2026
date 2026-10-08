@@ -622,7 +622,7 @@ function mpillHTML(b,f){
 }
 // new Deliver+ box: Unlimited = upsell (checkbox, dynamic price, Get Unlimited+ strip, Debenhams only) · Unlimited+ = included
 function coDplusHTML(b,f){
-  if(b!=='debenhams'){const lg=(window.DG_DPLUS_CO_LOGOS||'').replace(/assets\//g,AST+'/');return `<div class="dplus-co" data-el="dplus"><div class="top">${lg}<button class="chk on" aria-checked="true" aria-label="Deliver+ added"></button></div><p>Next-level experience, guaranteed for <b>£3.90</b></p><span class="more">Learn more</span></div>`;}
+  {const lg=(window.DG_DPLUS_CO_LOGOS||'').replace(/assets\//g,AST+'/');return `<div class="dplus-co" data-el="dplus"><div class="top">${lg}<button class="chk on" aria-checked="true" aria-label="Deliver+ added"></button></div><p>Peace of mind, guaranteed <b>£3.90</b></p><span class="more">Learn more</span></div>`;}
   let logos=(window.DG_DPLUS_LOGOS||'').replace(/assets\//g,AST+'/');
   logos=new RegExp(`dpl-${b}"`).test(logos)?logos.replace(new RegExp(`dpl-${b}"`),`dpl-${b} show"`):logos.replace('dpl-generic"','dpl-generic show"');
   const plus=b==='debenhams'&&S.status==='plus';

@@ -106,4 +106,4 @@ Top bar **Account · PDP · Checkout**.
 - **New checkout** screen: Checkout 2026 3996:173492 landing (bag + express pay, Arrives/Change summary, Pennies donation, payment grid, order summary). **Change** opens the delivery-method modal (3996:173990 / 174293); all four options kept. No USP bar (as Figma).
 - **Current checkout:** the membership pill sits on the right edge of the Delivery Method heading.
 - **App checkout** (both): App Checkout `zGhu3eHyChNPZCHsFOmuie` 5441:420 (PLT) layout for every fascia, in that fascia's font.
-- **Deliver+** in checkout for non-Debenhams fascias = the new DS checkout banner `.dplus-co` (SEEL Enhancements 2026 "Small New", own lockup / font / colour). Debenhams keeps the Unlimited / Unlimited+ member boxes from Checkout 2026.
+- **Deliver+** in checkout for every fascia, Debenhams included = the new DS checkout banner `.dplus-co` (SEEL Enhancements 2026 "Small New", own lockup / font / colour), copy "Peace of mind, guaranteed £x.xx", checkbox on the right margin. The old green Unlimited / Unlimited+ boxes (`.co-dp`) are no longer rendered.
