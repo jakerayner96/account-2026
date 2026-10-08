@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account 2026 · configurator — All Brands</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+/* ============================================================
+   Review shell — configurator. Same model as Core PDP 2026 / PLP UI updates:
+   WINDOW controls on top (fascia, format, viewport, fold, export) · PAGE controls down the left.
+   ============================================================ */
+:root{--bg:#161616;--bar:#000;--panel:#000;--line:rgba(255,255,255,.14);--ink:#F7F7F7;--muted:#9A9A9A;--dim:#707070;--accent:#0D99FF;--ok:#1FA971}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);font-family:'Google Sans','Montserrat',system-ui,sans-serif;color:var(--muted);display:grid;grid-template-rows:48px 1fr;grid-template-columns:360px 1fr;height:100%;overflow:hidden;font-size:12px}
+button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
+a{color:var(--accent)}
+
+/* ---- top bar: window controls ---- */
+.top{grid-column:1/3;display:flex;align-items:center;gap:14px;padding:0 14px;background:var(--bar);border-bottom:1px solid var(--line);min-width:0}
+.top .export{display:flex;align-items:center;gap:8px;background:var(--ink);color:#000;padding:6px 12px;border-radius:99px;font-weight:600;font-size:12px;flex:none}
+.top .export:disabled{opacity:.5;cursor:progress}
+.top .export svg{width:13px;height:13px}
+.top .mid{margin:0 auto;display:flex;align-items:center;gap:10px;min-width:0}
+.seg{display:inline-flex;border:1px solid rgba(255,255,255,.25);border-radius:99px;overflow:hidden;flex:none}
+.seg button{padding:5px 12px;color:#B0B0B0;font-size:11.5px;white-space:nowrap}
+.seg button.on{background:var(--ink);color:#000;font-weight:700}
+.seg button:disabled{opacity:.35;cursor:not-allowed}
+.top select,.panel select{background:#161616;color:var(--ink);border:1px solid rgba(255,255,255,.25);border-radius:7px;padding:4px 8px;font:inherit;font-size:11.5px}
+.top select.on{background:var(--ink);color:#000;font-weight:600;border-color:var(--ink)}
+.top .ttl{font-weight:600;font-size:12px;color:var(--ink);white-space:nowrap}
+.top .w{font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums;min-width:40px;text-align:right}
+.top .status{font-size:11px;color:var(--muted);white-space:nowrap}
+.top .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0}
+.top .div{width:1px;height:20px;background:rgba(255,255,255,.15);margin:0 2px;flex:none}
+@media(max-width:1500px){.top .ttl{display:none}}
+
+/* ---- left panel: page controls ---- */
+.panel{background:var(--panel);border-right:1px solid var(--line);overflow-y:auto;padding:16px 14px 40px}
+.ph{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 14px}
+.ph h1{font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+.ph .open{padding:6px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.3);color:var(--ink);font-size:11.5px;font-weight:600;white-space:nowrap;text-decoration:none}
+.card{border:1px solid var(--line);border-radius:10px;padding:12px 12px 10px;margin-bottom:10px;background:#0E0E0E}
+.card h3{font-size:12.5px;font-weight:600;color:var(--ink);display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;gap:8px}
+.card h3 .tag{font-size:9.5px;font-weight:600;color:#000;background:var(--ok);padding:2px 7px;border-radius:99px;white-space:nowrap}
+.card p{font-size:11px;color:var(--dim);line-height:1.45;margin-bottom:8px}
+.card .sub{font-size:11px;font-weight:600;color:var(--ink);margin:12px 0 0;padding-top:10px;border-top:1px solid rgba(255,255,255,.14)}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:7px 0;cursor:pointer;border-top:1px solid rgba(255,255,255,.07);width:100%;text-align:left}
+.opt:first-child{border-top:none}
+.opt:disabled{opacity:.4;cursor:not-allowed}
+.opt .r{flex:none;width:16px;height:16px;border-radius:99px;border:1.5px solid #6A6A6A;margin-top:1px;position:relative}
+.opt.on .r{border-color:var(--accent);background:var(--accent)}
+.opt.on .r::after{content:"";position:absolute;inset:4px;border-radius:99px;background:#0A0A0A}
+.opt .t{flex:1;min-width:0}
+.opt .t b{display:block;font-size:12px;font-weight:500;color:#D8D8D8}
+.opt.on .t b{font-weight:600;color:var(--ink)}
+.opt .t span{display:block;font-size:10.5px;color:var(--dim);line-height:1.4}
+.opt .sw{flex:none;width:8px;height:8px;border-radius:99px;margin-top:5px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fields label{display:flex;flex-direction:column;gap:4px;font-size:10.5px;color:var(--dim)}
+.fields label.w2{grid-column:span 2}
+.fields input{background:#161616;color:var(--ink);border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:6px 8px;font:inherit;font-size:12px;width:100%}
+/* element list — add / remove / reorder */
+.els{display:flex;flex-direction:column}
+.el{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid rgba(255,255,255,.07)}
+.el:first-child{border-top:none}
+.el .tg{flex:none;width:30px;height:18px;border-radius:99px;background:#3A3A3A;position:relative;transition:background .15s}
+.el .tg::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:99px;background:#FFF;transition:transform .15s}
+.el.on .tg{background:var(--accent)}
+.el.on .tg::after{transform:translateX(12px)}
+.el .n{flex:1;min-width:0;text-align:left;font-size:12px;color:#8A8A8A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.el.on .n{color:var(--ink)}
+.el .n i{font-style:normal;font-size:9.5px;color:#000;background:#E0B341;border-radius:99px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+.el .mv{flex:none;width:22px;height:22px;border-radius:6px;border:1px solid rgba(255,255,255,.18);color:#BDBDBD;font-size:10px;display:grid;place-items:center}
+.el .mv:hover{border-color:rgba(255,255,255,.4);color:#FFF}
+.el .mv:disabled{opacity:.25;cursor:default}
+.chips{display:flex;gap:6px}
+.chip{padding:5px 11px;border-radius:99px;border:1px solid rgba(255,255,255,.2);font-size:11.5px;color:#B0B0B0;white-space:nowrap}
+.chip.on{background:var(--ink);color:#000;border-color:var(--ink);font-weight:600}
+.link{color:var(--accent);font-size:11.5px;text-decoration:underline;padding:0}
+.sum{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--dim);line-height:1.5;word-break:break-word;margin-top:4px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 2px}
+
+/* ---- mobile: the page fills the window; the panel slides over it from a settings tab ---- */
+#mtab,.mhead{display:none}
+@media(max-width:760px){
+  body{grid-template-columns:1fr;grid-template-rows:1fr}
+  .top{display:none}
+  .win,.holder,.device{width:100%!important}
+  .device{flex:1}
+  iframe{width:100%!important;box-shadow:none}
+  .stage .handle{display:none!important}
+  #mtab{display:grid;place-items:center;position:fixed;left:0;top:64px;z-index:70;width:44px;height:44px;background:#000;color:#FFF;border-radius:0 12px 12px 0;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+  #mtab svg{width:22px;height:22px}
+  .panel{position:fixed;inset:0;z-index:80;border-right:none;transform:translateX(-100%);transition:transform .25s ease;padding-top:12px}
+  .panel.open{transform:none}
+  .mhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px}
+  .mhead select{flex:1}
+  .mhead .export{display:flex;align-items:center;gap:6px;background:var(--ink);color:#000;padding:6px 12px;border-radius:99px;font-weight:600;font-size:12px;flex:none}
+  .mhead .export svg{width:13px;height:13px}
+  .mhead .mclose{flex:none;width:32px;height:32px;border-radius:99px;border:1px solid rgba(255,255,255,.3);color:var(--ink)}
+}
+/* ---- fold view: iOS 26 Safari frame ---- */
+.device{position:relative;display:flex;flex-direction:column;height:100%;background:#FFF}
+.device iframe{flex:1;min-height:0}
+.device .sb,.device .tb,.device .home,.device .chin{display:none}
+body.fold .stage{align-items:center}
+body.fold .win{height:auto}
+body.fold .device{height:calc(var(--k) * 874px);border-radius:calc(var(--k) * 44px);overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,.5)}
+body.fold .device .sb,body.fold .device .tb,body.fold .device .home{display:flex}
+body.fold .device .chin{display:block;flex:none;height:calc(var(--k) * 82px);background:#FFF}
+body.fold .device iframe{box-shadow:none}
+.device .sb{height:calc(var(--k) * 62px);flex:none;background:#FFF;position:relative;align-items:center;justify-content:space-between;padding:0 calc(var(--k) * 30px) 0 calc(var(--k) * 48px);font-family:-apple-system,'SF Pro Text',system-ui,sans-serif}
+.device .sb .time{font-size:calc(var(--k) * 17px);font-weight:600;color:#000;letter-spacing:-.02em;width:calc(var(--k) * 54px)}
+.device .sb .island{position:absolute;left:50%;top:calc(var(--k) * 11px);transform:translateX(-50%);width:calc(var(--k) * 124px);height:calc(var(--k) * 36px);background:#000;border-radius:99px}
+.device .sb .sys{display:flex;align-items:center;gap:calc(var(--k) * 6px)}
+.device .sb .sig{width:calc(var(--k) * 18px);height:calc(var(--k) * 12px)}
+.device .sb .wifi{width:calc(var(--k) * 16px);height:calc(var(--k) * 12px)}
+.device .sb .bat{width:calc(var(--k) * 28px);height:calc(var(--k) * 13px)}
+.device .tb{position:absolute;left:0;right:0;bottom:calc(var(--k) * 34px);height:calc(var(--k) * 48px);padding:0 calc(var(--k) * 28px);align-items:center;justify-content:space-between;gap:calc(var(--k) * 8px);pointer-events:none}
+.device .tb .circ{width:calc(var(--k) * 48px);height:calc(var(--k) * 48px);border-radius:99px;background:rgba(255,255,255,.92);box-shadow:0 1px 6px rgba(0,0,0,.18);display:grid;place-items:center;flex:none;backdrop-filter:blur(12px)}
+.device .tb .circ svg{width:calc(var(--k) * 12px);height:calc(var(--k) * 20px)}
+.device .tb .circ:last-child svg{width:calc(var(--k) * 22px);height:calc(var(--k) * 6px)}
+.device .tb .url{flex:1;height:calc(var(--k) * 48px);border-radius:99px;background:rgba(255,255,255,.92);box-shadow:0 1px 6px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:space-between;padding:0 calc(var(--k) * 14px);font-family:-apple-system,'SF Pro Text',system-ui,sans-serif;font-size:calc(var(--k) * 17px);color:#000;backdrop-filter:blur(12px)}
+.device .tb .url .pg{width:calc(var(--k) * 20px);height:calc(var(--k) * 18px)}
+.device .tb .url .rl{width:calc(var(--k) * 20px);height:calc(var(--k) * 20px)}
+.device .home{position:absolute;left:50%;bottom:calc(var(--k) * 8px);transform:translateX(-50%);width:calc(var(--k) * 134px);height:calc(var(--k) * 5px);border-radius:99px;background:#000}
+/* ---- stage: plain frame, drag to resize ---- */
+.stage{position:relative;overflow:hidden;display:flex;align-items:stretch;justify-content:center;padding:0}
+.win{display:flex;height:100%;max-width:100%}
+.holder{display:flex;flex:1;min-height:0}
+iframe{border:none;display:block;height:100%;background:#FFF;box-shadow:0 0 60px rgba(0,0,0,.5)}
+.handle{width:16px;display:flex;align-items:center;justify-content:center;cursor:col-resize;flex:none}
+.handle i{width:5px;height:56px;border-radius:99px;background:#3A3A3A}
+.handle:hover i,.dragging .handle i{background:#6A6A6A}
+body.dragging{user-select:none;cursor:col-resize}
+body.dragging iframe{pointer-events:none}
+#exp{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;z-index:90}
+#exp[hidden]{display:none}
+#exp .box{background:#0A0A0A;border:1px solid var(--line);color:#FFF;padding:16px 22px;border-radius:12px;font-size:13px;display:flex;gap:12px;align-items:center;max-width:420px}
+#exp .sp{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#FFF;border-radius:99px;animation:sp .8s linear infinite;flex:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+body.appmode .device .sb,body.appmode .device .tb{display:none!important}
+body.appmode .device .chin{height:0!important}
+#hidden{position:fixed;left:-20000px;top:0;width:1px;height:1px;overflow:hidden}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <span class="ttl">Account 2026 · All Brands</span>
+  <div class="mid">
+    <span class="chips" id="brands">
+      <button class="chip" data-b="debenhams">Debenhams</button>
+      <button class="chip" data-b="boohoo">boohoo</button>
+      <button class="chip" data-b="boohooman">boohooMAN</button>
+      <button class="chip" data-b="plt">PLT</button>
+      <button class="chip" data-b="karenmillen">Karen Millen</button>
+      <button class="chip" data-b="warehouse">Warehouse</button>
+      <button class="chip" data-b="brandroom">Brand Room</button>
+    </span>
+    <select id="more" aria-label="More fascias"></select>
+    <span class="div"></span>
+    <span class="seg" id="chan" title="Mobile web or the app"><button data-c="web">Web</button><button data-c="app">App</button></span>
+    <span class="div"></span>
+    <span class="seg" id="dev"><button data-w="0">Desktop</button><button data-w="390">Mobile</button></span>
+    <select id="preset" aria-label="Width preset" title="Exact width — or drag the handle on the preview">
+      <option value="390">390</option><option value="402">402</option><option value="440">440</option><option value="768">768</option><option value="1024">1024</option><option value="1280">1280</option><option value="1440">1440</option><option value="0">Fit</option>
+    </select>
+    <span class="w" id="sizebox"></span>
+    <span class="seg" id="fold"><button data-f="0">Full page</button><button data-f="1">Fold</button></span>
+  </div>
+  <span class="status" id="status"></span>
+  <button class="export" id="exportbtn" title="Export full-page PNGs (mobile + desktop) and the configuration"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M2.5 12.5h11"/></svg>Export</button>
+</header>
+
+<button id="mtab" aria-label="Open the configurator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+<aside class="panel">
+  <div class="mhead">
+    <select id="brand-m" aria-label="Fascia"></select>
+    <span class="seg" id="chan-m"><button data-c="web">Web</button><button data-c="app">App</button></span>
+    <button class="export" id="exportbtn2"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M2.5 12.5h11"/></svg>Export</button>
+    <button class="mclose" id="mclose" aria-label="Close">✕</button>
+  </div>
+  <div class="ph"><h1>Configure the account page</h1><a class="open" id="openfull" href="account.html" target="_blank" rel="noopener">Open page ↗</a></div>
+
+  <div class="card"><div class="els"><div class="el" id="baltg"><button class="tg" aria-label="Account balance"></button><button class="n">Account balance</button></div></div>
+    <p style="margin:6px 0 0">The balance card and the Account Balance row.</p></div>
+  <div class="card" id="memcard"><h3>Membership <span class="tag">SEEL</span></h3><p id="memname"></p><div id="stateopts"></div><div id="tiercard"><div class="sub">Tier · Debenhams</div><div id="memopts"></div></div></div>
+</aside>
+
+<main class="stage" id="stage">
+  <div class="win" id="win">
+    <div class="holder">
+      <div class="device" id="device">
+        <div class="sb"><span class="time">9:41</span><span class="island"></span><span class="sys">
+          <svg class="sig" viewBox="0 0 18 12" fill="#000"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg>
+          <svg class="wifi" viewBox="0 0 16 12" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round"><path d="M1.5 4.2a9.5 9.5 0 0 1 13 0"/><path d="M4 7a5.8 5.8 0 0 1 8 0"/><circle cx="8" cy="10.2" r="1" fill="#000" stroke="none"/></svg>
+          <svg class="bat" viewBox="0 0 28 13"><rect x=".5" y=".5" width="24" height="12" rx="3.5" fill="none" stroke="#000" stroke-opacity=".4"/><rect x="2" y="2" width="21" height="9" rx="2" fill="#000"/><path d="M26 4.5v4a2 2 0 0 0 0-4z" fill="#000" fill-opacity=".4"/></svg>
+        </span></div>
+        <iframe id="frame" title="Account preview"></iframe>
+        <div class="tb"><span class="circ"><svg viewBox="0 0 12 20" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2 2 10l8 8"/></svg></span><span class="url"><svg class="pg" viewBox="0 0 20 18" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="2" width="14" height="10" rx="1.5"/><path d="M6 6h8M6 9h5M7 16h6"/></svg><span id="urltxt">debenhams.com</span><svg class="rl" viewBox="0 0 20 20" fill="none" stroke="#000" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a6 6 0 1 1-1.8-4.3"/><path d="M15 2v4h-4"/></svg></span><span class="circ"><svg viewBox="0 0 22 6" fill="#000"><circle cx="3" cy="3" r="2.2"/><circle cx="11" cy="3" r="2.2"/><circle cx="19" cy="3" r="2.2"/></svg></span></div>
+        <div class="chin"></div>
+        <div class="home"></div>
+      </div>
+      <div class="handle" id="hr" title="Drag to resize width"><i></i></div>
+    </div>
+  </div>
+</main>
+
+<div id="exp" hidden><div class="box"><span class="sp"></span><span id="exptxt">Exporting…</span></div></div>
+<div id="hidden"></div>
+
+<script>
+const FASCIAS=[ // core seven = chips; the rest = the More select (all have a 2026 account frame in Figma)
+ ['debenhams','Debenhams','debenhams.com',1],['boohoo','boohoo','boohoo.com',1],['boohooman','boohooMAN','boohooman.com',1],['plt','PLT','prettylittlething.com',1],
+ ['karenmillen','Karen Millen','karenmillen.com',1],['warehouse','Warehouse','warehousefashion.com',1],['brandroom','Brand Room','thebrandroom.com',1],
+ ['burton','Burton','burton.co.uk'],['coast','Coast','coastfashion.com'],['dorothyperkins','Dorothy Perkins','dorothyperkins.com'],['dsgnstudio','DSGN Studio','dsgnstudio.com'],
+ ['misspap','Misspap','misspap.com'],['nastygal','Nasty Gal','nastygal.com'],['oasis','Oasis','oasis-stores.com'],['principles','Principles','principles.co.uk'],['wallis','Wallis','wallis.co.uk']];
+const NAME=Object.fromEntries(FASCIAS.map(f=>[f[0],f[1]])), DOMAIN=Object.fromEntries(FASCIAS.map(f=>[f[0],f[2]]));
+const MEMS=[['active','Unlimited'],['plus','Unlimited+']]; // tier — Debenhams only
+const MSTATES=[['active','Active','#70C474'],['none','Not active','#D6D6D6'],['expiring','Expires in 3 days','#D33F3F']]; // every fascia with a membership (SEEL 3525:157792 · 157039 · 157904)
+const NOMEMBER=['brandroom','dsgnstudio'];
+const DEF={brand:'debenhams',mode:'new',app:false,page:'landing',name:'Jake',email:'jake.rayner@debenhams.com',status:'active',mstate:'active',balance:'100.18',subs:3,chev:'auto',on:{},order:{blocks:null,rows:null}};
+let S=JSON.parse(JSON.stringify(DEF));
+try{const saved=JSON.parse(localStorage.getItem('acct26')||'null');if(saved)S=Object.assign(S,saved);}catch(e){}
+{const q=new URLSearchParams(location.search);try{if(q.get('s'))S=Object.assign(S,JSON.parse(decodeURIComponent(escape(atob(q.get('s'))))));}catch(e){}
+ if(q.get('brand')&&NAME[q.get('brand')])S.brand=q.get('brand');}
+S.mode='new'; // new 2026 designs only
+// the only page controls: account balance on/off + (Debenhams) Unlimited / Unlimited+ — everything else is the design as is
+{const bal=S.on['blocks:balance']!==false;S=Object.assign(JSON.parse(JSON.stringify(DEF)),{brand:S.brand,app:!!S.app,status:S.status==='plus'?'plus':'active',mstate:['none','expiring'].includes(S.mstate)?S.mstate:'active'});if(!bal)setBal(false);}
+function setBal(v){if(v){delete S.on['blocks:balance'];delete S.on['rows:balance'];}else{S.on['blocks:balance']=false;S.on['rows:balance']=false;}}
+function effStatus(){const plus=S.brand==='debenhams'&&S.status==='plus',st=S.mstate||'active';return st==='none'?(plus?'plusnone':'none'):st==='expiring'?(plus?'plusexp':'expiring'):(plus?'plus':'active');}
+let FOLD=false, W=390, PAGE_STATE={blocks:[],rows:[],statusStyle:'dot',member:'Unlimited'};
+const $=s=>document.querySelector(s);
+const frame=$('#frame'),stage=$('#stage'),win=$('#win'),preset=$('#preset'),sizebox=$('#sizebox');
+
+const enc=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+function pageURL(st=S){return 'account.html?s='+enc({...st,status:effStatus()});}
+function save(){try{localStorage.setItem('acct26',JSON.stringify(S));}catch(e){}history.replaceState(null,'','?s='+enc(S));}
+function send(focus,f=frame){try{f.contentWindow.postMessage({acctSet:1,state:{...S,status:effStatus()},focus:focus||null},'*');}catch(e){}save();renderPanel();}
+
+function radios(host,list,get,set){
+  host.innerHTML='';
+  list.forEach(([v,label,hint])=>{
+    const o=document.createElement('button');o.className='opt'+(get()===v?' on':'');o.setAttribute('role','radio');o.setAttribute('aria-checked',get()===v);
+    const sw=hint&&/^#/.test(hint)?`<span class="sw" style="background:${hint}"></span>`:'';
+    o.innerHTML=`<span class="r"></span><span class="t"><b>${label}</b>${hint&&!sw?`<span>${hint}</span>`:''}</span>${sw}`;
+    o.onclick=()=>{set(v);send();};host.appendChild(o);
+  });
+}
+function summary(){return `${NAME[S.brand]} · account balance ${S.on['blocks:balance']===false?'off':'on'}${S.brand==='debenhams'?' · '+(S.status==='plus'?'Unlimited+':'Unlimited'):''} · ${(S.mstate||'active')}`;}
+function renderPanel(){
+  const bal=S.on['blocks:balance']!==false,tg=$('#baltg');tg.classList.toggle('on',bal);
+  tg.querySelectorAll('button').forEach(b=>b.onclick=()=>{setBal(!bal);send(bal?null:'balance');});
+  $('#memcard').hidden=NOMEMBER.includes(S.brand);
+  $('#memname').textContent=(PAGE_STATE.member||'Unlimited')+' — row status, and the page it clicks into.';
+  radios($('#stateopts'),MSTATES,()=>S.mstate||'active',v=>S.mstate=v);
+  $('#tiercard').hidden=S.brand!=='debenhams';
+  radios($('#memopts'),MEMS,()=>S.status,v=>S.status=v);
+  document.querySelectorAll('#brands .chip').forEach(b=>b.classList.toggle('on',b.dataset.b===S.brand));
+  const more=$('#more');more.value=FASCIAS.find(f=>f[0]===S.brand&&!f[3])?S.brand:'';more.classList.toggle('on',!!more.value);
+  $('#brand-m').value=S.brand;
+  document.querySelectorAll('#chan button,#chan-m button').forEach(b=>b.classList.toggle('on',(b.dataset.c==='app')===!!S.app));
+  $('#openfull').href=pageURL();$('#urltxt').textContent=DOMAIN[S.brand];
+}
+function apply(){
+  // app = phone only: lock to a mobile width, no desktop; Fold drops the Safari chrome (the app draws its own status + tab bars)
+  document.body.classList.toggle('appmode',!!S.app);
+  if(S.app&&(!W||W>=600)){W=390;preset.value='390';}
+  if(S.app)FOLD=true;
+  document.querySelector('#dev button[data-w="0"]').disabled=!!S.app;
+  if(matchMedia('(max-width:760px)').matches){frame.style.width='100%';win.style.width='100%';return;}
+  const avail=stage.clientWidth-16;
+  const w=Math.min(W||avail,avail);
+  frame.style.width=w+'px';win.style.width=(w+16)+'px';
+  const mobile=w<600;document.body.classList.toggle('fold',FOLD&&mobile);document.documentElement.style.setProperty('--k',(w/390).toFixed(4));
+  document.querySelectorAll('#fold button').forEach(b=>{b.classList.toggle('on',(+b.dataset.f===1)===(FOLD&&mobile));b.disabled=!mobile||(!!S.app&&b.dataset.f==='0');}); // the app is always shown at the fold
+  sizebox.textContent=`${Math.round(w)}px`;
+  document.querySelectorAll('#dev button').forEach(b=>b.classList.toggle('on',(b.dataset.w==='390'&&w<600)||(b.dataset.w==='0'&&w>=600)));
+}
+addEventListener('message',e=>{
+  const d=e.data;if(!d||e.source!==frame.contentWindow)return;
+  if(d.acctReady){PAGE_STATE=d;renderPanel();}
+  if(d.acctPage){S.page=d.acctPage;save();renderPanel();}
+});
+
+// fascia pickers
+const more=$('#more'),bm=$('#brand-m');
+more.innerHTML='<option value="">More fascias…</option>'+FASCIAS.filter(f=>!f[3]).map(f=>`<option value="${f[0]}">${f[1]}</option>`).join('');
+bm.innerHTML=FASCIAS.map(f=>`<option value="${f[0]}">${f[1]}</option>`).join('');
+const setBrand=b=>{if(!NAME[b])return;S.brand=b;send();};
+document.querySelectorAll('#brands .chip').forEach(b=>b.onclick=()=>setBrand(b.dataset.b));
+more.onchange=()=>more.value&&setBrand(more.value);bm.onchange=()=>setBrand(bm.value);
+document.querySelectorAll('#chan button,#chan-m button').forEach(b=>b.onclick=()=>{S.app=b.dataset.c==='app';S.page='landing';send();apply();});
+document.querySelectorAll('#dev button').forEach(b=>b.onclick=()=>{W=+b.dataset.w;preset.value=String(W);apply();});
+preset.onchange=()=>{W=+preset.value;apply();};
+document.querySelectorAll('#fold button').forEach(b=>b.onclick=()=>{FOLD=b.dataset.f==='1';apply();});
+$('#hr').addEventListener('pointerdown',e=>{
+  e.preventDefault();document.body.classList.add('dragging');
+  const sx=e.clientX, sw=frame.offsetWidth;
+  const move=ev=>{W=Math.max(320,sw+(ev.clientX-sx));preset.value='0';apply();};
+  const up=()=>{document.body.classList.remove('dragging');removeEventListener('pointermove',move);removeEventListener('pointerup',up);};
+  addEventListener('pointermove',move);addEventListener('pointerup',up);
+});
+addEventListener('resize',apply);
+frame.src=pageURL()+'&_='+Date.now();
+preset.value='390';renderPanel();apply();
+
+/* ---------- Export: full-page PNGs (390 + 1440) + config.json, zipped ---------- */
+const status=$('#status'),exp=$('#exp'),exptxt=$('#exptxt');
+function loadFrame(w){
+  return new Promise(res=>{
+    const f=document.createElement('iframe');f.style.width=w+'px';f.style.height='900px';f.style.border='0';f.src=pageURL()+'&_='+Date.now();
+    $('#hidden').appendChild(f);
+    f.addEventListener('load',()=>setTimeout(()=>{const h=S.app?844:f.contentDocument.documentElement.scrollHeight;f.style.height=(S.app?h:h+20)+'px';setTimeout(()=>res(f),700);},900));
+  });
+}
+async function shot(w){
+  const f=await loadFrame(w);const doc=f.contentDocument;const h=S.app?844:doc.documentElement.scrollHeight; // app: cropped at the fold (390 × 844)
+  const canvas=await html2canvas(doc.documentElement,{width:w,height:h,windowWidth:w,windowHeight:h,scale:2,useCORS:true,backgroundColor:'#FFFFFF',logging:false});
+  f.remove();
+  return new Promise(r=>canvas.toBlob(b=>r(b),'image/png'));
+}
+function stamp(){const d=new Date();return d.toISOString().slice(0,16).replace('T','-').replace(':','');}
+async function doExport(){
+  const btn=$('#exportbtn');btn.disabled=true;exp.hidden=false;
+  try{
+    exptxt.textContent=(S.app?'Rendering app (390 × 844, at the fold)…':'Rendering mobile (390)…');const m=await shot(390);
+    exptxt.textContent='Rendering desktop (1440)…';const d=S.app?null:await shot(1440); // app is phone-only
+    exptxt.textContent='Zipping…';
+    const name=`account-${S.brand}${S.app?'-app':''}-${S.page}-${stamp()}`;
+    const zip=new JSZip();const root=zip.folder(name);
+    root.file('config.json',JSON.stringify({...S,blocks:PAGE_STATE.blocks,rows:PAGE_STATE.rows,summary:summary(),link:location.href.split('?')[0]+'?s='+enc(S),exportedAt:new Date().toISOString()},null,2));
+    root.file(`${name}-${S.app?'app-390x844':'mobile-390'}.png`,m);if(d)root.file(`${name}-desktop-1440.png`,d);
+    root.file('README.txt',`Account 2026 — ${NAME[S.brand]}\nExported ${new Date().toISOString()}\n\nReopen this exact configuration: ${location.href.split('?')[0]}?s=${enc(S)}\n\n${summary()}\n`);
+    const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name+'.zip';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);
+    status.textContent='Exported ✓ 2 PNGs + config';
+  }catch(err){console.error(err);status.textContent='Export failed: '+err.message;}
+  finally{$('#hidden').innerHTML='';btn.disabled=false;exp.hidden=true;setTimeout(()=>status.textContent='',8000);}
+}
+$('#exportbtn').onclick=doExport;$('#exportbtn2').onclick=doExport;
+$('#mtab').onclick=()=>document.querySelector('.panel').classList.add('open');
+$('#mclose').onclick=()=>document.querySelector('.panel').classList.remove('open');
+</script>
+</body>
+</html>

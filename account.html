@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="debenhams">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Jost:wght@400;500;600&family=Public+Sans:wght@300;400;600;700&family=Hanken+Grotesk:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Urbanist:wght@300;400;600;700&family=Archivo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- DS — canonical, linked not copied -->
+<link rel="stylesheet" href="https://jakerayner96.github.io/debenhamsgroup.design/assets/ds/tokens.css">
+<link rel="stylesheet" href="https://jakerayner96.github.io/debenhamsgroup.design/assets/ds/components.css">
+<style>
+/* ============================================================
+   Account 2026 — one page, every fascia. Built on DS classes:
+   .hd (header) · .hd-usp (USP) · .acct-card (balance card) · .acct-row (account row) · .tagpill · .dplus (Deliver+) · .bd (buttons) · .ft (footer) · .acc-h (accordion)
+   Figma: Account 2026 2KLlzqIWlDcri8YIHwEd63 (1009:1836 store credit + per-fascia frames, 397:17211 Dec 25 landing = live)
+          SEEL Enhancements 2026 CQIe2e2c0iagD1T9WjdYsx 3336:188708 (Unlimited states)
+   ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--page-bg,#FAFAFA);color:var(--text-primary);font-family:var(--font-family-base);font-weight:var(--w-regular);font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
+img{display:block}
+:root{--m:16px;--gut:8px}
+@media(min-width:1024px){:root{--m:80px}}
+[hidden]{display:none!important}
+
+/* ---- header (DS .hd) ---- */
+.hd{position:relative;z-index:5}
+.hd .desk{display:none}
+@media(min-width:1024px){.hd .mob{display:none}.hd .desk{display:block}}
+.hd-bar--desktop{--plp-margin:var(--m)}
+/* USP — DS USP banner (catalogue 'usp-banner', Figma aIHmkCaTy9c5EWOxAGw0So 11982-37171 / 13005-165658): .usp-strip of .usp-cell,
+   .usp-row / .usp-t / .usp-sep (4px dash, line break once wrapped), .usp-cd countdown. New-format sizing = the PLP UI updates prototype
+   (12px / 15px leading / 4px padding → 23px row, 44px with a countdown; every message in one strip, rotating on mobile, side by side on desktop).
+   That sizing still lives in projects/plp-alignment/plp.html, not components.css — promote it with whichever brief merges first. */
+.usp-strip{padding:0;gap:0;overflow:hidden}
+.usp-cell{font-size:12px;line-height:15px;min-height:0;padding:4px 16px;font-weight:var(--w-regular);gap:2px;background:var(--usp-a-bg);text-transform:none}
+.usp-cell:has(.usp-cd){gap:2px}
+.usp-cell b{font-size:12px;line-height:15px;font-weight:var(--w-strong)}
+.usp-cd{line-height:17px}
+@media(min-width:1024px){.usp-strip{grid-auto-columns:auto;justify-content:center;column-gap:32px}}
+@media(max-width:1023px){.usp-strip .usp-cell{min-height:0}.usp-strip .usp-cell.rot-on{animation:usp-fade var(--dur-slow) var(--ease-standard)}} /* DS mobile floor is 56px (old format) */
+@keyframes usp-fade{from{opacity:0}to{opacity:1}}
+
+/* ---- page frame ---- */
+main{padding:16px var(--m) 32px;max-width:1440px;margin:0 auto}
+.blk{margin-bottom:16px}
+.blk:empty{display:none}
+.hello{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.hello h1{font-size:24px;font-weight:var(--w-strong);line-height:30px;letter-spacing:-.01em}
+.hello p{font-size:12px;margin-top:4px;word-break:break-all}
+.hello .so{display:none}
+@media(min-width:1024px){main{padding-top:32px}.hello .so{display:inline-flex}.signout-m{display:none!important}}
+
+/* balance card (DS .acct-card) — 2026 fills per fascia from Figma; tokens are the fallback */
+.acct-card{background:var(--ac-bg,var(--card-bg));color:var(--ac-ink,var(--card-ink));border-radius:var(--ac-r,var(--radius-default));gap:16px;padding:24px 16px}
+.acct-card .lbl{color:var(--ac-lbl,inherit);margin-top:-12px}
+.acct-card .bd{background:var(--ac-btn,var(--card-btn-bg));color:var(--ac-btn-ink,var(--card-btn-ink))}
+.acct-card .amt{font-family:var(--font-family-base)}
+
+/* mobile: card and menu stack with the Figma 16px gap */
+.dgrid{display:flex;flex-direction:column;gap:16px}
+.hd-logo.wm{font-weight:700;font-size:18px;line-height:20px;letter-spacing:-.02em;max-width:none;height:auto;white-space:nowrap}
+/* dark headers (Misspap: --surface-page #000 — red wordmark, white icons, per the Figma frame) */
+.hd.dark .hd-icons img,.hd.dark .hd-burger img,.hd.dark .hd-search img{filter:invert(1)}
+.hd-logo.mask{display:block;-webkit-mask:var(--lg) left center/contain no-repeat;mask:var(--lg) left center/contain no-repeat;background:var(--lgc);height:18px}
+/* rows (DS .acct-row) */
+.menu{display:flex;flex-direction:column;gap:8px}
+.acct-row{min-height:56px}
+.acct-row .lbl{white-space:normal;display:flex;align-items:center;gap:8px}
+.acct-row .st{text-transform:uppercase;letter-spacing:.01em;white-space:nowrap}
+.acct-row .dot{background:var(--sd)}
+.acct-row .chev{width:16px;height:16px;opacity:.9}
+body:not(.chev-on) .acct-row .chev{display:none}
+.tagpill{height:20px;padding:0 8px;font-size:10px;text-transform:uppercase;letter-spacing:.02em}
+.tagpill--n{width:20px;padding:0}
+
+/* desktop tile grid */
+@media(min-width:1024px){
+  .dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .dgrid.has-card{grid-template-columns:minmax(220px,1.05fr) repeat(4,1fr)}
+  .dgrid .acct-card{grid-row:span 2;justify-content:center;margin:0}
+  .dgrid .menu{display:contents}
+  /* tile: icon top-left; label bottom-left with the status on the same line, right-aligned (Figma 1970:205) */
+  .dgrid .acct-row{display:grid;grid-template-columns:1fr auto;grid-template-rows:1fr auto;align-items:end;column-gap:12px;row-gap:24px;min-height:143px;padding:32px 24px 32px}
+  .dgrid .acct-row img:first-child{width:40px;height:40px;grid-column:1/-1;grid-row:1;align-self:start}
+  .dgrid .acct-row .lbl{flex:none;font-size:18px;grid-column:1;grid-row:2}
+  .dgrid .acct-row .chev{display:none}
+  .dgrid .acct-row .st{grid-column:2;grid-row:2;align-self:center;margin:0}
+  .dgrid.has-card .acct-row{min-height:0;padding:24px 20px;gap:20px}
+  .dgrid.has-card .acct-row img:first-child{width:32px;height:32px}
+  .dgrid.has-card .acct-row .lbl{font-size:14px}
+}
+.signout-m{display:flex;justify-content:center;margin:16px 0 8px}
+.bd.so-btn{background:var(--panel-bg,#FFF);border:1px solid var(--border-subtle);color:var(--text-primary);text-transform:none;font-weight:var(--w-regular);font-size:16px;line-height:24px;padding:4px 28px}
+
+/* Beauty Club — live (Dec 25) progress card · new (SEEL) rewards balance */
+.beauty{background:var(--panel-bg,#FFF);border-radius:var(--radius-default);padding:16px;display:flex;flex-direction:column;gap:12px}
+.beauty .h{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:var(--w-mid)}
+.beauty .h img{width:20px;height:20px}
+.beauty .bar{height:6px;border-radius:99px;background:var(--surface-media)}
+.beauty .bar i{display:block;height:100%;width:62%;border-radius:inherit;background:var(--surface-action)}
+.beauty .bd{width:100%}
+.beauty--new{background:#1A1A1A;color:#FFF;flex-direction:row;align-items:center;justify-content:space-between}
+.beauty--new .v{font-size:28px;font-weight:var(--w-strong);line-height:1}
+.beauty--new .v small{font-size:18px}
+.beauty--new .l{font-size:12px;color:#FFD0B1;margin-top:4px}
+.beauty--new .bd{width:auto;background:#FFF;color:#000;text-transform:none;font-weight:var(--w-regular);font-size:14px;padding:8px 14px;line-height:20px}
+
+/* Deliver+ (DS .dplus, SEEL account banner copy) */
+.dplus{min-width:0;width:100%}
+.dplus .dpl{display:none}
+.dplus .dpl.show{display:block;max-width:100%;height:auto!important}
+.dplus p{font-size:12px;line-height:1.35}
+.dplus .h b{font-weight:var(--w-strong)}
+
+/* balance page */
+.back{display:flex;align-items:center;gap:12px;font-size:16px;font-weight:var(--w-mid);margin-bottom:16px}
+.back img{width:16px;height:16px} /* back chevron: DS icons-left at 16×16, 1pt line (Jake, 08 Oct) */
+.tx{display:flex;flex-direction:column}
+.tx .r{display:flex;justify-content:space-between;align-items:flex-end;padding:12px 16px;background:var(--panel-bg,#FFF)}
+.tx .r:nth-child(even){background:var(--surface-media)}
+.tx .d{font-size:10px;color:var(--text-secondary);margin-bottom:4px}
+.tx b{font-weight:var(--w-strong);font-size:14px;display:block}
+.tx .o{font-size:12px}
+.tx .a{font-size:12px;font-weight:var(--w-strong)}
+.tx .a.neg{color:var(--text-secondary)}
+.empty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:56px 16px;font-size:12px;color:var(--text-secondary)}
+.empty img{width:24px;height:24px;opacity:.7}
+.bal-desk{display:block}
+.bal-side{display:none}
+@media(min-width:1024px){
+  .bal-desk{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start}
+  .bal-side{display:flex;flex-direction:column;gap:16px}
+  .bal-side .acct-card{margin:0}
+  .bal-side .menu{gap:0}
+  .bal-side .acct-row{background:none;min-height:44px;padding:10px 12px;font-size:14px}
+  .bal-side .acct-row .lbl{font-size:14px}
+  .bal-side .acct-row.cur{background:var(--surface-media)}
+  .bal-desk>.mobcard{display:none}
+  .back{display:none}
+}
+
+/* ---- account sub-pages: mobile back header; desktop side menu one level deep (live /account/unlimited, 08 Oct 2026) ---- */
+.sub .side{display:none}
+.subc{min-width:0}
+@media(min-width:1024px){
+  .sub{display:grid;grid-template-columns:270px minmax(0,1fr);gap:48px;align-items:start}
+  .sub .side{display:block}
+  .sub .side .hello{margin-bottom:24px}
+  .sub .side .menu{gap:0}
+  .sub .side .acct-row{background:none;border-radius:0;min-height:0;padding:12px;border-bottom:1px solid var(--border-subtle);gap:12px}
+  .sub .side .acct-row img:first-child{width:24px;height:24px}
+  .sub .side .acct-row .lbl{font-size:16px}
+  .sub .side .acct-row .st{display:none}
+  .sub .side .acct-row.cur{background:var(--surface-media);box-shadow:inset 4px 0 0 var(--surface-action);font-weight:var(--w-strong)}
+  .sub .back{display:none}
+  .subc .acct-card{max-width:374px}
+}
+/* membership page (live: logo band + body; member = ACTIVE + membership / expiry) */
+.mbox{background:var(--panel-bg,#FFF);width:100%} /* no outline · full width to the margins (Jake, 08 Oct) */
+.mbox .band{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;min-height:50px;background:var(--mb-bg,#DCDCDC) center/cover no-repeat;color:var(--mb-ink,#000)}
+.mbox .band>span:first-child{min-width:0;flex:0 1 auto} /* the logo gives way, the status never moves off-screen */
+.mbox .band img{height:var(--mb-h,40px);width:auto;max-width:100%;object-fit:contain;object-position:left center}
+.mbox .band .plus{font-size:28px;font-weight:var(--w-strong);line-height:1;margin-left:-6px}
+.mbox .band .on{font-size:14px;font-weight:var(--w-strong);text-transform:uppercase;white-space:nowrap;flex:none}
+.mbox .band b.nm{font-size:22px;font-weight:var(--w-strong);text-transform:uppercase}
+.mbox .bodyx{padding:24px 24px 28px;display:flex;flex-direction:column;gap:16px;font-size:14px} /* live member view: 14px light labels, bold values, dark 12px note */
+.mbox .kv{display:flex;gap:8px;align-items:baseline;padding-bottom:16px;border-bottom:1px solid var(--border-subtle);font-weight:300}
+.mbox .kv:last-of-type{border-bottom:none;padding-bottom:0}
+.mbox .kv b{font-weight:600}
+.mbox .ctas{display:flex;flex-direction:column;gap:8px} /* Add + Find out more: 8px apart (Jake, 08 Oct) */
+.mbox .note{font-size:12px;line-height:18px;color:var(--acct-ink);font-weight:300}
+/* ---- app (Figma Account 2026 · App / Account / Landing 1296:69086) ---- */
+body.app .hd,body.app .ft{display:none}
+body.app{background:#FFF}
+[data-brand="plt"] body.app{background:#FAF5E7} /* PLT app page is cream (Account 2026 1292:10945) */
+body.app main{padding:0 16px 120px;min-height:100vh}
+.app-sb{display:flex;justify-content:space-between;align-items:center;height:47px;padding:0 14px 0 32px;font:600 17px/1 -apple-system,'SF Pro Text',system-ui,sans-serif;margin:0 -16px}
+.app-sb svg{display:block}
+.app-title{position:relative;text-align:center;font-size:18px;font-weight:var(--w-strong);line-height:24px;padding:14px 32px 18px}
+.app-title .bk{position:absolute;left:0;top:10px;width:32px;height:32px;display:grid;place-items:center;padding:0}
+.app-title .bk img{width:16px;height:16px}
+body.app .dgrid{gap:12px}
+body.app .menu{gap:0}
+body.app .acct-row{background:none;border-radius:0;border-bottom:1px solid var(--border-subtle);padding:16px 4px;gap:24px}
+body.app .acct-row .chev{display:block!important;width:20px;height:20px}
+body.app .signout-m .bd.so-btn{background:var(--surface-media);border-color:transparent;font-size:14px;padding:8px 16px}
+/* app tab bar = DS .app-tabbar (components.css; catalogue 'app-tabbar') — pinned to the bottom of the phone viewport */
+body.app .app-tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20}
+/* ---- footer (DS .ft) — mobile accordions, desktop columns ---- */
+.ft{margin-top:0}
+.ft-news{text-align:center;justify-items:center}
+.ft-news h3{font-size:24px;line-height:1.2}
+.ft-news p{margin:0 auto}
+.ft-sub{flex-direction:column;width:100%;max-width:520px}
+.ft-sub input{flex:none;height:50px}
+.ft-sub .bd{height:44px}
+.ft-legal{margin:12px auto 0;text-align:center;font-size:12px;color:var(--text-primary)}
+.ft-acc{padding:0 var(--m)}
+.ft-acc .acc-h{padding:14px 0;border-bottom:1px solid var(--border-subtle);font-size:14px;font-weight:var(--w-strong)}
+.ft-acc .acc-h img{width:16px;height:16px}
+.ft-h{font-size:14px;font-weight:var(--w-strong);text-align:center;margin:24px 0 10px}
+.ft-soc{display:flex;gap:18px;justify-content:center}
+.ft-soc img{width:22px;height:22px}
+.ft-brands{gap:18px 22px;border-top:none}
+.ft-brands img{height:11px}
+.ft-cols{display:none}
+@media(min-width:1024px){
+  .ft-news{grid-template-columns:1fr 1fr;text-align:left;justify-items:stretch;padding:40px var(--m)}
+  .ft-news p{margin:0}
+  .ft-sub{flex-direction:row;max-width:none}
+  .ft-sub input{flex:1}
+  .ft-legal{text-align:center}
+  .ft-acc,.ft-mob{display:none}
+  .ft-cols{display:grid;grid-template-columns:repeat(4,1fr) 1.2fr;padding:40px var(--m);border-bottom:1px solid var(--border-subtle);margin:0 var(--m);padding-left:0;padding-right:0}
+  .ft-col a{font-size:12px;padding:4px 0}
+  .ft-col h4{font-size:12px}
+  .ft-soc{justify-content:flex-start}
+  .ft-apps{justify-content:flex-start;padding:0}
+}
+.ft-apps img{height:36px}
+
+/* ---- live colour match (signed-in computed styles, all UK fascias, 08 Oct 2026) ----
+   page #FAFAFA · rows/tiles #FFF · text #000 · Sign Out #FFF + 1px #E7E7E7 (desktop #E5E7EB) · newsletter band #F8F8F8 · greeting 24/600
+   PLT: page #FAF5E7 · rows #FFFDF7 · text #333 · band #FAF5E7 · greeting 16/400 · square. Desktop tiles: 8px radius (0 where the brand is square). */
+:root{--acct-ink:#000;--acct-band:#F8F8F8;--acct-so-b:#E7E7E7}
+[data-brand="plt"]{--acct-ink:#333;--acct-band:#FAF5E7;--acct-so-b:#FAF5E7}
+body,.acct-row,.bd.so-btn,.hello h1,.hello p,.tx,.mbox{color:var(--acct-ink)}
+.ft-news{background:var(--acct-band)}
+.hello h1{font-weight:600}
+[data-brand="plt"] .hello h1{font-size:16px;font-weight:400;line-height:24px}
+.bd.so-btn{border-color:var(--acct-so-b)}
+@media(min-width:1024px){
+  .dgrid .acct-row{border-radius:calc(var(--radius-default) * 2)}
+  .hello .so{border-color:#E5E7EB}
+  [data-brand="plt"] .hello .so{border-color:#E5E7EB}
+}
+/* configurator focus ring */
+.focus{outline:2px solid #0D99FF;outline-offset:3px;transition:outline-color .6s}
+</style>
+</head>
+<body class="mode-new">
+
+<header class="hd" id="hd">
+  <div id="uspAbove"></div><!-- DS USP banners, rows set to sit above the logo row -->
+  <div class="mob">
+    <div class="hd-bar">
+      <div class="hd-left"><button class="hd-burger" aria-label="Menu"><img src="https://jakerayner96.github.io/debenhamsgroup.design/assets/ds/icons/lib/icons-hamburger-menu.svg" alt=""></button><img class="hd-logo logo" alt=""></div>
+      <div class="hd-icons"><button aria-label="Search"><img class="ic-search" alt=""></button><button aria-label="Account"><img class="ic-account" alt=""></button><button aria-label="Wishlist"><img class="ic-heart" alt=""></button><button aria-label="Bag"><img class="ic-bag" alt=""></button></div>
+    </div>
+  </div>
+  <div class="desk">
+    <div class="hd-bar hd-bar--desktop"><img class="hd-logo logo" alt=""><div class="hd-search"><span class="ph"></span><span class="ics"><img src="https://jakerayner96.github.io/debenhamsgroup.design/assets/ds/icons/lib/icons-camera.svg" alt=""><img class="ic-search" alt=""></span></div><div class="hd-icons"><button aria-label="Account"><img class="ic-account" alt=""></button><button aria-label="Wishlist"><img class="ic-heart" alt=""></button><button aria-label="Bag"><img class="ic-bag" alt=""></button></div></div>
+    <nav class="hd-nav" id="nav"></nav>
+  </div>
+  <div class="hd-usp-wrap" data-el="usp" id="usp"></div>
+</header>
+
+<main id="main"></main>
+<footer class="ft" id="ft"></footer>
+
+<script>
+const AST='https://jakerayner96.github.io/debenhamsgroup.design/assets', LIB=AST+'/ds/icons/lib';
+/* ================= Per-fascia facts =================
+   card: 2026 balance card from the Account 2026 Figma (1009:1836 per-fascia frames + Debenhams/PLT/boohoo sections). MAN + KM have no 2026 frame → DS tokens.
+   menu: which rows each fascia carries (Figma frames + Dec 25 landing + live boohooMAN capture).
+   usp: live strings captured 06 Oct 2026 for the core seven (logged-out /login, same header as /account); Figma frame copy for the rest. */
+const F={
+ debenhams:{name:'Debenhams',dom:'debenhams.com',member:'Unlimited',subs:1,mastercard:1,beauty:1,
+  card:{bg:'linear-gradient(131deg,#7BE7D8 1.8%,#9DEDE2 100%)',ink:'#000',btn:'#FFF',btnInk:'#000'},
+  usp:['48% Off for 48 Hours | Shop Now','Up To An Extra 20% Off Selected Beauty | Use Code: BEAUTY','Autumn Steals Up To 70% Off'],uspB:['£1 Express Delivery On Home & Electricals Orders Over £25','1EXPRESS'],
+  nav:['Sale','New','Women','Men','Kids','Shoes','Beauty','Home','Garden','Electricals','Autumn','Gifts','Wedding','Sports','Brands'],search:'Search over 10,000+ brands...',
+  ft:['Shopping With Debenhams','Customer Care','Privacy & Legal','More From Debenhams'],brands:['dorothyperkins','wallis','oasis','coast','warehouse','burton','misspap']},
+ boohoo:{name:'boohoo',dom:'boohoo.com',member:'Premier',memberIcon:'icons-delivery-fast',subs:1,
+  card:{bg:'#FFE0EB',ink:'#000',btn:'#FFF',btnInk:'#000'},
+  usp:['25% OFF ALMOST EVERYTHING*','PREMIER NEXT DAY DELIVERY - ONLY £9.99 FOR 1 YEAR!'],uspB:['EXTRA 10% OFF ALMOST EVERYTHING*','EXTRA'],
+  nav:['New In','Clothing','Dresses','Tops','Shoes','Accessories','Beauty','Plus','Petite','Tall','Maternity','Sale'],search:'Search',
+  ft:['Shopping with boohoo','Customer Care','Privacy & Legal','More From boohoo','Other Countries']},
+ boohooman:{name:'boohooMAN',dom:'boohooman.com',member:'Premier',memberIcon:'icon-boohooman-premier',
+  card:null,
+  usp:['ORDER BY MIDNIGHT TO GET IT TOMORROW|00:12:22:59','EXTRA 15% OFF BRANDS AT MAN | Use Code: BRAND15'],uspB:["48% OFF 100'S OF STYLES*",''],
+  nav:['Sale','New','Clothing','Brands','Active','Plus','Tall','Essentials','Going out','Sets','Shoes & Accessories'],search:'Search',
+  ft:['Shopping with boohooMAN','Customer Care','Privacy & Legal','More From boohooMAN']},
+ plt:{name:'PrettyLittleThing',dom:'prettylittlething.com',member:'Royalty',memberIcon:'icons-plt-royalty',icons:'plt',
+  card:{bg:'#4D0E08',ink:'#FFFDF7',btn:'#FFFDF7',btnInk:'#4D0E08'},
+  usp:['ORDER BY MIDNIGHT FOR NEXT DAY DELIVERY|00:12:23:08','EXTRA 20% OFF DENIM, SHOES & ACCESSORIES* CODE: OUTFIT20'],uspB:['20-30% OFF ALMOST EVERYTHING*',''],
+  nav:['Sale','New','Women','Men','Kids','Shoes','Beauty','Autumn','Gifts'],search:'Search Products and Brands',
+  ft:['Shopping with PLT','Customer Care','Privacy & Legal','More from PrettyLittleThing']},
+ karenmillen:{name:'Karen Millen',dom:'karenmillen.com',member:'Premier',
+  card:null,
+  usp:['up to 50% off*','£2.99 express delivery* on orders over £150*'],uspB:['extra 10% off sale*','KMSALE10'],
+  nav:['New In','Clothing','Dresses','Coats & Jackets','Knitwear','Occasion','Workwear','Accessories','Sale'],search:'Search',
+  ft:['Shopping with Karen Millen','Customer Care','Privacy & Legal','More From Karen Millen','Other Countries'],news:'Receive style tips, exclusive offers & more'},
+ warehouse:{name:'Warehouse',dom:'warehousefashion.com',member:'Unlimited',
+  card:{bg:'#FDFFF5',ink:'#000',btn:'#000',btnInk:'#FDFFF5'},
+  usp:['Free Delivery On Orders Over £49'],uspB:null,nav:['New In','Clothing','Dresses','Outlet'],search:'Search',
+  ft:['Shopping with Warehouse','Customer Care','Privacy & Legal','More From Warehouse']},
+ brandroom:{name:'The Brand Room',dom:'thebrandroom.com',member:null,
+  card:{bg:'#E7E7E7',ink:'#000',btn:'#000',btnInk:'#FFF',r:'0px'},
+  usp:['Free next day delivery over £100'],uspB:null,nav:['New','Women','Men','Footwear','Accessories','Brands'],search:'Search',
+  ft:['Shopping with The Brand Room','Customer Care','Privacy & Legal','More From The Brand Room'],news:'Receive style tips, exclusive offers & more'},
+ burton:{name:'Burton',dom:'burton.co.uk',member:'Unlimited',
+  card:{bg:'#E2EAF4',ink:'#000',btn:'#284D7B',btnInk:'#FFF'},
+  usp:['Free Delivery On Orders Over £60'],uspB:null,nav:['New In','Clothing','Suits','Shoes','Accessories','Sale'],search:'Search',
+  ft:['Shopping with Burton','Customer Care','Privacy & Legal','More From Burton']},
+ coast:{name:'Coast',dom:'coastfashion.com',member:'Unlimited',subs:1,
+  card:{bg:'#E2E0DC',ink:'#000',btn:'#000',btnInk:'#FFF'},
+  usp:['Wedding Guest Outfits','At Least Half Price Occasionwear'],uspB:['Unlimited Next Day Delivery £14.99',''],
+  nav:['New In','Dresses','Occasion','Wedding Guest','Bridesmaid','Clothing','Accessories','Sale'],search:'Search',
+  ft:['Shopping with Coast','Customer Care','Privacy & Legal','More From Coast'],brands:['debenhams','dorothyperkins','wallis','oasis','warehouse','burton']},
+ dorothyperkins:{name:'Dorothy Perkins',dom:'dorothyperkins.com',member:'Unlimited',
+  card:{bg:'#181729',ink:'#FFF',btn:'#FFF',btnInk:'#181729'},
+  usp:['Payday Perks Up To 50% Off'],uspB:null,nav:['New In','Clothing','Dresses','Petite','Tall','Curve','Workwear','Sale'],search:'Search',
+  ft:['Shopping with DP','Customer Care','Privacy & Legal','More From DP'],brands:['debenhams','wallis','oasis','coast','warehouse','burton']},
+ misspap:{name:'Misspap',dom:'misspap.com',member:'Unlimited',hdDark:1,logoInk:'#C22527',logoAR:134/42,
+  card:{bg:'#E7D5C6',ink:'#000',btn:'#000',btnInk:'#FFF',lbl:'#74102C'},
+  usp:['Payday Deals! 30% Off + An Extra 10% Off With Code'],uspB:null,nav:['New In','Clothing','Dresses','Going Out','Sale'],search:'Search',
+  ft:['Shopping with Misspap','Customer Care','Privacy & Legal','More From Misspap']},
+ nastygal:{name:'Nasty Gal',dom:'nastygal.com',member:'Unlimited',subs:1,
+  card:{bg:'#EEEEED',ink:'#000',btn:'#000',btnInk:'#FFF'},
+  usp:['Extra 15% Off For New Customers! | Use Code: NEW15'],uspB:null,nav:['New In','Clothing','Dresses','Shoes','Accessories','Sale'],search:'Search',
+  ft:['Shopping with Nasty Gal','Customer Care','Privacy & Legal','More From Nasty Gal']},
+ oasis:{name:'Oasis',dom:'oasis-stores.com',member:'Unlimited',subs:1,
+  card:{bg:'#EDE6DF',ink:'#000',btn:'#000',btnInk:'#FFF'},
+  usp:['Free Delivery On Orders Over £49'],uspB:null,nav:['New In','Clothing','Dresses','Knitwear','Coats','Sale'],search:'Search',
+  ft:['Shopping with Oasis','Customer Care','Privacy & Legal','More From Oasis']},
+ principles:{name:'Principles',dom:'principles.co.uk',member:'Unlimited',subs:1,rewards:1,
+  card:{bg:'#FBF6F0',ink:'#000',btn:'#000',btnInk:'#FFF'},
+  usp:['New Season, New Dress | Shop Dresses'],uspB:null,nav:['New In','Clothing','Dresses','Workwear','Sale'],search:'Search',
+  ft:['Shopping with Principles','Customer Care','Privacy & Legal','More From Principles']},
+ wallis:{name:'Wallis',dom:'wallis.co.uk',member:'Unlimited',subs:1,
+  card:{bg:'#F9EEF3',ink:'#000',btn:'#000',btnInk:'#FFF',lbl:'#8F2958'},
+  usp:['Summer Essentials | 48% Off For 48 Hours|01:24:17'],uspB:null,nav:['New In','Clothing','Dresses','Petite','Tall','Sale'],search:'Search',
+  ft:['Shopping with Wallis','Customer Care','Privacy & Legal','More From Wallis']},
+ dsgnstudio:{name:'DSGN Studio',dom:'dsgnstudio.com',member:null,
+  card:{bg:'#F4F6F0',ink:'#000',btn:'#000',btnInk:'#F4F6F0'},
+  usp:['NEW HERE? GET AN EXTRA 20% OFF WITH: DSGN20'],uspB:null,nav:['New In','Clothing','Tracksuits','Sale'],search:'Search',
+  ft:['Shopping with DSGN Studio','Customer Care','Privacy & Legal','More From DSGN Studio']},
+};
+/* ================= Element registry — the configurator's add / remove list =================
+   blocks = page sections · rows = the account menu. def(mode,fascia) = on by default? */
+const BLOCKS=[
+ {id:'usp',label:'USP banners',def:()=>1},
+ {id:'hello',label:'Greeting + email',def:()=>1},
+ {id:'beauty',label:'Beauty Club card',def:(m,f)=>!!f.beauty&&m==='live'},
+ {id:'balance',label:'Account balance card',def:m=>m==='new'},
+ {id:'menu',label:'Account menu',def:()=>1},
+ {id:'dplus',label:'Deliver+ banner',def:()=>0},
+ {id:'signout',label:'Sign out',def:()=>1},
+ {id:'news',label:'Newsletter sign-up',def:()=>1},
+ {id:'footer',label:'Footer',def:()=>1},
+];
+const ROWS=[
+ {id:'orders',label:'Order History',icon:'icons-order',def:()=>1},
+ {id:'subs',label:'Subscribe & Save',live:'Your Subscriptions',icon:'icons-subscribe-and-save',def:(m,f)=>!!f.subs,count:1},
+ {id:'rewards',label:'Debenhams Rewards',icon:'icons-rewards-solid',def:(m,f)=>!!f.rewards},
+ {id:'balance',label:'Account Balance',icon:'icons-account-balance',def:m=>m==='new'},
+ {id:'details',label:'My Details',icon:'icons-account',def:()=>1},
+ {id:'addresses',label:'Addresses',icon:'icons-addresses',def:()=>1},
+ {id:'member',label:'Membership',icon:'icons-unlimited',def:(m,f)=>!!f.member,status:1},
+ {id:'beautyrow',label:'Beauty Club',icon:'icons-star-outline',def:(m,f)=>!!f.beauty&&m==='live'},
+ {id:'contact',label:'Contact Preferences',icon:'icons-contact-prefs',def:()=>1},
+ {id:'mastercard',label:'Debenhams Mastercard',icon:'icons-card',def:(m,f)=>!!f.mastercard},
+ {id:'help',label:'FAQs, Help and Support',icon:'icons-question',def:()=>S.app,app:1}, // app only (Figma 1296:69086)
+ {id:'settings',label:'Settings',icon:'icons-settings',def:()=>S.app,app:1},
+];
+const STATUS={ // SEEL Enhancements 2026 · 3336:188708 — dot #D6D6D6 / #70C474 / #D33F3F, 12px caps · label black when active or expiring, grey when not active (Jake, 08 Oct)
+ none:{plus:0,txt:'Not active',dot:'#D6D6D6',ink:'#6B6B6B',tag:null},
+ plusnone:{plus:1,txt:'Not active',dot:'#D6D6D6',ink:'#6B6B6B',tag:null}, // tier and state are independent controls
+ active:{plus:0,txt:'Active',dot:'#70C474',ink:'#000',tag:'Active'},
+ plus:{plus:1,txt:'Active',dot:'#70C474',ink:'#000',tag:'Active'},
+ expiring:{plus:0,txt:'Expires in 3 days',dot:'#D33F3F',ink:'#000',tag:'Expires in 3 days'},
+ plusexp:{plus:1,txt:'Expires in 3 days',dot:'#D33F3F',ink:'#000',tag:'Expires in 3 days'},
+};
+/* membership page box — live art per programme (assets/brands/memberships, from the live PDP/account), price from the live /account/unlimited pages 08 Oct 2026 */
+const MB={debenhams:{logo:'unlimited-logo.svg',bg:'prem-bg-deb.jpg',price:'£14.99',h:40},boohoo:{logo:'prem-logo-bh.png',bg:'prem-bg-bh.jpg',price:'£9.99',h:12},boohooman:{logo:'prem-logo-bm.png',bg:'prem-bg-bm.jpg',price:'£9.99',h:22},
+  plt:{logo:'prem-logo-plt.png',bg:'prem-bg-plt.jpg',price:'£9.99',h:28,ink:'#FFF'},karenmillen:{logo:'prem-logo-km.png',bg:null,bgc:'#000',price:'£14.99',h:22,ink:'#FFF'}};
+const TX=[['14/01/25','Earned','',2.04],['04/01/25','Earned','',2.04],['15/07/24','Earned','',2.04],['02/07/24','Spent','Order ADR1AT1QU4',-2.04],['15/07/24','Earned','',2.04],['04/01/23','Earned','',2.04]];
+
+let S={brand:'debenhams',mode:'new',app:false,page:'landing',name:'Jake',email:'jake.rayner@debenhams.com',status:'active',statusStyle:'auto',balance:'100.18',subs:3,chev:'auto',on:{},order:{blocks:null,rows:null}};
+const q=new URLSearchParams(location.search);
+try{ if(q.get('s')) S=Object.assign(S,JSON.parse(decodeURIComponent(escape(atob(q.get('s')))))); }catch(e){}
+if(q.get('brand'))S.brand=q.get('brand');
+if(window.ACCT_PRESET)S=Object.assign(S,window.ACCT_PRESET);
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function isOn(kind,el,f){const k=kind+':'+el.id;return k in S.on?!!S.on[k]:!!el.def(S.mode,f);}
+function ordered(kind,list){const o=S.order[kind];if(!o)return list;return [...list].sort((a,b)=>{const ia=o.indexOf(a.id),ib=o.indexOf(b.id);return (ia<0?99:ia)-(ib<0?99:ib);});}
+function money(v){const n=Math.max(0,parseFloat(v)||0);const [i,d]=n.toFixed(2).split('.');return `£${(+i).toLocaleString('en-GB')}<small>.${d}</small>`;}
+function statusStyle(){return 'dot';} // SEEL 2026: dot + label on the right of the row, always
+
+function cardHTML(btn=true){
+  return `<div class="acct-card" data-el="balance"><div class="amt">${money(S.balance)}</div><div class="lbl">Account Balance</div>${btn?'<button class="bd" data-go="balance">View Balance</button>':''}</div>`;
+}
+function rowHTML(r,f,cur){
+  const st=STATUS[S.status]||STATUS.none;
+  let label=S.mode==='live'&&r.live?r.live:r.label, right='', icon=`${LIB}/${r.icon}.svg`;
+  if(r.id==='member'){
+    label=(f.member||'Unlimited')+(st.plus?'+':'');
+    // fascia programme mark where the DS has one (PLT Royalty crown, MAN Premier) — else Unlimited: ∞ in 2026, diamond live
+    // membership icon per fascia: Debenhams ∞ / ∞+ · PLT Royalty emblem · boohoo delivery-fast · boohooMAN Premier P · the rest the live diamond
+    icon=`${LIB}/${f.memberIcon||(S.brand==='debenhams'?(st.plus?'icons-unlimited-plus':'icons-unlimited-infinity'):'icons-unlimited')}.svg`;
+    if(statusStyle()==='dot') right=`<span class="st" style="--sd:${st.dot};color:${st.ink}"><span class="dot"></span>${st.txt}</span>`;
+    else if(st.tag) label+=` <span class="tagpill">${st.tag}</span>`;
+  }
+  if(r.count&&+S.subs>0) label+=` <span class="tagpill tagpill--n">${+S.subs}</span>`;
+  const chev=`<img class="chev" src="${LIB}/icons-right.svg" alt="">`;
+  return `<button class="acct-row${cur?' cur':''}" data-el="row:${r.id}"${r.id==='balance'?' data-go="balance"':r.id==='member'?' data-go="unlimited"':''}><img src="${icon}" alt=""><span class="lbl">${label}</span>${right}${chev}</button>`;
+}
+function menuHTML(f,cur){return `<div class="menu" data-el="menu">${ordered('rows',ROWS).filter(r=>isOn('rows',r,f)&&(!r.app||S.app)).map(r=>rowHTML(r,f,cur===r.id)).join('')}</div>`;}
+function dplusHTML(b){
+  const logos=(window.DG_DPLUS_LOGOS||'').replace(/assets\//g,AST+'/').replace(new RegExp(`dpl-${b}"`),`dpl-${b} show"`);
+  const hasOwn=new RegExp(`dpl-${b} show`).test(logos);
+  return `<div class="dplus blk" data-el="dplus"><div class="col">${hasOwn?logos:logos.replace('dpl-generic"','dpl-generic show"')}<div class="h">Protect your order from <b>£2.99.</b></div><p>Get 35-day returns, £5/day late delivery compensation and much more.</p><span class="more">Learn more</span></div></div>`;
+}
+function beautyHTML(){
+  if(S.mode==='new') return `<div class="beauty beauty--new blk" data-el="beauty"><div><div class="v">£6<small>.18</small></div><div class="l">Rewards balance</div></div><button class="bd">View Activity</button></div>`;
+  return `<div class="beauty blk" data-el="beauty"><div class="h">Beauty Club Membership <img src="${LIB}/icons-star-outline.svg" alt=""></div><div>You’re £69.00 away from becoming a Beauty Pro!</div><div class="bar"><i></i></div><button class="bd pri">My Beauty Club</button></div>`;
+}
+
+function mboxHTML(b,f){
+  // states (SEEL Enhancements 2026 3525:157039 / 157792 / 157904): not active = join box · active + expiring = the live member view (band status + date only differ)
+  const m=MB[b]||MB.debenhams, st=STATUS[S.status]||STATUS.none, active=!/none/.test(S.status), exp=/exp/.test(S.status);
+  const bg=m.bg?`url(${AST}/brands/memberships/${m.bg})`:(m.bgc||'#DCDCDC');
+  // Debenhams Unlimited+ wordmark (assets/brands/memberships/unlimited-plus-logo.svg, Jake 08 Oct 2026)
+  const logo=st.plus&&b==='debenhams'?`<img src="${AST}/brands/memberships/unlimited-plus-logo.svg" alt="Debenhams Unlimited+">`:`<img src="${AST}/brands/memberships/${m.logo}" alt="${esc(f.member||'Unlimited')}">`;
+  const band=`<div class="band" style="--mb-bg:${bg};--mb-h:${m.h}px;--mb-ink:${m.ink||'#000'}"><span style="display:flex;align-items:center;gap:8px">${logo}</span>${active?`<span class="on">${st.txt}</span>`:''}</div>`;
+  // member view = live /account/unlimited (boohooMAN Premier, 08 Oct 2026), copied for every brand; expiring only changes the band status and the date
+  const body=active?`<div class="bodyx"><div class="kv">Your Membership: <b>1 year</b></div><div class="kv">Expiry Date: <b>${exp?'11/10/2026':'25/08/2027'}</b></div><p class="note">Your membership will not auto-renew. We will let you know when it's time to renew.</p></div>`
+    :`<div class="bodyx"><p>Enjoy unlimited delivery for an entire year for just <b>${m.price}</b></p><div class="ctas"><button class="bd pri">Add</button><button class="bd sec">Find out more</button></div></div>`;
+  return `<div class="mbox" data-el="mbox">${band}${body}</div>`;
+}
+const appSB=()=>`<div class="app-sb"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 18 12" fill="#000"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg><svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round"><path d="M1.5 4.2a9.5 9.5 0 0 1 13 0"/><path d="M4 7a5.8 5.8 0 0 1 8 0"/><circle cx="8" cy="10.2" r="1" fill="#000" stroke="none"/></svg><svg width="28" height="13" viewBox="0 0 28 13"><rect x=".5" y=".5" width="24" height="12" rx="3.5" fill="none" stroke="#000" stroke-opacity=".4"/><rect x="2" y="2" width="21" height="9" rx="2" fill="#000"/><path d="M26 4.5v4a2 2 0 0 0 0-4z" fill="#000" fill-opacity=".4"/></svg></span></div>`;
+// app nav bar: account is a sub-page of Home, so it always has the back chevron (landing → Home, sub-pages → account)
+const appTitle=(t,back)=>`<div class="app-title"><button class="bk"${back?' data-go="landing"':''} aria-label="Back"><img src="${LIB}/icons-left.svg" alt=""></button>${esc(t)}</div>`;
+const appTabs=()=>{ // DS app tab bar: standard (bookmark on boohooMAN + Karen Millen, per DS rules) · PLT has its own labelled bar · Home is active: account is a sub-page of Home
+  const I=AST+'/ds/icons/app/';
+  if(S.brand==='plt') return `<nav class="app-tabbar app-tabbar--plt" aria-label="App tabs"><div class="tabs">${[['plt-tab-home','Home'],['plt-tab-shop','Shop'],['plt-tab-discover','Discover'],['plt-tab-wishlist','Wishlist'],['plt-tab-bag','Bag']].map(([t,l])=>`<button class="tab${t==='plt-tab-home'?' on':''}"><img src="${I}${t}.svg" alt=""><span>${l}</span></button>`).join('')}</div></nav>`;
+  const fav=['boohooman','karenmillen'].includes(S.brand)?'tab-bookmark':'tab-wishlist';
+  return `<nav class="app-tabbar" aria-label="App tabs"><div class="tabs">${['tab-home','tab-menusearch','tab-bag',fav,'tab-account'].map((t,i)=>`<button class="tab${i===0?' on':''}" aria-label="${t.replace('tab-','')}"><img src="${I}${t}.svg" alt=""></button>`).join('')}</div><span class="hi"></span></nav>`;
+};
+
+function render(){
+  S.mode='new'; // new 2026 designs only
+  const b=F[S.brand]?S.brand:'debenhams', f=F[b];
+  document.documentElement.setAttribute('data-brand',b);
+  document.body.className='mode-'+S.mode+((S.chev==='on')?' chev-on':'')+(S.app?' app':'');
+  const r=document.documentElement.style, c=f.card;
+  ['--ac-bg','--ac-ink','--ac-btn','--ac-btn-ink','--ac-lbl','--ac-r'].forEach(k=>r.removeProperty(k));
+  if(c){r.setProperty('--ac-bg',c.bg);r.setProperty('--ac-ink',c.ink);r.setProperty('--ac-btn',c.btn);r.setProperty('--ac-btn-ink',c.btnInk);if(c.lbl)r.setProperty('--ac-lbl',c.lbl);if(c.r)r.setProperty('--ac-r',c.r);}
+  const plt=f.icons==='plt';
+  // logo: DS mark, or the fascia name as a wordmark where the DS has no artwork yet (Nasty Gal)
+  $('#hd').classList.toggle('dark',!!f.hdDark);
+  if(f.logoInk){document.querySelectorAll('.logo').forEach(el=>{const m=document.createElement('span');m.className='hd-logo logo mask';m.setAttribute('role','img');m.setAttribute('aria-label',f.name);m.style.cssText=`--lg:url(${AST}/brands/${b}.svg);--lgc:${f.logoInk};width:${Math.round(18*f.logoAR)}px`;el.replaceWith(m);});}
+  else document.querySelectorAll('.logo').forEach(el=>{const img=document.createElement('img');img.className='hd-logo logo';img.alt=f.name;img.onerror=()=>{const w=document.createElement('span');w.className='hd-logo logo wm';w.textContent=f.name;img.replaceWith(w);};img.src=`${AST}/brands/${b}.svg`;el.replaceWith(img);});
+  document.querySelectorAll('.ic-search').forEach(i=>i.src=plt?`${AST}/ds/icons/plt-search.svg`:`${LIB}/icons-search.svg`);
+  document.querySelectorAll('.ic-account').forEach(i=>i.src=plt?`${AST}/ds/icons/plt-account.svg`:`${LIB}/icons-account.svg`);
+  document.querySelectorAll('.ic-heart').forEach(i=>i.src=plt?`${AST}/ds/icons/plt-heart.svg`:`${LIB}/icons-wishlist.svg`);
+  document.querySelectorAll('.ic-bag').forEach(i=>i.src=plt?`${AST}/ds/icons/plt-bag.svg`:`${LIB}/icons-bag.svg`);
+  $('.hd-search .ph').textContent=f.search;
+  $('#nav').innerHTML=f.nav.map(n=>`<a${/sale/i.test(n)?' class="sale"':''} href="#">${n}</a>`).join('');
+  const on=id=>isOn('blocks',BLOCKS.find(x=>x.id===id),f);
+
+  // USP banners — banked in the DS (assets/ds/usp-live.js + usp.js, tag usp-banners-2026-10-08): mount the DS rows, never hand-build them.
+  // Fascias not banked yet (no DG_USP_LIVE entry) keep the prototype's own strip until they are.
+  if(on('usp')&&window.DG_USP_LIVE&&window.DG_USP_LIVE[b]){
+    $('#uspAbove').innerHTML='<div data-usp-banners data-usp-pos="above"></div>';
+    $('#usp').innerHTML='<div data-usp-banners></div>';
+    if(window.DG_uspMount)window.DG_uspMount();
+  }else{
+    $('#uspAbove').innerHTML='';
+    // ' | ' splits headline / sub · a bare '|' before digits = countdown · uspB = [text, code]
+    const msgs=f.usp.map(t=>{const cd=t.match(/^(.*\S)\|(\d[\d:]*)$/);if(cd)return {b:cd[1],s:cd[2]};const sp=t.split(' | ');return {b:sp[0],s:sp.slice(1).join(' ')||null};});
+    if(f.uspB)msgs.push({b:f.uspB[0],s:f.uspB[1]?'Code: '+f.uspB[1]:null});
+    $('#usp').innerHTML=on('usp')?`<div class="usp-strip" id="uspstrip">${msgs.map((c,i)=>{const keep=c.s&&/code|%|\d/i.test(c.s)&&!/^shop/i.test(c.s);return `<div class="usp-cell${i===0?' rot-on':''}">${uspNewParts(c.b,keep?c.s:null)}</div>`;}).join('')}</div>`:'';
+    rotI=0;syncUspH();uspSepWrap();
+  }
+
+  // main
+  let html='';
+  const hello=on('hello')?`<div class="hello blk" data-el="hello"><div><h1>Good Morning, ${esc(S.name||'Jake')}</h1><p>${esc(S.email)}</p></div>${on('signout')?'<button class="bd so-btn so">Sign Out</button>':''}</div>`:'';
+  if(S.app)html+=appSB();
+  if(S.page==='landing'){
+    if(S.app)html+=appTitle('Good Morning, '+(S.name||'Jake'));
+    const blocks=ordered('blocks',BLOCKS).filter(x=>!['usp','news','footer'].includes(x.id)&&on(x.id));
+    // the balance card and the menu share the desktop tile grid when adjacent
+    for(let i=0;i<blocks.length;i++){
+      const id=blocks[i].id;
+      if(id==='hello'){if(!S.app)html+=hello;}
+      else if(id==='balance'||id==='menu'){
+        const pair=blocks[i+1]&&['balance','menu'].includes(blocks[i+1].id)&&blocks[i+1].id!==id;
+        const parts=pair?[id,blocks[i+1].id]:[id]; if(pair)i++;
+        html+=`<div class="dgrid blk${parts.includes('balance')?' has-card':''}">${parts.map(p=>p==='balance'?cardHTML():menuHTML(f)).join('')}</div>`;
+      }
+      else if(id==='beauty')html+=beautyHTML();
+      else if(id==='dplus')html+=dplusHTML(b);
+      else if(id==='signout')html+=`<div class="signout-m" data-el="signout"><button class="bd so-btn">Sign Out</button></div>`;
+    }
+  }else{
+    // one level deep: mobile back header (app: centred title) · desktop greeting + side menu with the current page marked (live)
+    const empty=S.page==='empty', unl=S.page==='unlimited', st=STATUS[S.status]||STATUS.none;
+    const title=unl?(f.member||'Unlimited')+(st.plus?'+':''):'Account Balance';
+    let content;
+    if(unl) content=mboxHTML(b,f);
+    else{
+      const saved=S.balance;if(empty)S.balance='0';
+      content=`<div class="blk">${cardHTML(false)}</div>`+(empty?`<div class="empty"><img src="${LIB}/icons-account-balance.svg" alt="">No balance activity</div>`:
+        `<div class="tx">${TX.map(([d,t,o,a])=>`<div class="r"><div><div class="d">${d}</div><b>${t}</b>${o?`<span class="o">${o}</span>`:''}</div><span class="a${a<0?' neg':''}">${a<0?'-':'+'} £${Math.abs(a).toFixed(2)}</span></div>`).join('')}</div>`);
+      S.balance=saved;
+    }
+    html+=S.app?appTitle(title,true):`<button class="back" data-go="landing"><img src="${LIB}/icons-left.svg" alt="">${esc(title)}</button>`;
+    const sideHello=`<div class="hello"><div><h1>Good Morning, ${esc(S.name||'Jake')}</h1><p>${esc(S.email)}</p></div></div>`;
+    html+=`<div class="sub"><aside class="side">${sideHello}${menuHTML(f,unl?'member':'balance')}</aside><div class="subc">${content}</div></div>`;
+  }
+  if(S.app)html+=appTabs();
+  $('#main').innerHTML=html;
+
+  // footer
+  let ft='';
+  if(on('news')) ft+=`<div class="ft-news" data-el="news"><div><h3>${f.news||'Let’s Get To Know Each Other'}</h3><p>Sign up to receive emails from us, so you never miss out on the good stuff.</p></div><div><div class="ft-sub"><input type="email" placeholder="Please enter your email address" aria-label="Email address"><button class="bd pri">Subscribe</button></div><p class="ft-legal">By submitting your details, you agree to receive marketing communications from ${f.dom.replace(/^./,ch=>ch.toUpperCase())} by email. You can unsubscribe at any point. You also consent to the use of your details in accordance with our <u>Privacy Policy</u>.</p></div></div>`;
+  if(on('footer')){
+    const pay=['visa','mastercard','amex','maestro','visa-electron','apple-pay','payplus','paypal','klarna','clearpay','google-pay'];
+    const soc=['social-instagram','social-pintrest','social-facebook','social-x','you-tube','social-tik-tok'].map(s=>`<img src="${LIB}/${s}.svg" alt="">`).join('');
+    const apps=`<div class="ft-apps"><img src="${AST}/ds/icons/apps/google-play.png" alt="Get it on Google Play"><img src="${AST}/ds/icons/apps/app-store.svg" alt="Download on the App Store"></div>`;
+    const links=[['Unlimited Delivery','Rewards','Student Discount','Gift Cards'],['Return Your Order','Frequently Asked Questions','Delivery Information','Returns Information','Contact Us'],['Privacy Policy','Terms & Conditions','About Cookies','Terms of Use'],['Careers','Modern Slavery Statement','Site Map']];
+    ft+=`<div data-el="footer">`;
+    if(f.brands) ft+=`<div class="ft-brands ft-mob">${f.brands.map(x=>`<img src="${AST}/brands/${x}.svg" alt="${x}">`).join('')}</div>`;
+    ft+=`<div class="ft-pay ft-mob">${pay.map(p=>`<img src="${AST}/ds/icons/pay/${p}.png" alt="${p}">`).join('')}</div>`;
+    ft+=`<div class="ft-acc">${f.ft.slice(0,4).map(a=>`<button class="acc-h">${a}<img src="${LIB}/icons-down.svg" alt=""></button>`).join('')}</div>`;
+    ft+=`<div class="ft-mob"><div class="ft-h">Download our app</div>${apps.replace('ft-apps','ft-apps" style="justify-content:center;padding:0')}<div class="ft-h">Follow us on social media</div><div class="ft-soc">${soc}</div></div>`;
+    ft+=`<div class="ft-cols">${f.ft.slice(0,4).map((h,i)=>`<div class="ft-col"><h4>${h}</h4>${links[i].map(l=>`<a href="#">${l}</a>`).join('')}</div>`).join('')}<div class="ft-col"><h4>Follow us on social media</h4><div class="ft-soc" style="margin-bottom:20px">${soc}</div><h4>Download our app</h4>${apps}</div></div>`;
+    ft+=`<div class="ft-base"><img src="${AST}/brands/${b}.svg" alt="${f.name}" onerror="this.outerHTML='<b style=&quot;font-size:22px&quot;>${f.name}</b>'"><small>Copyright © 2026 ${f.name}</small></div></div>`;
+  }
+  $('#ft').innerHTML=ft;
+  report();
+}
+
+/* ---- DS USP banner helpers — same as projects/plp-alignment/plp.html ---- */
+// new-format copy rules: no asterisks, sentence case (brand initialisms kept), 'Use Code' → 'Code:', code value strong and uppercase
+const USP_KEEP=['MAN','PLT','UK','NDD','DSGN','DEBENHAMS'];
+function uspTidy(t){
+  let s=String(t).replace(/<[^>]+>/g,'').replace(/\*/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+  s=s.charAt(0).toUpperCase()+s.slice(1);
+  USP_KEEP.forEach(k=>{s=s.replace(new RegExp('\\b'+k.toLowerCase()+'\\b','g'),k==='DEBENHAMS'?'Debenhams':k)});
+  s=s.replace(/\b(?:use\s+)?code:?\s*([a-z0-9]+)/i,(m,c)=>'Code: <b>'+c.toUpperCase()+'</b>');
+  return s;
+}
+function uspCdMarkup(v){return '<span class="usp-cd">'+v.split(':').map((d,i)=>(i?'<i>:</i>':'')+'<b>'+d+'</b>').join('')+'</span>'}
+function uspNewParts(text,sub){
+  let row=String(text).split(' | ').map(x=>'<span class="usp-t">'+uspTidy(x)+'</span>').join('<span class="usp-sep"></span>'),cd='';
+  if(sub){const sv=String(sub).trim();
+    if(/^[\d:]+$/.test(sv))cd=uspCdMarkup(sv);
+    else row+='<span class="usp-sep"></span><span class="usp-t">'+uspTidy(sv)+'</span>';
+  }
+  return '<span class="usp-row">'+row+'</span>'+cd;
+}
+// the dash exists only while its sections share a line — once they split it becomes a full-width breaker
+function uspSepWrap(){document.querySelectorAll('.usp-row').forEach(r=>{const kids=[...r.children];kids.forEach(el=>el.classList.remove('wrapbr'));kids.forEach((el,i)=>{if(!el.classList.contains('usp-sep'))return;const prev=kids[i-1],next=kids[i+1];if(prev&&next&&Math.abs(prev.offsetTop-next.offsetTop)>=4)el.classList.add('wrapbr');});});}
+// mobile rotation must not breathe: lock every cell to the tallest message
+function syncUspH(){
+  const strip=document.getElementById('uspstrip');const cells=strip?[...strip.querySelectorAll('.usp-cell')]:[];
+  cells.forEach(c=>c.style.minHeight='');
+  if(!cells.length||!matchMedia('(max-width:1023px)').matches)return;
+  const probe=strip.cloneNode(false);probe.style.cssText='position:absolute;left:-9999px;top:0;width:'+strip.offsetWidth+'px;visibility:hidden;display:grid';
+  cells.forEach(c=>{const k=c.cloneNode(true);k.classList.add('rot-on');probe.appendChild(k)});
+  document.body.appendChild(probe);const h=Math.max(0,...[...probe.children].map(c=>c.offsetHeight));probe.remove();
+  cells.forEach(c=>c.style.minHeight=h+'px');
+}
+// mobile USP rotation — one cell at a time, crossfade in place
+let rotI=0;
+setInterval(()=>{const cells=[...document.querySelectorAll('#uspstrip .usp-cell')];if(cells.length<2||!matchMedia('(max-width:1023px)').matches)return;rotI=(rotI+1)%cells.length;cells.forEach((c,i)=>c.classList.toggle('rot-on',i===rotI));},4000);
+
+// page navigation inside the prototype
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(!g)return;S.page=g.dataset.go==='balance'?(parseFloat(S.balance)>0?'balance':'empty'):g.dataset.go;render();parent!==window&&parent.postMessage({acctPage:S.page},'*');window.scrollTo(0,0);});
+
+function report(){
+  if(parent===window)return;
+  const f=F[S.brand];
+  parent.postMessage({acctReady:1,
+    blocks:ordered('blocks',BLOCKS).map(x=>({id:x.id,label:x.label,on:isOn('blocks',x,f),def:!!x.def(S.mode,f)})),
+    rows:ordered('rows',ROWS).map(x=>({id:x.id,label:x.id==='member'?(f.member||'Unlimited')+' (membership)':(S.mode==='live'&&x.live?x.live:x.label),on:isOn('rows',x,f),def:!!x.def(S.mode,f)})),
+    statusStyle:statusStyle(),member:f.member},'*');
+}
+addEventListener('message',e=>{const d=e.data;if(!d||!d.acctSet)return;S=Object.assign(S,d.state);render();
+  if(d.focus){const el=document.querySelector(`[data-el="${d.focus}"]`);if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('focus');setTimeout(()=>el.classList.remove('focus'),900);}}});
+addEventListener('resize',()=>{clearTimeout(window.__rz);window.__rz=setTimeout(render,120);});
+</script>
+<script src="https://jakerayner96.github.io/debenhamsgroup.design/assets/ds/dplus-logos.js"></script>
+<script src="https://jakerayner96.github.io/debenhamsgroup.design/assets/ds/usp-live.js"></script>
+<script src="https://jakerayner96.github.io/debenhamsgroup.design/assets/ds/usp.js"></script>
+<script>render();</script>
+</body>
+</html>
