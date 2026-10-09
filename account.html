@@ -338,6 +338,8 @@ body:not(.comodal) .co-ov,body:not(.comodal) .co-modal{display:none}
 .nco section{background:#FFF;padding:16px}
 .nco h4{font-size:16px;font-weight:600}
 .nco .n-lt{font-weight:300}.nco s{font-weight:300}
+/* Deliver+ on the new checkout page, under the address row — SEEL Enhancements 2026 3343:189740 (frame 3343:189780: 20px above, 4px below, 16px side margins from the section) */
+.nco .n-dp{margin-top:20px;padding-bottom:4px}
 .nco .n-chg{font-size:12px;font-weight:600;color:var(--co-cta);cursor:pointer;background:none;border:0;padding:0;font-family:inherit}
 .nco .n-bag{background:#FAFAFA;padding:12px 16px;display:flex;flex-direction:column;gap:16px}
 .nco .n-bag .n-top{display:flex;justify-content:space-between;align-items:center}.nco .n-bag .n-top img{width:16px;height:16px}
@@ -631,9 +633,9 @@ function coDplusHTML(b,f){
   return `<div class="co-dp" data-el="dplus"><div class="in"><span class="chk"></span><div class="col"><div class="dlg">${logos}</div><p>Your delivery is free. Why not protect it <b>for £2.99?</b></p><ul><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Extended</b> 35-Day Returns</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Win</b> a holiday worth £15k!</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>£5/day</b> Late Delivery Compensation</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Priority</b> Customer Support</span></li></ul>${lm}</div></div>${b==='debenhams'?'<div class="up">Want protection on every order? - <b>Get Unlimited+</b></div>':''}</div>`;
 }
 const CO_ADDR=['Apartment 18, 2 Munday Street','Manchester, United Kingdom','M4 7BB','+447733361372'];
-function coModalHTML(b,f){
+function coModalHTML(b,f,dp=true){
   const opts=CO_OPTS.map(([t,d,pr,was,on])=>`<div class="co-opt"><span class="co-radio${on?' on':''}"></span><div class="t"><b>${t}</b><small>${d}</small></div><span class="pr">${pr}${was?`<s>${was}</s>`:''}</span></div>`).join('');
-  return `<div class="co-ov" data-co="close"></div><div class="co-modal" role="dialog" aria-label="Delivery Method" data-el="comodal" style="--co-sel:${b==='debenhams'?'#00787D':'var(--acct-ink)'}"><div class="mh"><h3>Delivery Method</h3>${mpillHTML(b,f)}<img class="x" data-co="close" src="${LIB}/icons-close.svg" alt="Close"></div><div class="co-opts">${opts}</div>${coDplusHTML(b,f)}</div>`;
+  return `<div class="co-ov" data-co="close"></div><div class="co-modal" role="dialog" aria-label="Delivery Method" data-el="comodal" style="--co-sel:${b==='debenhams'?'#00787D':'var(--acct-ink)'}"><div class="mh"><h3>Delivery Method</h3>${mpillHTML(b,f)}<img class="x" data-co="close" src="${LIB}/icons-close.svg" alt="Close"></div><div class="co-opts">${opts}</div>${dp?coDplusHTML(b,f):''}</div>`;
 }
 const PM=AST+'/ds/icons/payments/', CA='assets/checkout/';
 const TICK='<svg viewBox="0 0 16 16" fill="none" stroke="#FFF" stroke-width="1.6"><path d="M3 8.5 6.5 12 13 4.5"/></svg>';
@@ -644,7 +646,7 @@ function newCheckoutHTML(b,f){
     <div class="n-xp"><span class="n-pp"><img src="${PM}paypal-wordmark.svg" alt="PayPal" style="height:20px"></span><span class="n-ap"><img src="${PM}applepay-onblack.svg" alt="Apple Pay" style="height:22px"></span><span class="n-kl"><img src="${CA}klarna-express.svg" alt="Klarna" style="height:33px"></span></div></div>`;
   const dl=`<section data-el="delivery"><div class="n-dl"><h4>${o[1].replace(/^Arrives/,'Arrives')}</h4>
     <div class="n-r"><div><span class="n-lt">${o[0]}</span><span><b>${o[2]}</b> ${o[3]?`<s>${o[3]}</s>`:''}</span></div><button class="n-chg" data-co="open">Change</button></div><hr>
-    <div class="n-r"><div><span><b>Jake Rayner</b><br><span class="n-lt">${CO_ADDR.slice(0,3).join(', ')}</span></span></div><button class="n-chg">Change</button></div></div></section>`;
+    <div class="n-r"><div><span><b>Jake Rayner</b><br><span class="n-lt">${CO_ADDR.slice(0,3).join(', ')}</span></span></div><button class="n-chg">Change</button></div></div><div class="n-dp">${coDplusHTML(b,f)}</div></section>`;
   const don=`<section data-el="donation"><div class="n-don"><h4 style="margin-bottom:-8px">Make a Donation?</h4><p class="n-lt">Change lives with just <b>${gbp(Math.ceil(tot)-tot)}!</b> Your support will help [charity name] do amazing things!</p>
     <div class="n-cl"><span class="n-ck"></span><span class="n-lt">Yes, round up my total to <b>${gbp(Math.ceil(tot))}</b></span></div>
     <p class="n-fine">Every penny you give goes to charity: 95% to British Heart Foundation (registered charity no. 296645) and 5% goes to Pennies (registered charity no. 1122489)</p>
@@ -663,7 +665,7 @@ function newCheckoutHTML(b,f){
     <div class="n-cl" style="align-items:flex-start"><span class="n-ck n-on">${TICK}</span><p>We will share our latest offers, promotions and new collections via email and SMS from ${esc(f.name)} and our <a>family of brands</a> unless you untick this box.</p></div>
     <p>By continuing I confirm that I am over the age of 18 and by entering my email address, I consent to receive an automated one-time verification code from ${esc(f.name)} at the phone number associated with my account. Message and data rates may apply.</p>
     <p>We will use your information in accordance with our <a>Terms of use</a> and <a>Privacy policy</a>.</p></div>`;
-  return `<div class="nco"><div class="n-main">${bag}${dl}${don}${pay}</div><div class="n-aside">${sum}</div></div>${coModalHTML(b,f)}`;
+  return `<div class="nco"><div class="n-main">${bag}${dl}${don}${pay}</div><div class="n-aside">${sum}</div></div>${coModalHTML(b,f,false)}`;
 }
 const coSelHTML=()=>{const o=CO_OPTS.find(x=>x[4]);return `<button class="co-sel" data-co="open"><div class="t"><b>${o[0]}</b><small>${o[1]}</small></div><span class="pr">${o[2]}</span><u>Change</u></button>`;};
 function checkoutHTML(b,f){
