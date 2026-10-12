@@ -696,7 +696,7 @@ function appCheckoutHTML(b,f){
    <div class="seg2"><span class="on"><img src="${LIB}/icons-delivery.svg" alt="">Home Delivery</span><span><img src="${LIB}/shop.svg" alt="">Click &amp; Collect</span></div>
    <div class="rows">
     <div class="kv top"><span class="l">Delivery Address</span><span class="r"><span>Jake Rayner<br>Apartment 18,<br>2 Munday Street,<br>M4 7BB<br>+447733361372</span>${CH}</span></div><hr>
-    <div class="kv"${nw?' data-co="open" style="cursor:pointer"':''}><span class="l">Delivery Method</span><span class="r"><span class="dmv">${nw?'':mpillHTML(b,f)}<span><b>${o[0]}</b><br>${o[2]}</span></span>${CH}</span></div><hr>
+    <div class="kv${nw?'':' top'}"${nw?' data-co="open" style="cursor:pointer"':''}><span class="l">Delivery Method</span><span class="r"><span class="dmv">${nw?'':mpillHTML(b,f)}<span><b>${o[0]}</b><br>${o[2]}</span></span>${CH}</span></div><hr>
     ${nw?'':`<div class="dprot">${coDplusHTML(b,f)}</div><hr>`}
     <div class="kv"><span class="l">Billing Address</span><span class="r"><span class="lnk">Select billing address</span>${CH}</span></div><hr>
     <div class="kv"><span class="l">Gift Card</span><span class="r"><span class="lnk">Redeem Gift Card</span>${CH}</span></div><hr>
