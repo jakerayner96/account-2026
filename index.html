@@ -235,7 +235,7 @@ try{const saved=JSON.parse(localStorage.getItem('acct26')||'null');if(saved)S=Ob
  if(q.get('brand')&&NAME[q.get('brand')])S.brand=q.get('brand');}
 S.mode='new'; // new 2026 designs only
 // the only page controls: account balance on/off + (Debenhams) Unlimited / Unlimited+ — everything else is the design as is
-{const bal=S.on['blocks:balance']!==false;S=Object.assign(JSON.parse(JSON.stringify(DEF)),{brand:S.brand,app:!!S.app,view:['pdp','checkout','checkout2'].includes(S.view)?S.view:'account',status:S.status==='plus'?'plus':'active',mstate:['none','expiring'].includes(S.mstate)?S.mstate:'active'});if(!bal)setBal(false);}
+{const bal=S.on['blocks:balance']!==false;S=Object.assign(JSON.parse(JSON.stringify(DEF)),{brand:S.brand,app:!!S.app,view:['pdp','checkout','checkout2'].includes(S.view)?S.view:'account',status:S.status==='plus'?'plus':'active',mstate:['none','expiring'].includes(S.mstate)?S.mstate:'active'});if(!bal)setBal(false);if(S.app&&S.view==='checkout2')S.view='checkout';if(S.app&&S.view==='pdp')S.view='account';}
 function setBal(v){if(v){delete S.on['blocks:balance'];delete S.on['rows:balance'];}else{S.on['blocks:balance']=false;S.on['rows:balance']=false;}}
 function effStatus(){const plus=S.brand==='debenhams'&&S.status==='plus',st=S.mstate||'active';return st==='none'?(plus?'plusnone':'none'):st==='expiring'?(plus?'plusexp':'expiring'):(plus?'plus':'active');}
 let FOLD=false, W=390, PAGE_STATE={blocks:[],rows:[],statusStyle:'dot',member:'Unlimited'};
@@ -266,7 +266,7 @@ function renderPanel(){
   $('#pdpcard').hidden=!pdp;$('#balcard').hidden=pdp||co;
   $('#pdpnote').innerHTML=(PDP_BRANDS.includes(S.brand)?'':`${NAME[S.brand]} has no PDP yet — showing Debenhams. `)+`${NAME[pdpBrand()]} PDP as it is live today (core-pdp-2026 live recreation).`+(pdpBrand()==='debenhams'?' Membership box carries the new Unlimited wordmark.':'')+'';
   $('.ph h1').textContent=pdp?'PDP':S.view==='checkout2'?'New checkout':co?'Configure the checkout':'Configure the account page';
-  document.querySelectorAll('#view button,#view-m button').forEach(b=>{b.classList.toggle('on',b.dataset.v===S.view);b.disabled=b.dataset.v==='pdp'&&!!S.app;}); // the PDP is web only
+  document.querySelectorAll('#view button,#view-m button').forEach(b=>{b.classList.toggle('on',b.dataset.v===S.view);b.disabled=(b.dataset.v==='pdp'||b.dataset.v==='checkout2')&&!!S.app;b.title=b.disabled?'Web only — the app has no '+(b.dataset.v==='pdp'?'PDP here':'new checkout'):'';}); // PDP + new checkout are web only (the app has no new checkout)
   const bal=S.on['blocks:balance']!==false,tg=$('#baltg');tg.classList.toggle('on',bal);
   tg.querySelectorAll('button').forEach(b=>b.onclick=()=>{setBal(!bal);send(bal?null:'balance');});
   $('#memcard').hidden=NOMEMBER.includes(S.brand)||pdp||(co&&S.brand!=='debenhams');
@@ -309,7 +309,7 @@ bm.innerHTML=FASCIAS.map(f=>`<option value="${f[0]}">${f[1]}</option>`).join('')
 const setBrand=b=>{if(!NAME[b])return;S.brand=b;send();};
 document.querySelectorAll('#brands .chip').forEach(b=>b.onclick=()=>setBrand(b.dataset.b));
 more.onchange=()=>more.value&&setBrand(more.value);bm.onchange=()=>setBrand(bm.value);
-document.querySelectorAll('#chan button,#chan-m button').forEach(b=>b.onclick=()=>{S.app=b.dataset.c==='app';S.page='landing';if(S.app&&S.view==='pdp')S.view='account';send();apply();});
+document.querySelectorAll('#chan button,#chan-m button').forEach(b=>b.onclick=()=>{S.app=b.dataset.c==='app';S.page='landing';if(S.app&&S.view==='pdp')S.view='account';if(S.app&&S.view==='checkout2')S.view='checkout';send();apply();});
 document.querySelectorAll('#view button,#view-m button').forEach(b=>b.onclick=()=>{if(b.disabled)return;S.view=b.dataset.v;S.page='landing';send();});
 document.querySelectorAll('#dev button').forEach(b=>b.onclick=()=>{W=+b.dataset.w;preset.value=String(W);apply();});
 preset.onchange=()=>{W=+preset.value;apply();};
