@@ -100,7 +100,7 @@ Abroad, `hidePremier` hides the row on most non-UK locales (Debenhams US/IE, boo
 ## Screens (08 Oct 2026)
 Top bar **Account · PDP · Checkout**.
 - **Checkout** — active member only. Live checkout layout (boohooMAN web, Debenhams app sheet) with all four delivery options kept; the new pieces from Checkout 2026 (`WChEtDPH0LcErdYFS9SESn` 3996:173990 Unlimited · 3996:174293 Unlimited+, current 3996:171295) are the membership pill on *Delivery Method* (grey Unlimited / Premier / Royalty; black→teal gradient Unlimited+) and the Deliver+ box (upsell + *Get Unlimited+* strip with Unlimited, *Included* with Unlimited+). Tier toggle stays for Debenhams; no pill for Brand Room / DSGN Studio.
-- **PDP** — the core-pdp-2026 pages copied into `pdp/` (boohooMAN = new-format `pdp.html`, other fascias = live recreations `live.html` + `live-pdp.js` + `brands-live.js`; assets load from core-pdp-2026 Pages). Only change: the Debenhams membership box uses the new Unlimited wordmark (DS `assets/brands/memberships/unlimited-logo.svg`). Web only.
+- **PDP** — what is live today: the core-pdp-2026 live recreation copied into `pdp/` (`live.html` + `live-pdp.js` + `brands-live.js`, every fascia incl. boohooMAN; assets load from core-pdp-2026 Pages). The unreleased boohooMAN new-format PDP is not used (Jake 12 Oct 2026). Only change: the Debenhams membership box uses the new Unlimited wordmark (DS `assets/brands/memberships/unlimited-logo.svg`). Web only.
 
 ### 08 Oct 2026 (later)
 - **New checkout** screen: Checkout 2026 3996:173492 landing (bag + express pay, Arrives/Change summary, Pennies donation, payment grid, order summary). **Change** opens the delivery-method modal (3996:173990 / 174293); all four options kept. No USP bar (as Figma).

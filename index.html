@@ -227,7 +227,7 @@ const NAME=Object.fromEntries(FASCIAS.map(f=>[f[0],f[1]])), DOMAIN=Object.fromEn
 const MEMS=[['active','Unlimited'],['plus','Unlimited+']]; // tier — Debenhams only
 const MSTATES=[['active','Active','#70C474'],['none','Not active','#D6D6D6'],['expiring','Expires in 3 days','#D33F3F']]; // every fascia with a membership (SEEL 3525:157792 · 157039 · 157904)
 const NOMEMBER=['brandroom','dsgnstudio'];
-const PDP_BRANDS=['debenhams','boohoo','boohooman','plt','karenmillen','dorothyperkins','coast']; // fascias with a PDP in core-pdp-2026 (boohooMAN = the new-format configurator page, the rest = live recreations)
+const PDP_BRANDS=['debenhams','boohoo','boohooman','plt','karenmillen','dorothyperkins','coast']; // fascias with a live PDP recreation in core-pdp-2026 (live.html) — what is live today, no unreleased designs
 const DEF={brand:'debenhams',mode:'new',app:false,view:'account',page:'landing',name:'Jake',email:'jake.rayner@debenhams.com',status:'active',mstate:'active',balance:'100.18',subs:3,chev:'auto',on:{},order:{blocks:null,rows:null}};
 let S=JSON.parse(JSON.stringify(DEF));
 try{const saved=JSON.parse(localStorage.getItem('acct26')||'null');if(saved)S=Object.assign(S,saved);}catch(e){}
@@ -245,7 +245,7 @@ const frame=$('#frame'),stage=$('#stage'),win=$('#win'),preset=$('#preset'),size
 const enc=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o))));
 // PDP = the core-pdp-2026 pages copied into pdp/ (Debenhams wordmark swapped for the new Unlimited one); account + checkout = account.html
 const pdpBrand=()=>PDP_BRANDS.includes(S.brand)?S.brand:'debenhams';
-function pageURL(st=S){if(st.view==='pdp'){const b=pdpBrand();return b==='boohooman'?'pdp/pdp.html?brand=boohooman&mode=new':'pdp/live.html?brand='+b;}return 'account.html?s='+enc({...st,status:effStatus()});}
+function pageURL(st=S){if(st.view==='pdp')return 'pdp/live.html?brand='+pdpBrand();return 'account.html?s='+enc({...st,status:effStatus()});}
 let SRCKEY='';const srcKey=()=>S.view==='pdp'?'pdp:'+pdpBrand():'acct';
 function load(){SRCKEY=srcKey();frame.src=pageURL()+'&_='+Date.now();}
 function save(){try{localStorage.setItem('acct26',JSON.stringify(S));}catch(e){}history.replaceState(null,'','?s='+enc(S));}
@@ -264,7 +264,7 @@ function summary(){return `${S.view} · ${NAME[S.brand]} · account balance ${S.
 function renderPanel(){
   const pdp=S.view==='pdp',co=S.view==='checkout'||S.view==='checkout2';
   $('#pdpcard').hidden=!pdp;$('#balcard').hidden=pdp||co;
-  $('#pdpnote').innerHTML=(PDP_BRANDS.includes(S.brand)?'':`${NAME[S.brand]} has no PDP yet — showing Debenhams. `)+(pdpBrand()==='boohooman'?'boohooMAN new-format PDP (the core-pdp-2026 configurator page, default set-up).':`${NAME[pdpBrand()]} live PDP recreation.`)+(pdpBrand()==='debenhams'?' Membership box carries the new Unlimited wordmark.':'')+' Configure it fully at <a href="https://jakerayner96.github.io/core-pdp-2026/" target="_blank" rel="noopener" style="color:inherit">core-pdp-2026 ↗</a>';
+  $('#pdpnote').innerHTML=(PDP_BRANDS.includes(S.brand)?'':`${NAME[S.brand]} has no PDP yet — showing Debenhams. `)+`${NAME[pdpBrand()]} PDP as it is live today (core-pdp-2026 live recreation).`+(pdpBrand()==='debenhams'?' Membership box carries the new Unlimited wordmark.':'')+'';
   $('.ph h1').textContent=pdp?'PDP':S.view==='checkout2'?'New checkout':co?'Configure the checkout':'Configure the account page';
   document.querySelectorAll('#view button,#view-m button').forEach(b=>{b.classList.toggle('on',b.dataset.v===S.view);b.disabled=b.dataset.v==='pdp'&&!!S.app;}); // the PDP is web only
   const bal=S.on['blocks:balance']!==false,tg=$('#baltg');tg.classList.toggle('on',bal);
