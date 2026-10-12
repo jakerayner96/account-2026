@@ -262,8 +262,6 @@ body.co main{padding-top:0;padding-left:0;padding-right:0;max-width:1100px}
 .co-ghost{background:var(--surface-media,#F7F7F7);border:0;border-radius:var(--radius-default);padding:6px 10px;font-size:14px;color:var(--acct-ink)}
 .co-addr{display:flex;align-items:center;gap:20px;border:1px solid var(--border-subtle);border-radius:var(--radius-default);padding:20px;font-size:16px;line-height:24px}
 .co-addr .t{flex:1}.co-addr b{font-weight:600}
-.co-radio{flex:none;width:24px;height:24px;border-radius:99px;border:1px solid var(--border-strong,#767676);display:grid;place-items:center}
-.co-radio.on::after{content:"";width:12px;height:12px;border-radius:99px;background:var(--acct-ink)}
 .co-more{display:flex;align-items:center;justify-content:center;gap:10px;font-size:16px;margin:16px 0 0}
 .co-more img{width:16px;height:16px}
 .co-div{height:1px;background:var(--border-subtle);margin:24px calc(var(--m) * -1)}
@@ -298,7 +296,6 @@ body.co main{padding-top:0;padding-left:0;padding-right:0;max-width:1100px}
 .co-dp .lm a{font-weight:600;color:var(--dplus-link,#00787D)}
 .co-dp .lm i{width:1px;height:18px;background:#E0E0E0}
 .co-dp .lm span{display:flex;align-items:center;gap:4px;opacity:.7;font-weight:300}.co-dp .lm span img{height:16px;width:auto}
-.co-dp .chk{flex:none;width:24px;height:24px;border:1px solid #B5B5B5;border-radius:4px;background:#FFF}
 .co-dp .up{background:rgba(255,255,255,.3);padding:8px 16px;font-size:12px;font-weight:300;color:#323232}
 .co-dp .up b{font-weight:600;background:linear-gradient(115deg,#000,#00787D);-webkit-background-clip:text;background-clip:text;color:transparent}
 .co-acc{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--border-subtle);font-size:18px;font-weight:600}
@@ -327,7 +324,6 @@ body.co main{padding-top:0;padding-left:0;padding-right:0;max-width:1100px}
 .co-modal .mh{display:flex;align-items:center;gap:16px;margin-bottom:24px}
 .co-modal .mh h3{font-size:18px;font-weight:600;line-height:24px}
 .co-modal .mh .x{margin-left:auto;width:16px;height:16px;flex:none;cursor:pointer}
-.co-modal .co-radio.on{border-color:var(--co-sel,var(--acct-ink))}.co-modal .co-radio.on::after{background:var(--co-sel,var(--acct-ink))}
 body:not(.comodal) .co-ov,body:not(.comodal) .co-modal{display:none}
 @media(min-width:1024px){.co-modal{left:50%;right:auto;bottom:auto;top:50%;transform:translate(-50%,-50%);width:520px;border-radius:8px;padding:32px}}
 .co-modal *{box-sizing:border-box}
@@ -349,8 +345,6 @@ body:not(.comodal) .co-ov,body:not(.comodal) .co-modal{display:none}
 .nco .n-dl{display:flex;flex-direction:column;gap:8px}
 .nco .n-dl .n-r{display:flex;align-items:center;gap:8px}.nco .n-dl .n-r>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
 .nco .n-dl hr{border:0;height:1px;background:#E7E7E7;margin:4px 0}
-.nco .n-ck{width:24px;height:24px;flex:none;border:1px solid #B5B5B5;border-radius:3px;background:#FFF;display:grid;place-items:center}
-.nco .n-ck.n-on{background:var(--co-cta);border-color:var(--co-cta)}.nco .n-ck svg{width:16px;height:16px}
 .nco .n-cl{display:flex;gap:8px;align-items:center}
 .nco .n-fine{font-size:12px;font-weight:300;color:#767676}
 .nco .n-don{display:flex;flex-direction:column;gap:12px}.nco .n-don .n-lg{display:flex;gap:24px}
@@ -405,6 +399,8 @@ body.app.co .app-sb{margin:0} /* checkout main has no side padding */
 .co-opts+.dplus-co{margin-top:24px}
 .app-co .pay{height:50px;width:100%;flex:none;border-radius:4px;background:#E5E7EB;color:#6B7280;font:var(--app-co-bold,700) 16px/24px var(--font-family-base);text-transform:uppercase;border:0}
 .app-co .hi{position:fixed;left:50%;bottom:8px;transform:translateX(-50%);width:139px;height:5px;border-radius:100px;background:#000}
+/* radios + checkboxes = the DS Forms atoms .rad / .chk (components.css), colour from the fascia's --icon-action (Jake 12 Oct 2026) */
+.co-opt .rad,.co-addr .rad,.co-dp .chk,.nco .chk{flex:none}
 /* configurator focus ring */
 .focus{outline:2px solid #0D99FF;outline-offset:3px;transition:outline-color .6s}
 </style>
@@ -631,15 +627,14 @@ function coDplusHTML(b,f){
   const plus=b==='debenhams'&&S.status==='plus';
   const lm=`<div class="lm"><a>Learn more</a><i></i><span>Powered by <img src="${AST}/ds/icons/seel/seel-logo.png" alt="seel"></span></div>`;
   if(plus) return `<div class="co-dp" data-el="dplus"><div class="in"><div class="col"><div class="top">${logos}<span class="inc"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg>Included</span></div><p class="sm">Deliver+ protection on every order is included with your Unlimited+ membership.</p>${lm}</div></div></div>`;
-  return `<div class="co-dp" data-el="dplus"><div class="in"><span class="chk"></span><div class="col"><div class="dlg">${logos}</div><p>Your delivery is free. Why not protect it <b>for £2.99?</b></p><ul><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Extended</b> 35-Day Returns</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Win</b> a holiday worth £15k!</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>£5/day</b> Late Delivery Compensation</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Priority</b> Customer Support</span></li></ul>${lm}</div></div>${b==='debenhams'?'<div class="up">Want protection on every order? - <b>Get Unlimited+</b></div>':''}</div>`;
+  return `<div class="co-dp" data-el="dplus"><div class="in"><span class="chk" role="checkbox" aria-checked="false"></span><div class="col"><div class="dlg">${logos}</div><p>Your delivery is free. Why not protect it <b>for £2.99?</b></p><ul><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Extended</b> 35-Day Returns</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Win</b> a holiday worth £15k!</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>£5/day</b> Late Delivery Compensation</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2.5 8.5 6 12l7.5-8"/></svg><span><b>Priority</b> Customer Support</span></li></ul>${lm}</div></div>${b==='debenhams'?'<div class="up">Want protection on every order? - <b>Get Unlimited+</b></div>':''}</div>`;
 }
 const CO_ADDR=['Apartment 18, 2 Munday Street','Manchester, United Kingdom','M4 7BB','+447733361372'];
 function coModalHTML(b,f,dp=true){
-  const opts=CO_OPTS.map(([t,d,pr,was,on])=>`<div class="co-opt"><span class="co-radio${on?' on':''}"></span><div class="t"><b>${t}</b><small>${d}</small></div><span class="pr">${pr}${was?`<s>${was}</s>`:''}</span></div>`).join('');
+  const opts=CO_OPTS.map(([t,d,pr,was,on])=>`<div class="co-opt"><span class="rad${on?' on':''}" role="radio" aria-checked="${!!on}"></span><div class="t"><b>${t}</b><small>${d}</small></div><span class="pr">${pr}${was?`<s>${was}</s>`:''}</span></div>`).join('');
   return `<div class="co-ov" data-co="close"></div><div class="co-modal" role="dialog" aria-label="Delivery Method" data-el="comodal" style="--co-sel:${b==='debenhams'?'#00787D':'var(--acct-ink)'}"><div class="mh"><h3>Delivery Method</h3>${mpillHTML(b,f)}<img class="x" data-co="close" src="${LIB}/icons-close.svg" alt="Close"></div><div class="co-opts">${opts}</div>${dp?coDplusHTML(b,f):''}</div>`;
 }
 const PM=AST+'/ds/icons/payments/', CA='assets/checkout/';
-const TICK='<svg viewBox="0 0 16 16" fill="none" stroke="#FFF" stroke-width="1.6"><path d="M3 8.5 6.5 12 13 4.5"/></svg>';
 function newCheckoutHTML(b,f){
   const p=PROD[b]||PROD.debenhams, o=CO_OPTS.find(x=>x[4]), ship=1.99, sub=p.was||p.now, tot=p.now+ship, deb=b==='debenhams';
   const bag=`<div class="n-bag" data-el="bag"><div class="n-top"><div><b>Your Bag (1)</b><div><span class="n-lt">Order Total:</span> <b>${gbp(tot)}</b></div></div><img src="${LIB}/icons-down.svg" alt=""></div>
@@ -649,7 +644,7 @@ function newCheckoutHTML(b,f){
     <div class="n-r"><div><span class="n-lt">${o[0]}</span><span><b>${o[2]}</b> ${o[3]?`<s>${o[3]}</s>`:''}</span></div><button class="n-chg" data-co="open">Change</button></div><hr>
     <div class="n-r"><div><span><b>Jake Rayner</b><br><span class="n-lt">${CO_ADDR.slice(0,3).join(', ')}</span></span></div><button class="n-chg">Change</button></div></div><div class="n-dp">${coDplusHTML(b,f)}</div></section>`;
   const don=`<section data-el="donation"><div class="n-don"><h4 style="margin-bottom:-8px">Make a Donation?</h4><p class="n-lt">Change lives with just <b>${gbp(Math.ceil(tot)-tot)}!</b> Your support will help [charity name] do amazing things!</p>
-    <div class="n-cl"><span class="n-ck"></span><span class="n-lt">Yes, round up my total to <b>${gbp(Math.ceil(tot))}</b></span></div>
+    <div class="n-cl"><span class="chk" role="checkbox" aria-checked="false"></span><span class="n-lt">Yes, round up my total to <b>${gbp(Math.ceil(tot))}</b></span></div>
     <p class="n-fine">Every penny you give goes to charity: 95% to British Heart Foundation (registered charity no. 296645) and 5% goes to Pennies (registered charity no. 1122489)</p>
     <div class="n-lg"><img src="${CA}pennies.png" alt="Pennies" style="width:73px;height:26px"><img src="${CA}bhf.png" alt="British Heart Foundation" style="width:71px;height:31px"></div></div></section>`;
   const pay=`<section data-el="payment"><div class="n-pay"><h4>Payment</h4><div class="n-promo"><span>Enter promo code...</span><button>Apply</button></div>
@@ -658,12 +653,12 @@ function newCheckoutHTML(b,f){
       <span><img src="${PM}paypal-wordmark.svg" alt="PayPal" style="height:18px"></span><span><img src="${PM}paypal-monogram.png" alt="" style="height:20px">Pay Later</span>
       ${deb?`<span><img src="${CA}debenhams-pay-plus.svg" alt="Debenhams Pay+" style="height:16px"></span>`:''}<span style="gap:4px"><img src="${PM}gpay-g.svg" alt="" style="height:20px"><img src="${PM}gpay-word.svg" alt="Google Pay" style="height:22px"></span>
       <span><img src="${PM}klarna-badge.svg" alt="Klarna" style="height:20px"></span><span><span class="n-cp"><img src="${PM}clearpay-lockup-mini.svg" alt="Clearpay" style="height:12px"></span></span></div>
-    <b>Billing Address</b><div class="n-cl"><span class="n-ck n-on">${TICK}</span><span class="n-lt">Use delivery address as billing address</span></div></div></section>`;
+    <b>Billing Address</b><div class="n-cl"><span class="chk on" role="checkbox" aria-checked="true"></span><span class="n-lt">Use delivery address as billing address</span></div></div></section>`;
   const sum=`<div class="n-sum" data-el="summary"><b>Order Summary</b>
     <div class="n-r"><span>Subtotal</span><span>${gbp(sub)}</span></div><div class="n-r"><span>Delivery</span><span><b>${o[2]}</b> ${o[3]?`<s>${o[3]}</s>`:''}</span></div>
     ${p.was?`<div class="n-r"><span class="n-disc">Discounts<img src="${LIB}/icons-down.svg" alt=""></span><span>-${gbp(p.was-p.now)}</span></div>`:''}
     <div class="n-r n-tot"><span>Order Total</span><span>${gbp(tot)}</span></div>
-    <div class="n-cl" style="align-items:flex-start"><span class="n-ck n-on">${TICK}</span><p>We will share our latest offers, promotions and new collections via email and SMS from ${esc(f.name)} and our <a>family of brands</a> unless you untick this box.</p></div>
+    <div class="n-cl" style="align-items:flex-start"><span class="chk on" role="checkbox" aria-checked="true"></span><p>We will share our latest offers, promotions and new collections via email and SMS from ${esc(f.name)} and our <a>family of brands</a> unless you untick this box.</p></div>
     <p>By continuing I confirm that I am over the age of 18 and by entering my email address, I consent to receive an automated one-time verification code from ${esc(f.name)} at the phone number associated with my account. Message and data rates may apply.</p>
     <p>We will use your information in accordance with our <a>Terms of use</a> and <a>Privacy policy</a>.</p></div>`;
   return `<div class="nco"><div class="n-main">${bag}${dl}${don}${pay}</div><div class="n-aside">${sum}</div></div>${coModalHTML(b,f,false)}`;
@@ -672,11 +667,11 @@ const coSelHTML=()=>{const o=CO_OPTS.find(x=>x[4]);return `<button class="co-sel
 function checkoutHTML(b,f){
   const nw=S.view==='checkout2';
   const p=PROD[b]||PROD.debenhams, ship=1.99, tot=p.now+ship;
-  const opts=CO_OPTS.map(([t,d,pr,was,on])=>`<div class="co-opt"><span class="co-radio${on?' on':''}"></span><div class="t"><b>${t}</b><small>${d}</small></div><span class="pr">${pr}${was?`<s>${was}</s>`:''}</span></div>`).join('');
+  const opts=CO_OPTS.map(([t,d,pr,was,on])=>`<div class="co-opt"><span class="rad${on?' on':''}" role="radio" aria-checked="${!!on}"></span><div class="t"><b>${t}</b><small>${d}</small></div><span class="pr">${pr}${was?`<s>${was}</s>`:''}</span></div>`).join('');
   const deliv=`<section class="co-card" data-el="delivery"><h2>Delivery</h2>
     <div class="co-seg"><button class="on"><img src="${LIB}/icons-delivery.svg" alt="">Home Delivery</button><button><img src="${LIB}/shop.svg" alt="">Click &amp; Collect</button></div>
     <div class="co-row"><h3>Delivery Address</h3><button class="co-ghost">Add new</button></div>
-    <div class="co-addr"><span class="co-radio on"></span><div class="t"><b>Jake Rayner</b><br>${CO_ADDR.join('<br>')}</div><img src="${LIB}/icons-edit.svg" alt="" style="width:20px"></div>
+    <div class="co-addr"><span class="rad on" role="radio" aria-checked="true"></span><div class="t"><b>Jake Rayner</b><br>${CO_ADDR.join('<br>')}</div><img src="${LIB}/icons-edit.svg" alt="" style="width:20px"></div>
     <div class="co-more">More Addresses <img src="${LIB}/icons-down.svg" alt=""></div>
     <div class="co-div"></div>
     ${nw?`<div class="co-dmh"><h3>Delivery Method</h3></div>${coSelHTML()}`:`<div class="co-dmh"><h3>Delivery Method</h3>${mpillHTML(b,f)}</div>
