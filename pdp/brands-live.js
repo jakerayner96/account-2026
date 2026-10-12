@@ -1242,19 +1242,9 @@ window.LIVE_BRANDS={
     "https://jakerayner96.github.io/core-pdp-2026/assets/live/products/plt/04.jpg"
    ],
    "swatches": [
-    {
-     "dot": "#4a2a20",
-     "name": "Chocolate",
-     "on": true
-    },
-    {
-     "dot": "#000",
-     "name": "Black"
-    },
-    {
-     "dot": "#8d7f74",
-     "name": "Taupe"
-    }
+    {"round": true, "img": "https://mediahub.prettylittlething.com/cno6126_chocolate_xl_s?w=60&h=60&qlt=100", "name": "Chocolate", "on": true},
+    {"round": true, "img": "https://mediahub.prettylittlething.com/cno6147_black_xl_s?w=60&h=60&qlt=100", "name": "Black"},
+    {"round": true, "img": "https://mediahub.prettylittlething.com/cnp4519_taupe_xl_s?w=60&h=60&qlt=100", "name": "Taupe"}
    ],
    "ndd": "14 hrs 49 mins",
    "url": "https://www.prettylittlething.com/product/satin-lace-cup-detail-midi-dress_plt01593?colour=chocolate",

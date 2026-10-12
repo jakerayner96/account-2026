@@ -96,6 +96,12 @@
 .lpdp .lp-sw.dot.on{outline:1px solid #000;outline-offset:3px;border-color:transparent}
 .lpdp .lp-sw.dot.on::after{display:none}
 .lpdp .lp-save.sm{font-size:14px}
+/* PLT live colour swatches (prettylittlething.com PDP, 12 Oct 2026): 34px fabric-swatch circles, 1px grey-2 border; selected = 1px black outline with the border turned white (inner white ring). */
+.lpdp .lp-sw.round{width:34px;height:34px;border-radius:50%;border:1px solid #E2E2E2;background:#FFF;overflow:hidden}
+.lpdp .lp-sw.round img{border-radius:50%}
+.lpdp .lp-sw.round.on{outline:1px solid #000;outline-offset:0;border-color:#FFF}
+.lpdp .lp-sw.round.on::after{display:none}
+.lpdp .lp-swatches:has(.lp-sw.round){padding-top:4px;padding-bottom:4px} /* live py-1: room for the selected outline */
 .lpdp .lp-sw.on::after{content:"";position:absolute;inset:0;border:1px solid #fff;border-radius:calc(var(--lp-radius) - 1px);pointer-events:none}
 .lpdp .lp-sizes{display:flex;flex-direction:column;gap:12px}
 .lpdp .lp-size-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
