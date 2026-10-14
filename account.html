@@ -172,7 +172,7 @@ body:not(.chev-on) .acct-row .chev{display:none}
 /* ---- app (Figma Account 2026 · App / Account / Landing 1296:69086) ---- */
 body.app .hd,body.app .ft{display:none}
 body.app{background:#FFF}
-[data-brand="plt"] body.app{background:#FAF5E7} /* PLT app page is cream (Account 2026 1292:10945) */
+[data-brand="plt"] body.app{background:var(--surface-page)} /* PLT app page = the sand version of white #FFFDF7, not the darker sand (Jake 14 Oct 2026) */
 body.app main{padding:0 16px 120px;min-height:100vh}
 .app-sb{display:flex;justify-content:space-between;align-items:center;height:47px;padding:0 14px 0 32px;font:600 17px/1 -apple-system,'SF Pro Text',system-ui,sans-serif;margin:0 -16px}
 .app-sb svg{display:block}
@@ -410,6 +410,13 @@ body.app.co .app-sb{margin:0} /* checkout main has no side padding */
 .co-opts+.dplus-co{margin-top:24px}
 .app-co .pay{height:50px;width:100%;flex:none;border-radius:4px;background:#E5E7EB;color:#6B7280;font:var(--app-co-bold,700) 16px/24px var(--font-family-base);text-transform:uppercase;border:0}
 .app-co .hi{position:fixed;left:50%;bottom:8px;transform:translateX(-50%);width:139px;height:5px;border-radius:100px;background:#000}
+/* PLT app checkout — sand rule (DS tokens.css PLT block, log 33): sheet warm white, segmented control sand with a warm-white selected tab,
+   links garnet, disabled Payment on the PLT disabled pair, everything square (Jake 14 Oct 2026) */
+[data-brand="plt"] .app-co{background:var(--panel-bg)}
+[data-brand="plt"] .app-co .seg2{background:var(--surface-media);border-radius:var(--radius-default)}
+[data-brand="plt"] .app-co .seg2 span{border-radius:var(--radius-default)}[data-brand="plt"] .app-co .seg2 span.on{background:var(--panel-bg)}
+[data-brand="plt"] .app-co .kv .lnk{color:var(--text-link)}
+[data-brand="plt"] .app-co .pay{background:var(--action-disabled-bg);color:var(--action-disabled-fg);border-radius:var(--radius-default)}
 /* radios + checkboxes = the DS Forms atoms .rad / .chk (components.css), colour from the fascia's --icon-action (Jake 12 Oct 2026) */
 .co-opt .rad,.co-addr .rad,.co-dp .chk,.nco .chk{flex:none}
 /* configurator focus ring */
