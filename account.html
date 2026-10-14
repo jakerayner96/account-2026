@@ -272,6 +272,9 @@ body.co main{padding-top:0;padding-left:0;padding-right:0;max-width:1100px}
 .mpill b{font-weight:600}.mpill span{font-weight:300}
 .mpill--plus{background:linear-gradient(115deg,#000 0%,#00787D 100%);color:#FFF}
 .mpill--plus i{background:#7BE7D8}.mpill--plus b{font-weight:700}
+/* PLT Royalty pill: square, sand like the Add new button, garnet dot (Jake 14 Oct 2026) */
+[data-brand="plt"] .mpill{border-radius:0;background:var(--surface-media);color:var(--acct-ink)}
+[data-brand="plt"] .mpill i{background:var(--brand-primary)}
 .co-opts{display:flex;flex-direction:column;gap:24px}
 .co-opt{display:flex;align-items:center;gap:16px}
 .co-opt .t{flex:1;min-width:0}
@@ -360,6 +363,13 @@ body:not(.comodal) .co-ov,body:not(.comodal) .co-modal{display:none}
 .nco .n-sum .n-r b{font-weight:600}.nco .n-sum .n-tot{font-weight:600;border-top:1px solid #E7E7E7;padding-top:16px}
 .nco .n-sum .n-disc{color:var(--co-cta);font-weight:600;display:flex;align-items:center;gap:4px}.nco .n-sum .n-disc img{width:12px;height:12px}
 .nco .n-sum p{font-weight:300;line-height:18px}.nco .n-sum a{color:var(--co-cta);font-weight:600}
+/* PLT new checkout = Checkout 2026 2290:437863: gaps + bag/summary bands PLT BG #FAF5E7 (--surface-media), sections PLT BG2 #FFFDF7 (--panel-bg),
+   Apply + payment tiles filled sand with no outline (Jake 14 Oct 2026) */
+[data-brand="plt"] .nco,[data-brand="plt"] .nco .n-bag,[data-brand="plt"] .nco .n-sum{background:var(--surface-media)}
+[data-brand="plt"] .nco section,[data-brand="plt"] .co-modal{background:var(--panel-bg)}
+[data-brand="plt"] .nco .n-promo span{background:var(--panel-bg)}
+[data-brand="plt"] .nco .n-xp span,[data-brand="plt"] .nco .n-pay .n-promo span,[data-brand="plt"] .nco .n-pay .n-promo button,[data-brand="plt"] .nco .n-pm>span{border-radius:var(--radius-default)}
+[data-brand="plt"] .nco .n-pay .n-promo button,[data-brand="plt"] .nco .n-pm>span{background:var(--surface-media);border-color:transparent}
 body.co2 #usp,body.co2 #uspAbove{display:none} /* Figma: no USP bar on the new checkout */
 @media(min-width:1024px){
   .nco{display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:8px 24px;background:none;align-items:start}
