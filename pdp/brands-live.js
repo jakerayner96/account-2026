@@ -1280,7 +1280,7 @@ window.LIVE_BRANDS={
    "cta": "Add",
    "bg": "#20090c",
    "fg": "#fff",
-   "ctaBg": "#fff",
+   "ctaBg": "#fffdf7",
    "ctaFg": "#000"
   },
   "deliver": {

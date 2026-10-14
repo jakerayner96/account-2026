@@ -66,7 +66,7 @@
 .lpdp .lp-title-text{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
 .lpdp .lp-brand{font-size:16px;font-weight:var(--lp-w-bold)}
 .lpdp .lp-pname{font-size:16px;font-weight:var(--lp-w-light);text-transform:var(--lp-case-title)}
-.lpdp .lp-wish{position:relative;width:44px;height:44px;flex:none;border-radius:99px;display:grid;place-items:center;background:#fff;box-shadow:0 0 14px -4px rgba(0,0,0,.25)}
+.lpdp .lp-wish{position:relative;width:44px;height:44px;flex:none;border-radius:99px;display:grid;place-items:center;background:var(--lp-bg);box-shadow:0 0 14px -4px rgba(0,0,0,.25)}
 .lpdp .lp-wish img{width:20px;height:20px;object-fit:contain}
 .lpdp .lp-stars{display:flex;align-items:center;gap:8px;font-size:14px}
 .lpdp .lp-stars .s{display:flex;gap:2px}
@@ -86,6 +86,8 @@
 .lpdp .lp-colour{display:flex;flex-direction:column;gap:12px}
 .lpdp .lp-colour-lbl{font-size:16px;font-weight:var(--lp-w-light)}
 .lpdp .lp-colour-lbl b{font-weight:var(--lp-w-med)}
+/* Surfaces (size / fit buttons, USP + returns box, BNPL box, wishlist, reviews button, footer input) take --lp-bg, never hard white:
+   PLT has no white — warm white #FFFDF7 or sand #FAF5E7 only (Jake 14 Oct 2026). Every other fascia's --lp-bg is #fff, so they are unchanged. */
 /* EDGE-TO-EDGE ROWS (Jake 10 Sep): swatches and sizes scroll off the right edge — never clipped by the page margin */
 .lpdp .lp-swatches,.lpdp .lp-size-btns,.lpdp .lp-fit-btns{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 calc(var(--lp-m) * -1);padding:0 var(--lp-m);scroll-padding:0 var(--lp-m)}
 .lpdp .lp-swatches::-webkit-scrollbar,.lpdp .lp-size-btns::-webkit-scrollbar,.lpdp .lp-fit-btns::-webkit-scrollbar{display:none}
@@ -97,7 +99,7 @@
 .lpdp .lp-sw.dot.on::after{display:none}
 .lpdp .lp-save.sm{font-size:14px}
 /* PLT live colour swatches (prettylittlething.com PDP, 12 Oct 2026): 34px fabric-swatch circles, 1px grey-2 border; selected = 1px black outline with the border turned white (inner white ring). */
-.lpdp .lp-sw.round{width:34px;height:34px;border-radius:50%;border:1px solid #E2E2E2;background:#FFF;overflow:hidden}
+.lpdp .lp-sw.round{width:34px;height:34px;border-radius:50%;border:1px solid #E2E2E2;background:var(--lp-bg);overflow:hidden}
 .lpdp .lp-sw.round img{border-radius:50%}
 .lpdp .lp-sw.round.on{outline:1px solid #000;outline-offset:0;border-color:#FFF}
 .lpdp .lp-sw.round.on::after{display:none}
@@ -109,7 +111,7 @@
 .lpdp .lp-size-head .lbl b{font-weight:var(--lp-w-med)}
 .lpdp .lp-size-guide{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:var(--lp-w-reg);white-space:nowrap}
 .lpdp .lp-size-guide img{width:16px;height:16px;object-fit:contain}
-.lpdp .lp-sz{flex:none;width:53px;min-width:53px;height:50px;background:#fff;border:1px solid var(--lp-size-border);border-radius:var(--lp-radius);font-size:16px;font-weight:var(--lp-w-reg);display:flex;align-items:center;justify-content:center;position:relative;color:#000;overflow:hidden}
+.lpdp .lp-sz{flex:none;width:53px;min-width:53px;height:50px;background:var(--lp-bg);border:1px solid var(--lp-size-border);border-radius:var(--lp-radius);font-size:16px;font-weight:var(--lp-w-reg);display:flex;align-items:center;justify-content:center;position:relative;color:#000;overflow:hidden}
 .lpdp .lp-sz.wide{width:auto;padding:0 16px}
 .lpdp .lp-sz.on{border-color:#000}
 .lpdp .lp-sz.oos{color:var(--lp-grey-4)}
@@ -151,7 +153,7 @@
 .lpdp .lp-deliver .quote{font-size:12px;font-weight:var(--lp-w-light);font-style:italic;border-top:1px solid var(--dp-rule,rgba(0,0,0,.15));padding-top:12px}
 .lpdp .lp-deliver .powered{font-size:11px;display:flex;gap:4px;align-items:center}
 .lpdp .lp-deliver .powered b{color:#00a7e1;font-weight:700}
-.lpdp .lp-uspbox{background:#fff;border:1px solid var(--lp-grey-2);border-radius:var(--lp-radius);padding:16px;display:flex;flex-direction:column;gap:16px}
+.lpdp .lp-uspbox{background:var(--lp-bg);border:1px solid var(--lp-grey-2);border-radius:var(--lp-radius);padding:16px;display:flex;flex-direction:column;gap:16px}
 .lpdp .lp-uspbox .r{display:flex;gap:16px;align-items:center}
 .lpdp .lp-uspbox .r img{width:24px;height:24px;flex:none;object-fit:contain}
 .lpdp .lp-uspbox .txt{flex:1;display:flex;flex-direction:column;gap:2px}
@@ -161,7 +163,7 @@
 .lpdp .lp-uspbox .cap{font-size:16px;font-weight:var(--lp-w-reg)}
 .lpdp .lp-uspbox .strong{font-size:16px;font-weight:var(--lp-w-bold)}
 .lpdp .lp-uspbox .kw{width:24px;height:24px;border-radius:99px;background:#000;color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;flex:none}
-.lpdp .lp-bnpl{background:#fff;border:1px solid var(--lp-grey-2);border-radius:var(--lp-radius);padding:16px;display:flex;flex-direction:column;gap:12px}
+.lpdp .lp-bnpl{background:var(--lp-bg);border:1px solid var(--lp-grey-2);border-radius:var(--lp-radius);padding:16px;display:flex;flex-direction:column;gap:12px}
 .lpdp .lp-bnpl .h{font-size:14px;font-weight:var(--lp-w-reg)}
 .lpdp .lp-bnpl .badges{display:flex;gap:8px;align-items:center}
 .lpdp .lp-bnpl .badges img{height:24px;width:auto}
@@ -201,7 +203,7 @@
 .lpdp .lp-reviews .st img{width:24px;height:24px}
 .lpdp .lp-reviews .sub{font-size:14px}
 .lpdp .lp-reviews .sub small{display:block;font-size:12px;color:var(--lp-grey-4);margin-top:4px}
-.lpdp .lp-reviews .lp-btn{border:1px solid #000;background:#fff;color:#000;max-width:360px}
+.lpdp .lp-reviews .lp-btn{border:1px solid #000;background:var(--lp-bg);color:#000;max-width:360px}
 /* ---------- description ---------- */
 .lpdp .lp-desc{padding:0 var(--lp-m);display:flex;flex-direction:column}
 .lpdp .lp-drow{padding:16px 0}
@@ -228,7 +230,7 @@
 .lpdp .lp-ft .news h3{font-size:24px;font-weight:var(--lp-w-bold);line-height:1.5}
 .lpdp .lp-ft .news p{font-size:16px}
 .lpdp .lp-ft .news .row{display:flex;flex-direction:column;gap:12px;max-width:520px;width:100%;margin:0 auto;align-items:center}
-.lpdp .lp-ft .news input{width:100%;height:50px;border:1px solid var(--lp-grey-3);border-radius:var(--lp-radius);padding:0 16px;font:inherit;font-size:14px;background:#fff}
+.lpdp .lp-ft .news input{width:100%;height:50px;border:1px solid var(--lp-grey-3);border-radius:var(--lp-radius);padding:0 16px;font:inherit;font-size:14px;background:var(--lp-bg)}
 .lpdp .lp-ft .news button{height:50px;background:var(--lp-primary);color:var(--lp-primary-ink);padding:0 24px;border-radius:var(--lp-radius);text-transform:var(--lp-case-btn);font-weight:var(--lp-w-btn)}
 .lpdp .lp-ft .news small{font-size:12px;color:#000;display:block;max-width:520px;margin:0 auto;line-height:1.5}
 .lpdp .lp-ft .news small u{text-decoration:underline}
