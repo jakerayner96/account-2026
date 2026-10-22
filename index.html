@@ -271,7 +271,7 @@ function renderPanel(){
   tg.querySelectorAll('button').forEach(b=>b.onclick=()=>{setBal(!bal);send(bal?null:'balance');});
   $('#memcard').hidden=NOMEMBER.includes(S.brand)||pdp||(co&&S.brand!=='debenhams');
   $('#stateopts').hidden=co; // checkout = the active state only
-  $('#memname').textContent=co?(S.view==='checkout2'?'Delivery methods in a modal (Checkout 2026 3996:173990 / 174293) — tap Delivery Method to reopen it. ':'')+'Checkout shows the active member: Unlimited (grey pill, Deliver+ upsell) or Unlimited+ (gradient pill, Deliver+ included).':(PAGE_STATE.member||'Unlimited')+' — row status, and the page it clicks into.';
+  $('#memname').textContent=co?(S.view==='checkout2'?'Delivery methods in a modal (Checkout 2026 3996:173990 / 174293) — tap Delivery Method to reopen it. ':'')+'Checkout shows the active member: the membership banner above the delivery options — Unlimited (grey, Deliver+ upsell) or Unlimited+ (gradient, Deliver+ included).':(PAGE_STATE.member||'Unlimited')+' — row status, and the page it clicks into.';
   radios($('#stateopts'),MSTATES,()=>S.mstate||'active',v=>S.mstate=v);
   $('#tiercard').hidden=S.brand!=='debenhams';
   radios($('#memopts'),MEMS,()=>S.status,v=>S.status=v);

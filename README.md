@@ -97,6 +97,10 @@ On the non-Debenhams family sites, "Debenhams Mastercard" is a footer link, not 
 
 Abroad, `hidePremier` hides the row on most non-UK locales (Debenhams US/IE, boohoo outside UK and IE, PLT outside UK, FR and IE, KM outside UK and IE, every boohooMAN locale outside the UK, Nasty Gal US).
 
+## 22 Oct 2026 (Jake)
+- **Account:** no box round the balance card + rows — they sit on the page at the 16px margins. The box came from a class clash: the DS delivery grid took `.dgrid` (border + padding), so the account grid is now `.acct-grid`.
+- **Checkout membership = the old banner format**, not the pill: DS `.mbanner` (new, catalogue *Membership banner · checkout*) full width above the delivery options on the current checkout, the new-checkout delivery modal and the app checkout (above the Delivery Method row). Unlimited / Premier grey gradient (Checkout 2026 3996:171295), Debenhams Unlimited+ black→teal, PLT sand + diamond *Royalty Delivery* (live PLT checkout). Every fascia with a programme; none for Brand Room / DSGN Studio.
+
 ## Screens (08 Oct 2026)
 Top bar **Account · PDP · Checkout**.
 - **Checkout** — active member only. Live checkout layout (boohooMAN web, Debenhams app sheet) with all four delivery options kept; the new pieces from Checkout 2026 (`WChEtDPH0LcErdYFS9SESn` 3996:173990 Unlimited · 3996:174293 Unlimited+, current 3996:171295) are the membership pill on *Delivery Method* (grey Unlimited / Premier / Royalty; black→teal gradient Unlimited+) and the Deliver+ box (upsell + *Get Unlimited+* strip with Unlimited, *Included* with Unlimited+). Tier toggle stays for Debenhams; no pill for Brand Room / DSGN Studio.
@@ -104,6 +108,6 @@ Top bar **Account · PDP · Checkout**.
 
 ### 08 Oct 2026 (later)
 - **New checkout** screen: Checkout 2026 3996:173492 landing (bag + express pay, Arrives/Change summary, Pennies donation, payment grid, order summary). **Change** opens the delivery-method modal (3996:173990 / 174293); all four options kept. No USP bar (as Figma).
-- **Current checkout:** the membership pill sits on the right edge of the Delivery Method heading.
+- **Current checkout:** ~~the membership pill sits on the right edge of the Delivery Method heading~~ — replaced 22 Oct, see below.
 - **App checkout** (both): App Checkout `zGhu3eHyChNPZCHsFOmuie` 5441:420 (PLT) layout for every fascia, in that fascia's font.
 - **Deliver+** in checkout for every fascia, Debenhams included = the new DS checkout banner `.dplus-co` (SEEL Enhancements 2026 "Small New", own lockup / font / colour), copy "Peace of mind, guaranteed £x.xx", checkbox on the right margin. The old green Unlimited / Unlimited+ boxes (`.co-dp`) are no longer rendered.

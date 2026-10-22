@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Account 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Jost:wght@400;500;600&family=Public+Sans:wght@300;400;600;700&family=Hanken+Grotesk:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Urbanist:wght@300;400;600;700&family=Archivo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;600;700&family=Antonio:wght@700&family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Jost:wght@400;500;600&family=Public+Sans:wght@300;400;600;700&family=Hanken+Grotesk:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Urbanist:wght@300;400;600;700&family=Archivo:wght@300;400;600;700&display=swap" rel="stylesheet">
 <!-- DS — canonical, linked not copied -->
 <link rel="stylesheet" href="https://jakerayner96.github.io/debenhamsgroup.design/assets/ds/tokens.css">
 <link rel="stylesheet" href="https://jakerayner96.github.io/debenhamsgroup.design/assets/ds/components.css">
@@ -56,8 +56,8 @@ main{padding:16px var(--m) 32px;max-width:1440px;margin:0 auto}
 .acct-card .bd{background:var(--ac-btn,var(--card-btn-bg));color:var(--ac-btn-ink,var(--card-btn-ink))}
 .acct-card .amt{font-family:var(--font-family-base)}
 
-/* mobile: card and menu stack with the Figma 16px gap */
-.dgrid{display:flex;flex-direction:column;gap:16px}
+/* mobile: card and menu stack with the Figma 16px gap, straight on the page at the 16px margins — no box (Jake 22 Oct). Was .dgrid until the DS delivery grid took that class (bordered box) */
+.acct-grid{display:flex;flex-direction:column;gap:16px}
 .hd-logo.wm{font-weight:700;font-size:18px;line-height:20px;letter-spacing:-.02em;max-width:none;height:auto;white-space:nowrap}
 /* dark headers (Misspap: --surface-page #000 — red wordmark, white icons, per the Figma frame) */
 .hd.dark .hd-icons img,.hd.dark .hd-burger img,.hd.dark .hd-search img{filter:invert(1)}
@@ -75,19 +75,19 @@ body:not(.chev-on) .acct-row .chev{display:none}
 
 /* desktop tile grid */
 @media(min-width:1024px){
-  .dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-  .dgrid.has-card{grid-template-columns:minmax(220px,1.05fr) repeat(4,1fr)}
-  .dgrid .acct-card{grid-row:span 2;justify-content:center;margin:0}
-  .dgrid .menu{display:contents}
+  .acct-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .acct-grid.has-card{grid-template-columns:minmax(220px,1.05fr) repeat(4,1fr)}
+  .acct-grid .acct-card{grid-row:span 2;justify-content:center;margin:0}
+  .acct-grid .menu{display:contents}
   /* tile: icon top-left; label bottom-left with the status on the same line, right-aligned (Figma 1970:205) */
-  .dgrid .acct-row{display:grid;grid-template-columns:1fr auto;grid-template-rows:1fr auto;align-items:end;column-gap:12px;row-gap:24px;min-height:143px;padding:32px 24px 32px}
-  .dgrid .acct-row img:first-child{width:40px;height:40px;grid-column:1/-1;grid-row:1;align-self:start}
-  .dgrid .acct-row .lbl{flex:none;font-size:18px;grid-column:1;grid-row:2}
-  .dgrid .acct-row .chev{display:none}
-  .dgrid .acct-row .st{grid-column:2;grid-row:2;align-self:center;margin:0}
-  .dgrid.has-card .acct-row{min-height:0;padding:24px 20px;gap:20px}
-  .dgrid.has-card .acct-row img:first-child{width:32px;height:32px}
-  .dgrid.has-card .acct-row .lbl{font-size:14px}
+  .acct-grid .acct-row{display:grid;grid-template-columns:1fr auto;grid-template-rows:1fr auto;align-items:end;column-gap:12px;row-gap:24px;min-height:143px;padding:32px 24px 32px}
+  .acct-grid .acct-row img:first-child{width:40px;height:40px;grid-column:1/-1;grid-row:1;align-self:start}
+  .acct-grid .acct-row .lbl{flex:none;font-size:18px;grid-column:1;grid-row:2}
+  .acct-grid .acct-row .chev{display:none}
+  .acct-grid .acct-row .st{grid-column:2;grid-row:2;align-self:center;margin:0}
+  .acct-grid.has-card .acct-row{min-height:0;padding:24px 20px;gap:20px}
+  .acct-grid.has-card .acct-row img:first-child{width:32px;height:32px}
+  .acct-grid.has-card .acct-row .lbl{font-size:14px}
 }
 .signout-m{display:flex;justify-content:center;margin:16px 0 8px}
 .bd.so-btn{background:var(--panel-bg,#FFF);border:1px solid var(--border-subtle);color:var(--text-primary);text-transform:none;font-weight:var(--w-regular);font-size:16px;line-height:24px;padding:4px 28px}
@@ -179,7 +179,7 @@ body.app main{padding:0 16px 120px;min-height:100vh}
 .app-title{position:relative;text-align:center;font-size:18px;font-weight:var(--w-strong);line-height:24px;padding:14px 32px 18px}
 .app-title .bk{position:absolute;left:0;top:10px;width:32px;height:32px;display:grid;place-items:center;padding:0}
 .app-title .bk img{width:16px;height:16px}
-body.app .dgrid{gap:12px}
+body.app .acct-grid{gap:12px}
 body.app .menu{gap:0}
 body.app .acct-row{background:none;border-radius:0;border-bottom:1px solid var(--border-subtle);padding:16px 4px;gap:24px}
 body.app .acct-row .chev{display:block!important;width:20px;height:20px}
@@ -230,7 +230,7 @@ body,.acct-row,.bd.so-btn,.hello h1,.hello p,.tx,.mbox{color:var(--acct-ink)}
 [data-brand="plt"] .hello h1{font-size:16px;font-weight:400;line-height:24px}
 .bd.so-btn{border-color:var(--acct-so-b)}
 @media(min-width:1024px){
-  .dgrid .acct-row{border-radius:calc(var(--radius-default) * 2)}
+  .acct-grid .acct-row{border-radius:calc(var(--radius-default) * 2)}
   .hello .so{border-color:#E5E7EB}
   [data-brand="plt"] .hello .so{border-color:#E5E7EB}
 }
@@ -265,16 +265,11 @@ body.co main{padding-top:0;padding-left:0;padding-right:0;max-width:1100px}
 .co-more{display:flex;align-items:center;justify-content:center;gap:10px;font-size:16px;margin:16px 0 0}
 .co-more img{width:16px;height:16px}
 .co-div{height:1px;background:var(--border-subtle);margin:24px calc(var(--m) * -1)}
-/* the new bit: membership pill on the Delivery Method heading */
-.co-dmh{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;margin-bottom:24px} /* current checkout: pill on the right edge (Jake 08 Oct) */
-.mpill{display:inline-flex;align-items:center;gap:6px;height:20px;padding:0 8px 0 6px;border-radius:100px;background:#F2F2F2;color:#000;font-size:10px;line-height:1;white-space:nowrap;text-transform:uppercase}
+/* membership: DS .mbanner (components.css, catalogue 'membership-banner-checkout') above the delivery options — the old live banner, kept (Jake 22 Oct 2026; Checkout 2026 3996:171295) */
+.co-dmh{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;margin-bottom:24px}
+.co-card .mbanner{margin-bottom:24px}
+.co-modal .mbanner{margin:-8px 0 16px} /* Figma: 16px heading → banner → options */
 :root{--m-dot:#000;--m-dot-plus:#7BE7D8;--m-grad-plus:linear-gradient(115deg,#000 0%,#00787D 100%)}[data-brand="plt"]{--m-dot:var(--brand-primary)} /* one active dot per fascia: checkout pill + account row; Unlimited+ account dot = the pill's gradient, aqua stays inside the pill (Jake 14 Oct 2026) */
-.mpill i{width:8px;height:8px;border-radius:99px;background:var(--m-dot);flex:none}
-.mpill b{font-weight:600}.mpill span{font-weight:300}
-.mpill--plus{background:var(--m-grad-plus);color:#FFF}
-.mpill--plus i{background:var(--m-dot-plus)}.mpill--plus b{font-weight:700}
-/* PLT Royalty pill: square, sand like the Add new button, garnet dot (Jake 14 Oct 2026) */
-[data-brand="plt"] .mpill{border-radius:0;background:var(--surface-media);color:var(--acct-ink)}
 .co-opts{display:flex;flex-direction:column;gap:24px}
 .co-opt{display:flex;align-items:center;gap:16px}
 .co-opt .t{flex:1;min-width:0}
@@ -398,7 +393,6 @@ body.app.co .app-sb{margin:0} /* checkout main has no side padding */
 .app-co .kv{display:flex;justify-content:space-between;align-items:center;gap:16px}
 .app-co .kv.top{align-items:flex-start}.app-co .kv.top .ch{align-self:center}
 .app-co .kv .l{font-weight:var(--app-co-bold,700);display:flex;flex-direction:column;gap:8px;align-items:flex-start}
-.app-co .kv .dmv{display:flex;flex-direction:column;align-items:flex-end;gap:8px} /* active pill stacked above the delivery option, right-aligned (Jake 12 Oct) */
 .app-co .kv .r{display:flex;align-items:center;gap:16px;text-align:right}
 .app-co .kv .lnk{color:#1661E3}
 .app-co .kv .ch{width:16px;height:16px;flex:none}
@@ -406,7 +400,6 @@ body.app.co .app-sb{margin:0} /* checkout main has no side padding */
 .app-co .dprot{display:flex;flex-direction:column;gap:24px}
 .app-co .dplus-co,.app-co .co-dp{margin:0}
 .app-co{--app-co-bold:var(--w-strong,700)}[data-brand="plt"] .app-co{--app-co-bold:700} /* Figma is PLT Roboto Bold; other fascias take their own strong weight */
-.app-co .mpill b{font-weight:600}.app-co .mpill--plus b{font-weight:700}
 .co-opts+.dplus-co{margin-top:24px}
 .app-co .pay{height:50px;width:100%;flex:none;border-radius:4px;background:#E5E7EB;color:#6B7280;font:var(--app-co-bold,700) 16px/24px var(--font-family-base);text-transform:uppercase;border:0}
 .app-co .hi{position:fixed;left:50%;bottom:8px;transform:translateX(-50%);width:139px;height:5px;border-radius:100px;background:#000}
@@ -631,11 +624,11 @@ const PROD={
 const gbp=n=>'£'+n.toFixed(2);
 // live delivery options (boohooMAN checkout, 08 Oct 2026) — member pricing; all four stay visible (Jake: don't hide them like the new designs)
 const CO_OPTS=[['UK Standard Delivery','Arrives by Tue 13 Oct','FREE','£3.99'],['UK Next Day Delivery','Arrives Tomorrow','£1.99','£5.99',1],['UK Express Delivery','Arrives by Sat 10 Oct','FREE','£4.99'],['Premium DPD Next Day Delivery','Arrives Tomorrow','£7.99']];
-// new: membership pill on "Delivery Method" (Checkout 2026 3996:173990 Unlimited grey · 3996:174293 Unlimited+ gradient). No membership = no pill.
-function mpillHTML(b,f){
+// membership banner above the delivery options = DS .mbanner (Checkout 2026 3996:171295 · PLT live "Royalty Delivery"). No membership = no banner.
+function mbannerHTML(b,f){
   if(!f.member)return '';
-  const plus=b==='debenhams'&&S.status==='plus';
-  return `<span class="mpill${plus?' mpill--plus':''}"><i></i><b>${esc(f.member)}${plus?'+':''}</b><span>Active</span></span>`;
+  const plus=b==='debenhams'&&S.status==='plus', plt=b==='plt';
+  return `<div class="mbanner${plus?' mbanner--plus':''}" data-el="mbanner"><span class="nm">${plt?`<img src="${LIB}/icons-unlimited.svg" alt="">`:''}${esc(plt?f.member+' Delivery':f.member)}${plus?'+':''}</span><span class="st">Active</span></div>`;
 }
 // new Deliver+ box: Unlimited = upsell (checkbox, dynamic price, Get Unlimited+ strip, Debenhams only) · Unlimited+ = included
 function coDplusHTML(b,f){
@@ -650,7 +643,7 @@ function coDplusHTML(b,f){
 const CO_ADDR=['Apartment 18, 2 Munday Street','Manchester, United Kingdom','M4 7BB','+447733361372'];
 function coModalHTML(b,f,dp=true){
   const opts=CO_OPTS.map(([t,d,pr,was,on])=>`<div class="co-opt"><span class="rad${on?' on':''}" role="radio" aria-checked="${!!on}"></span><div class="t"><b>${t}</b><small>${d}</small></div><span class="pr">${pr}${was?`<s>${was}</s>`:''}</span></div>`).join('');
-  return `<div class="co-ov" data-co="close"></div><div class="co-modal" role="dialog" aria-label="Delivery Method" data-el="comodal" style="--co-sel:${b==='debenhams'?'#00787D':'var(--acct-ink)'}"><div class="mh"><h3>Delivery Method</h3>${mpillHTML(b,f)}<img class="x" data-co="close" src="${LIB}/icons-close.svg" alt="Close"></div><div class="co-opts">${opts}</div>${dp?coDplusHTML(b,f):''}</div>`;
+  return `<div class="co-ov" data-co="close"></div><div class="co-modal" role="dialog" aria-label="Delivery Method" data-el="comodal" style="--co-sel:${b==='debenhams'?'#00787D':'var(--acct-ink)'}"><div class="mh"><h3>Delivery Method</h3><img class="x" data-co="close" src="${LIB}/icons-close.svg" alt="Close"></div>${mbannerHTML(b,f)}<div class="co-opts">${opts}</div>${dp?coDplusHTML(b,f):''}</div>`;
 }
 const PM=AST+'/ds/icons/payments/', CA='assets/checkout/';
 function newCheckoutHTML(b,f){
@@ -692,8 +685,8 @@ function checkoutHTML(b,f){
     <div class="co-addr"><span class="rad on" role="radio" aria-checked="true"></span><div class="t"><b>Jake Rayner</b><br>${CO_ADDR.join('<br>')}</div><img src="${LIB}/icons-edit.svg" alt="" style="width:20px"></div>
     <div class="co-more">More Addresses <img src="${LIB}/icons-down.svg" alt=""></div>
     <div class="co-div"></div>
-    ${nw?`<div class="co-dmh"><h3>Delivery Method</h3></div>${coSelHTML()}`:`<div class="co-dmh"><h3>Delivery Method</h3>${mpillHTML(b,f)}</div>
-    <div class="co-opts">${opts}</div>
+    ${nw?`<div class="co-dmh"><h3>Delivery Method</h3></div>${coSelHTML()}`:`<div class="co-dmh"><h3>Delivery Method</h3></div>
+    ${mbannerHTML(b,f)}<div class="co-opts">${opts}</div>
     ${coDplusHTML(b,f)}`}
   </section>`;
   const pay=`<section class="co-card" data-el="payment"><h2>Payment</h2><div class="co-acc">Promo Code<img src="${LIB}/icons-down.svg" alt=""></div><div class="co-acc">Redeem Gift Card<img src="${LIB}/icons-down.svg" alt=""></div></section>`;
@@ -701,7 +694,7 @@ function checkoutHTML(b,f){
     <section class="co-card co-sum"><h2>Order Summary</h2><div class="r"><span>Subtotal</span><span>${gbp(p.now)}</span></div><div class="r"><span>Delivery</span><span>${gbp(ship)}</span></div><div class="r tot"><span>Total</span><span>${gbp(tot)}</span></div></section></aside>`;
   return `<div class="co-bagbar"><div><b>Your Bag (1)</b><span>Total ${gbp(tot)}</span></div><img src="${LIB}/icons-down.svg" alt="" style="width:16px"></div><div class="co-wrap"><div style="display:flex;flex-direction:column;gap:16px">${deliv}${pay}</div>${side}</div>${nw?coModalHTML(b,f):''}`;
 }
-// app checkout sheet (Debenhams app, 08 Oct 2026): the grey "UNLIMITED / ACTIVE" banner becomes the new pill on Delivery Method
+// app checkout sheet (Debenhams app, 08 Oct 2026): the grey "UNLIMITED / ACTIVE" banner (DS .mbanner) sits above the Delivery Method row
 function appCheckoutHTML(b,f){
   const p=PROD[b]||PROD.debenhams, o=CO_OPTS.find(x=>x[4]), nw=S.view==='checkout2', CH=`<img class="ch" src="${LIB}/icons-right.svg" alt="">`;
   return `<div class="app-bagt">Bag (1)</div><div class="app-co"><div class="ttl">Checkout<img src="${LIB}/icons-close.svg" alt=""></div>
@@ -709,7 +702,7 @@ function appCheckoutHTML(b,f){
    <div class="seg2"><span class="on"><img src="${LIB}/icons-delivery.svg" alt="">Home Delivery</span><span><img src="${LIB}/shop.svg" alt="">Click &amp; Collect</span></div>
    <div class="rows">
     <div class="kv top"><span class="l">Delivery Address</span><span class="r"><span>Jake Rayner<br>Apartment 18,<br>2 Munday Street,<br>M4 7BB<br>+447733361372</span>${CH}</span></div><hr>
-    <div class="kv${nw?'':' top'}"${nw?' data-co="open" style="cursor:pointer"':''}><span class="l">Delivery Method</span><span class="r"><span class="dmv">${nw?'':mpillHTML(b,f)}<span><b>${o[0]}</b><br>${o[2]}</span></span>${CH}</span></div><hr>
+    ${nw?'':mbannerHTML(b,f)}<div class="kv"${nw?' data-co="open" style="cursor:pointer"':''}><span class="l">Delivery Method</span><span class="r"><span><b>${o[0]}</b><br>${o[2]}</span>${CH}</span></div><hr>
     ${nw?'':`<div class="dprot">${coDplusHTML(b,f)}</div><hr>`}
     <div class="kv"><span class="l">Billing Address</span><span class="r"><span class="lnk">Select billing address</span>${CH}</span></div><hr>
     <div class="kv"><span class="l">Gift Card</span><span class="r"><span class="lnk">Redeem Gift Card</span>${CH}</span></div><hr>
@@ -782,7 +775,7 @@ function render(){
       else if(id==='balance'||id==='menu'){
         const pair=blocks[i+1]&&['balance','menu'].includes(blocks[i+1].id)&&blocks[i+1].id!==id;
         const parts=pair?[id,blocks[i+1].id]:[id]; if(pair)i++;
-        html+=`<div class="dgrid blk${parts.includes('balance')?' has-card':''}">${parts.map(p=>p==='balance'?cardHTML():menuHTML(f)).join('')}</div>`;
+        html+=`<div class="acct-grid blk${parts.includes('balance')?' has-card':''}">${parts.map(p=>p==='balance'?cardHTML():menuHTML(f)).join('')}</div>`;
       }
       else if(id==='beauty')html+=beautyHTML();
       else if(id==='dplus')html+=dplusHTML(b);
