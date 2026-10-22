@@ -192,6 +192,7 @@ body.appmode .device .chin{height:0!important}
   <div class="card" id="pdpcard" hidden><h3>PDP <span class="tag">core-pdp-2026</span></h3><p id="pdpnote"></p></div>
   <div class="card" id="balcard"><div class="els"><div class="el" id="baltg"><button class="tg" aria-label="Account balance"></button><button class="n">Account balance</button></div></div>
     <p style="margin:6px 0 0">The balance card and the Account Balance row.</p></div>
+  <div class="card" id="costylecard" hidden><h3>Membership style <span class="tag">Checkout</span></h3><p>How the active membership shows on Delivery Method.</p><div id="costyleopts"></div></div>
   <div class="card" id="memcard"><h3>Membership <span class="tag">SEEL</span></h3><p id="memname"></p><div id="stateopts"></div><div id="tiercard"><div class="sub">Tier · Debenhams</div><div id="memopts"></div></div></div>
 </aside>
 
@@ -227,15 +228,16 @@ const NAME=Object.fromEntries(FASCIAS.map(f=>[f[0],f[1]])), DOMAIN=Object.fromEn
 const MEMS=[['active','Unlimited'],['plus','Unlimited+']]; // tier — Debenhams only
 const MSTATES=[['active','Active','#70C474'],['none','Not active','#D6D6D6'],['expiring','Expires in 3 days','#D33F3F']]; // every fascia with a membership (SEEL 3525:157792 · 157039 · 157904)
 const NOMEMBER=['brandroom','dsgnstudio'];
+const MSTYLES=[['banner','Banner','Full-width bar above the options (3996:171295)'],['pill','Pill','Next to the Delivery Method heading (3996:173990)']]; // current checkout only (Jake 22 Oct 2026); new checkout is always the pill
 const PDP_BRANDS=['debenhams','boohoo','boohooman','plt','karenmillen','dorothyperkins','coast']; // fascias with a live PDP recreation in core-pdp-2026 (live.html) — what is live today, no unreleased designs
-const DEF={brand:'debenhams',mode:'new',app:false,view:'account',page:'landing',name:'Jake',email:'jake.rayner@debenhams.com',status:'active',mstate:'active',balance:'100.18',subs:3,chev:'auto',on:{},order:{blocks:null,rows:null}};
+const DEF={brand:'debenhams',mode:'new',app:false,view:'account',page:'landing',name:'Jake',email:'jake.rayner@debenhams.com',status:'active',mstate:'active',mstyle:'banner',balance:'100.18',subs:3,chev:'auto',on:{},order:{blocks:null,rows:null}};
 let S=JSON.parse(JSON.stringify(DEF));
 try{const saved=JSON.parse(localStorage.getItem('acct26')||'null');if(saved)S=Object.assign(S,saved);}catch(e){}
 {const q=new URLSearchParams(location.search);try{if(q.get('s'))S=Object.assign(S,JSON.parse(decodeURIComponent(escape(atob(q.get('s'))))));}catch(e){}
  if(q.get('brand')&&NAME[q.get('brand')])S.brand=q.get('brand');}
 S.mode='new'; // new 2026 designs only
 // the only page controls: account balance on/off + (Debenhams) Unlimited / Unlimited+ — everything else is the design as is
-{const bal=S.on['blocks:balance']!==false;S=Object.assign(JSON.parse(JSON.stringify(DEF)),{brand:S.brand,app:!!S.app,view:['pdp','checkout','checkout2'].includes(S.view)?S.view:'account',status:S.status==='plus'?'plus':'active',mstate:['none','expiring'].includes(S.mstate)?S.mstate:'active'});if(!bal)setBal(false);if(S.app&&S.view==='checkout2')S.view='checkout';if(S.app&&S.view==='pdp')S.view='account';}
+{const bal=S.on['blocks:balance']!==false;S=Object.assign(JSON.parse(JSON.stringify(DEF)),{brand:S.brand,app:!!S.app,view:['pdp','checkout','checkout2'].includes(S.view)?S.view:'account',status:S.status==='plus'?'plus':'active',mstate:['none','expiring'].includes(S.mstate)?S.mstate:'active',mstyle:S.mstyle==='pill'?'pill':'banner'});if(!bal)setBal(false);if(S.app&&S.view==='checkout2')S.view='checkout';if(S.app&&S.view==='pdp')S.view='account';}
 function setBal(v){if(v){delete S.on['blocks:balance'];delete S.on['rows:balance'];}else{S.on['blocks:balance']=false;S.on['rows:balance']=false;}}
 function effStatus(){const plus=S.brand==='debenhams'&&S.status==='plus',st=S.mstate||'active';return st==='none'?(plus?'plusnone':'none'):st==='expiring'?(plus?'plusexp':'expiring'):(plus?'plus':'active');}
 let FOLD=false, W=390, PAGE_STATE={blocks:[],rows:[],statusStyle:'dot',member:'Unlimited'};
@@ -260,7 +262,7 @@ function radios(host,list,get,set){
     o.onclick=()=>{set(v);send();};host.appendChild(o);
   });
 }
-function summary(){return `${S.view} · ${NAME[S.brand]} · account balance ${S.on['blocks:balance']===false?'off':'on'}${S.brand==='debenhams'?' · '+(S.status==='plus'?'Unlimited+':'Unlimited'):''} · ${(S.mstate||'active')}`;}
+function summary(){return `${S.view} · ${NAME[S.brand]} · account balance ${S.on['blocks:balance']===false?'off':'on'}${S.brand==='debenhams'?' · '+(S.status==='plus'?'Unlimited+':'Unlimited'):''} · ${(S.mstate||'active')}${S.view==='checkout'?' · '+(S.mstyle||'banner'):''}`;}
 function renderPanel(){
   const pdp=S.view==='pdp',co=S.view==='checkout'||S.view==='checkout2';
   $('#pdpcard').hidden=!pdp;$('#balcard').hidden=pdp||co;
@@ -271,7 +273,9 @@ function renderPanel(){
   tg.querySelectorAll('button').forEach(b=>b.onclick=()=>{setBal(!bal);send(bal?null:'balance');});
   $('#memcard').hidden=NOMEMBER.includes(S.brand)||pdp||(co&&S.brand!=='debenhams');
   $('#stateopts').hidden=co; // checkout = the active state only
-  $('#memname').textContent=co?(S.view==='checkout2'?'Delivery methods in a modal (Checkout 2026 3996:173990 / 174293) — tap Delivery Method to reopen it. ':'')+'Checkout shows the active member: the membership banner above the delivery options — Unlimited (grey, Deliver+ upsell) or Unlimited+ (gradient, Deliver+ included).':(PAGE_STATE.member||'Unlimited')+' — row status, and the page it clicks into.';
+  $('#costylecard').hidden=S.view!=='checkout'||NOMEMBER.includes(S.brand);
+  radios($('#costyleopts'),MSTYLES,()=>S.mstyle||'banner',v=>S.mstyle=v);
+  $('#memname').textContent=co?(S.view==='checkout2'?'Delivery methods in a modal (Checkout 2026 3996:173990 / 174293) with the membership pill on its heading — tap Delivery Method to reopen it. ':'')+'Checkout shows the active member — Unlimited (Deliver+ upsell) or Unlimited+ (Deliver+ included).':(PAGE_STATE.member||'Unlimited')+' — row status, and the page it clicks into.';
   radios($('#stateopts'),MSTATES,()=>S.mstate||'active',v=>S.mstate=v);
   $('#tiercard').hidden=S.brand!=='debenhams';
   radios($('#memopts'),MEMS,()=>S.status,v=>S.status=v);

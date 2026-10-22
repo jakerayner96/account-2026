@@ -265,10 +265,9 @@ body.co main{padding-top:0;padding-left:0;padding-right:0;max-width:1100px}
 .co-more{display:flex;align-items:center;justify-content:center;gap:10px;font-size:16px;margin:16px 0 0}
 .co-more img{width:16px;height:16px}
 .co-div{height:1px;background:var(--border-subtle);margin:24px calc(var(--m) * -1)}
-/* membership: DS .mbanner (components.css, catalogue 'membership-banner-checkout') above the delivery options — the old live banner, kept (Jake 22 Oct 2026; Checkout 2026 3996:171295) */
+/* membership: Checkout tab (web + app) = DS .mbanner above the delivery options, the old live banner (Checkout 2026 3996:171295) · New checkout = DS .mpill on the delivery modal heading, as before (Jake 22 Oct 2026) */
 .co-dmh{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;margin-bottom:24px}
 .co-card .mbanner{margin-bottom:24px}
-.co-modal .mbanner{margin:-8px 0 16px} /* Figma: 16px heading → banner → options */
 :root{--m-dot:#000;--m-dot-plus:#7BE7D8;--m-grad-plus:linear-gradient(115deg,#000 0%,#00787D 100%)}[data-brand="plt"]{--m-dot:var(--brand-primary)} /* one active dot per fascia: checkout pill + account row; Unlimited+ account dot = the pill's gradient, aqua stays inside the pill (Jake 14 Oct 2026) */
 .co-opts{display:flex;flex-direction:column;gap:24px}
 .co-opt{display:flex;align-items:center;gap:16px}
@@ -393,6 +392,7 @@ body.app.co .app-sb{margin:0} /* checkout main has no side padding */
 .app-co .kv{display:flex;justify-content:space-between;align-items:center;gap:16px}
 .app-co .kv.top{align-items:flex-start}.app-co .kv.top .ch{align-self:center}
 .app-co .kv .l{font-weight:var(--app-co-bold,700);display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.app-co .kv .dmv{display:flex;flex-direction:column;align-items:flex-end;gap:8px} /* pill style: active pill stacked above the delivery option, right-aligned (Jake 12 Oct) */
 .app-co .kv .r{display:flex;align-items:center;gap:16px;text-align:right}
 .app-co .kv .lnk{color:#1661E3}
 .app-co .kv .ch{width:16px;height:16px;flex:none}
@@ -631,6 +631,12 @@ function mbannerHTML(b,f){
   const plus=b==='debenhams'&&S.status==='plus'; // Unlimited+ = same grey banner, name only (Jake 22 Oct)
   return `<div class="mbanner" data-el="mbanner"><span class="nm">${esc(b==='plt'?f.member+' Delivery':f.member)}${plus?'+':''}</span><span class="st">Active</span></div>`;
 }
+// new checkout only: membership pill on the delivery modal's "Delivery Method" heading = DS .mpill (Checkout 2026 3996:173990 grey · 3996:174293 Unlimited+ gradient). The banner is the Checkout tab only (Jake 22 Oct 2026).
+function mpillHTML(b,f){
+  if(!f.member)return '';
+  const plus=b==='debenhams'&&S.status==='plus';
+  return `<span class="mpill${plus?' mpill--plus':''}"><i></i><b>${esc(f.member)}${plus?'+':''}</b><span>Active</span></span>`;
+}
 // new Deliver+ box: Unlimited = upsell (checkbox, dynamic price, Get Unlimited+ strip, Debenhams only) · Unlimited+ = included
 function coDplusHTML(b,f){
   if(!DG_hasDplus(b))return ''; // DS rule: no Deliver+ on The Brand Room
@@ -645,7 +651,7 @@ function coDplusHTML(b,f){
 const CO_ADDR=['Apartment 18, 2 Munday Street','Manchester, United Kingdom','M4 7BB','+447733361372'];
 function coModalHTML(b,f,dp=true){
   const opts=CO_OPTS.map(([t,d,pr,was,on])=>`<div class="co-opt"><span class="rad${on?' on':''}" role="radio" aria-checked="${!!on}"></span><div class="t"><b>${t}</b><small>${d}</small></div><span class="pr">${pr}${was?`<s>${was}</s>`:''}</span></div>`).join('');
-  return `<div class="co-ov" data-co="close"></div><div class="co-modal" role="dialog" aria-label="Delivery Method" data-el="comodal" style="--co-sel:${b==='debenhams'?'#00787D':'var(--acct-ink)'}"><div class="mh"><h3>Delivery Method</h3><img class="x" data-co="close" src="${LIB}/icons-close.svg" alt="Close"></div>${mbannerHTML(b,f)}<div class="co-opts">${opts}</div>${dp?coDplusHTML(b,f):''}</div>`;
+  return `<div class="co-ov" data-co="close"></div><div class="co-modal" role="dialog" aria-label="Delivery Method" data-el="comodal" style="--co-sel:${b==='debenhams'?'#00787D':'var(--acct-ink)'}"><div class="mh"><h3>Delivery Method</h3>${mpillHTML(b,f)}<img class="x" data-co="close" src="${LIB}/icons-close.svg" alt="Close"></div><div class="co-opts">${opts}</div>${dp?coDplusHTML(b,f):''}</div>`;
 }
 const PM=AST+'/ds/icons/payments/', CA='assets/checkout/';
 function newCheckoutHTML(b,f){
@@ -678,7 +684,7 @@ function newCheckoutHTML(b,f){
 }
 const coSelHTML=()=>{const o=CO_OPTS.find(x=>x[4]);return `<button class="co-sel" data-co="open"><div class="t"><b>${o[0]}</b><small>${o[1]}</small></div><span class="pr">${o[2]}</span><u>Change</u></button>`;};
 function checkoutHTML(b,f){
-  const nw=S.view==='checkout2';
+  const nw=S.view==='checkout2', pill=S.mstyle==='pill'; // Checkout tab: membership banner (default) or pill, left-panel toggle (Jake 22 Oct 2026)
   const p=PROD[b]||PROD.debenhams, ship=1.99, tot=p.now+ship;
   const opts=CO_OPTS.map(([t,d,pr,was,on])=>`<div class="co-opt"><span class="rad${on?' on':''}" role="radio" aria-checked="${!!on}"></span><div class="t"><b>${t}</b><small>${d}</small></div><span class="pr">${pr}${was?`<s>${was}</s>`:''}</span></div>`).join('');
   const deliv=`<section class="co-card" data-el="delivery"><h2>Delivery</h2>
@@ -687,8 +693,8 @@ function checkoutHTML(b,f){
     <div class="co-addr"><span class="rad on" role="radio" aria-checked="true"></span><div class="t"><b>Jake Rayner</b><br>${CO_ADDR.join('<br>')}</div><img src="${LIB}/icons-edit.svg" alt="" style="width:20px"></div>
     <div class="co-more">More Addresses <img src="${LIB}/icons-down.svg" alt=""></div>
     <div class="co-div"></div>
-    ${nw?`<div class="co-dmh"><h3>Delivery Method</h3></div>${coSelHTML()}`:`<div class="co-dmh"><h3>Delivery Method</h3></div>
-    ${mbannerHTML(b,f)}<div class="co-opts">${opts}</div>
+    ${nw?`<div class="co-dmh"><h3>Delivery Method</h3></div>${coSelHTML()}`:`<div class="co-dmh"><h3>Delivery Method</h3>${pill?mpillHTML(b,f):''}</div>
+    ${pill?'':mbannerHTML(b,f)}<div class="co-opts">${opts}</div>
     ${coDplusHTML(b,f)}`}
   </section>`;
   const pay=`<section class="co-card" data-el="payment"><h2>Payment</h2><div class="co-acc">Promo Code<img src="${LIB}/icons-down.svg" alt=""></div><div class="co-acc">Redeem Gift Card<img src="${LIB}/icons-down.svg" alt=""></div></section>`;
@@ -698,13 +704,13 @@ function checkoutHTML(b,f){
 }
 // app checkout sheet (Debenhams app, 08 Oct 2026): the grey "UNLIMITED / ACTIVE" banner (DS .mbanner) sits above the Delivery Method row
 function appCheckoutHTML(b,f){
-  const p=PROD[b]||PROD.debenhams, o=CO_OPTS.find(x=>x[4]), nw=S.view==='checkout2', CH=`<img class="ch" src="${LIB}/icons-right.svg" alt="">`;
+  const p=PROD[b]||PROD.debenhams, o=CO_OPTS.find(x=>x[4]), nw=S.view==='checkout2', pill=S.mstyle==='pill', CH=`<img class="ch" src="${LIB}/icons-right.svg" alt="">`;
   return `<div class="app-bagt">Bag (1)</div><div class="app-co"><div class="ttl">Checkout<img src="${LIB}/icons-close.svg" alt=""></div>
    <div class="prod"><img src="${PIMG}${p.img}/01.jpg" alt=""><div><span>${esc(p.nm)}</span><span>Size: ${p.sz} - Qty: 1</span></div></div>
    <div class="seg2"><span class="on"><img src="${LIB}/icons-delivery.svg" alt="">Home Delivery</span><span><img src="${LIB}/shop.svg" alt="">Click &amp; Collect</span></div>
    <div class="rows">
     <div class="kv top"><span class="l">Delivery Address</span><span class="r"><span>Jake Rayner<br>Apartment 18,<br>2 Munday Street,<br>M4 7BB<br>+447733361372</span>${CH}</span></div><hr>
-    ${nw?'':mbannerHTML(b,f)}<div class="kv"${nw?' data-co="open" style="cursor:pointer"':''}><span class="l">Delivery Method</span><span class="r"><span><b>${o[0]}</b><br>${o[2]}</span>${CH}</span></div><hr>
+    ${nw||pill?'':mbannerHTML(b,f)}<div class="kv${pill&&!nw?' top':''}"${nw?' data-co="open" style="cursor:pointer"':''}><span class="l">Delivery Method</span><span class="r"><span class="dmv">${pill&&!nw?mpillHTML(b,f):''}<span><b>${o[0]}</b><br>${o[2]}</span></span>${CH}</span></div><hr>
     ${nw||!DG_hasDplus(b)?'':`<div class="dprot">${coDplusHTML(b,f)}</div><hr>`}
     <div class="kv"><span class="l">Billing Address</span><span class="r"><span class="lnk">Select billing address</span>${CH}</span></div><hr>
     <div class="kv"><span class="l">Gift Card</span><span class="r"><span class="lnk">Redeem Gift Card</span>${CH}</span></div><hr>
