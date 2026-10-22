@@ -627,8 +627,8 @@ const CO_OPTS=[['UK Standard Delivery','Arrives by Tue 13 Oct','FREE','£3.99'],
 // membership banner above the delivery options = DS .mbanner (Checkout 2026 3996:171295 · PLT live "Royalty Delivery"). No membership = no banner.
 function mbannerHTML(b,f){
   if(!f.member)return '';
-  const plus=b==='debenhams'&&S.status==='plus', plt=b==='plt';
-  return `<div class="mbanner${plus?' mbanner--plus':''}" data-el="mbanner"><span class="nm">${plt?`<img src="${LIB}/icons-unlimited.svg" alt="">`:''}${esc(plt?f.member+' Delivery':f.member)}${plus?'+':''}</span><span class="st">Active</span></div>`;
+  const plus=b==='debenhams'&&S.status==='plus'; // Unlimited+ = same grey banner, name only (Jake 22 Oct)
+  return `<div class="mbanner" data-el="mbanner"><span class="nm">${esc(b==='plt'?f.member+' Delivery':f.member)}${plus?'+':''}</span><span class="st">Active</span></div>`;
 }
 // new Deliver+ box: Unlimited = upsell (checkbox, dynamic price, Get Unlimited+ strip, Debenhams only) · Unlimited+ = included
 function coDplusHTML(b,f){
