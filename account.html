@@ -588,6 +588,7 @@ function rowHTML(r,f,cur){
 }
 function menuHTML(f,cur){return `<div class="menu" data-el="menu">${ordered('rows',ROWS).filter(r=>isOn('rows',r,f)&&(!r.app||S.app)).map(r=>rowHTML(r,f,cur===r.id)).join('')}</div>`;}
 function dplusHTML(b){
+  if(!DG_hasDplus(b))return ''; // DS rule: The Brand Room has no Deliver+ (Jake 22 Oct 2026)
   const logos=(window.DG_DPLUS_LOGOS||'').replace(/assets\//g,AST+'/').replace(new RegExp(`dpl-${b}"`),`dpl-${b} show"`);
   const hasOwn=new RegExp(`dpl-${b} show`).test(logos);
   return `<div class="dplus blk" data-el="dplus"><div class="col">${hasOwn?logos:logos.replace('dpl-generic"','dpl-generic show"')}<div class="h">Protect your order from <b>£2.99.</b></div><p>Get 35-day returns, £5/day late delivery compensation and much more.</p><span class="more">Learn more</span></div></div>`;
@@ -632,6 +633,7 @@ function mbannerHTML(b,f){
 }
 // new Deliver+ box: Unlimited = upsell (checkbox, dynamic price, Get Unlimited+ strip, Debenhams only) · Unlimited+ = included
 function coDplusHTML(b,f){
+  if(!DG_hasDplus(b))return ''; // DS rule: no Deliver+ on The Brand Room
   {const lg=(window.DG_DPLUS_CO_LOGOS||'').replace(/assets\//g,AST+'/');return `<div class="dplus-co" data-el="dplus"><div class="top">${lg}<button class="chk on" aria-checked="true" aria-label="Deliver+ added"></button></div><p>Peace of mind, guaranteed <b>£3.90</b></p><span class="more">Learn more</span></div>`;}
   let logos=(window.DG_DPLUS_LOGOS||'').replace(/assets\//g,AST+'/');
   logos=new RegExp(`dpl-${b}"`).test(logos)?logos.replace(new RegExp(`dpl-${b}"`),`dpl-${b} show"`):logos.replace('dpl-generic"','dpl-generic show"');
@@ -653,7 +655,7 @@ function newCheckoutHTML(b,f){
     <div class="n-xp"><span class="n-pp"><img src="${PM}paypal-wordmark.svg" alt="PayPal" style="height:20px"></span><span class="n-ap"><img src="${PM}applepay-onblack.svg" alt="Apple Pay" style="height:22px"></span><span class="n-kl"><img src="${CA}klarna-express.svg" alt="Klarna" style="height:33px"></span></div></div>`;
   const dl=`<section data-el="delivery"><div class="n-dl"><h4>${o[1].replace(/^Arrives/,'Arrives')}</h4>
     <div class="n-r"><div><span class="n-lt">${o[0]}</span><span><b>${o[2]}</b> ${o[3]?`<s>${o[3]}</s>`:''}</span></div><button class="n-chg" data-co="open">Change</button></div><hr>
-    <div class="n-r"><div><span><b>Jake Rayner</b><br><span class="n-lt">${CO_ADDR.slice(0,3).join(', ')}</span></span></div><button class="n-chg">Change</button></div></div><div class="n-dp">${coDplusHTML(b,f)}</div></section>`;
+    <div class="n-r"><div><span><b>Jake Rayner</b><br><span class="n-lt">${CO_ADDR.slice(0,3).join(', ')}</span></span></div><button class="n-chg">Change</button></div></div>${DG_hasDplus(b)?`<div class="n-dp">${coDplusHTML(b,f)}</div>`:''}</section>`;
   const don=`<section data-el="donation"><div class="n-don"><h4 style="margin-bottom:-8px">Make a Donation?</h4><p class="n-lt">Change lives with just <b>${gbp(Math.ceil(tot)-tot)}!</b> Your support will help [charity name] do amazing things!</p>
     <div class="n-cl"><span class="chk" role="checkbox" aria-checked="false"></span><span class="n-lt">Yes, round up my total to <b>${gbp(Math.ceil(tot))}</b></span></div>
     <p class="n-fine">Every penny you give goes to charity: 95% to British Heart Foundation (registered charity no. 296645) and 5% goes to Pennies (registered charity no. 1122489)</p>
@@ -703,7 +705,7 @@ function appCheckoutHTML(b,f){
    <div class="rows">
     <div class="kv top"><span class="l">Delivery Address</span><span class="r"><span>Jake Rayner<br>Apartment 18,<br>2 Munday Street,<br>M4 7BB<br>+447733361372</span>${CH}</span></div><hr>
     ${nw?'':mbannerHTML(b,f)}<div class="kv"${nw?' data-co="open" style="cursor:pointer"':''}><span class="l">Delivery Method</span><span class="r"><span><b>${o[0]}</b><br>${o[2]}</span>${CH}</span></div><hr>
-    ${nw?'':`<div class="dprot">${coDplusHTML(b,f)}</div><hr>`}
+    ${nw||!DG_hasDplus(b)?'':`<div class="dprot">${coDplusHTML(b,f)}</div><hr>`}
     <div class="kv"><span class="l">Billing Address</span><span class="r"><span class="lnk">Select billing address</span>${CH}</span></div><hr>
     <div class="kv"><span class="l">Gift Card</span><span class="r"><span class="lnk">Redeem Gift Card</span>${CH}</span></div><hr>
     <div class="kv"><span class="l">Total</span><span class="tot">${gbp(p.now+1.99)}</span></div>

@@ -99,6 +99,7 @@ Abroad, `hidePremier` hides the row on most non-UK locales (Debenhams US/IE, boo
 
 ## 22 Oct 2026 (Jake)
 - **Account:** no box round the balance card + rows — they sit on the page at the 16px margins. The box came from a class clash: the DS delivery grid took `.dgrid` (border + padding), so the account grid is now `.acct-grid`.
+- **No Deliver+ on The Brand Room** (DS rule, `DG_hasDplus` in `dplus-logos.js`): no account banner, no checkout / new-checkout / app Deliver+ box.
 - **Checkout membership = the old banner format**, not the pill: DS `.mbanner` (new, catalogue *Membership banner · checkout*) full width above the delivery options on the current checkout, the new-checkout delivery modal and the app checkout (above the Delivery Method row). Unlimited / Premier grey gradient (Checkout 2026 3996:171295), Debenhams Unlimited+ black→teal, PLT sand + diamond *Royalty Delivery* (live PLT checkout). Every fascia with a programme; none for Brand Room / DSGN Studio.
 
 ## Screens (08 Oct 2026)
